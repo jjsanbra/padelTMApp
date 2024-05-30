@@ -26,6 +26,14 @@
       "relationshipName": "tournaments",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "firstName",
+      "otherEntityName": "player",
+      "otherEntityRelationshipName": "category",
+      "relationshipName": "players",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
     }
   ],
   "searchEngine": "no",

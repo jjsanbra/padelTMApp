@@ -26,6 +26,8 @@ describe('Player Form Service', () => {
             age: expect.any(Object),
             category: expect.any(Object),
             level: expect.any(Object),
+            avatar: expect.any(Object),
+            categories: expect.any(Object),
             teams: expect.any(Object),
           }),
         );
@@ -43,6 +45,8 @@ describe('Player Form Service', () => {
             age: expect.any(Object),
             category: expect.any(Object),
             level: expect.any(Object),
+            avatar: expect.any(Object),
+            categories: expect.any(Object),
             teams: expect.any(Object),
           }),
         );

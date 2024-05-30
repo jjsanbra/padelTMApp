@@ -21,6 +21,8 @@ type TeamFormGroupContent = {
   teamName: FormControl<ITeam['teamName']>;
   level: FormControl<ITeam['level']>;
   category: FormControl<ITeam['category']>;
+  logo: FormControl<ITeam['logo']>;
+  logoContentType: FormControl<ITeam['logoContentType']>;
   players: FormControl<ITeam['players']>;
   tournaments: FormControl<ITeam['tournaments']>;
 };
@@ -45,6 +47,8 @@ export class TeamFormService {
       teamName: new FormControl(teamRawValue.teamName),
       level: new FormControl(teamRawValue.level),
       category: new FormControl(teamRawValue.category),
+      logo: new FormControl(teamRawValue.logo),
+      logoContentType: new FormControl(teamRawValue.logoContentType),
       players: new FormControl(teamRawValue.players ?? []),
       tournaments: new FormControl(teamRawValue.tournaments ?? []),
     });

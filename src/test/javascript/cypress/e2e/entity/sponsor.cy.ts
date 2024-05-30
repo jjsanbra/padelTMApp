@@ -15,7 +15,7 @@ describe('Sponsor e2e test', () => {
   const sponsorPageUrlPattern = new RegExp('/sponsor(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const sponsorSample = { sponsorName: 'replication' };
+  const sponsorSample = { sponsorName: 'indeed tomorrow' };
 
   let sponsor;
 
@@ -157,12 +157,16 @@ describe('Sponsor e2e test', () => {
     });
 
     it('should create an instance of Sponsor', () => {
-      cy.get(`[data-cy="sponsorName"]`).type('loudly');
-      cy.get(`[data-cy="sponsorName"]`).should('have.value', 'loudly');
+      cy.get(`[data-cy="sponsorName"]`).type('perfectly while');
+      cy.get(`[data-cy="sponsorName"]`).should('have.value', 'perfectly while');
 
-      cy.get(`[data-cy="description"]`).type('given');
-      cy.get(`[data-cy="description"]`).should('have.value', 'given');
+      cy.get(`[data-cy="description"]`).type('scorn inside amidst');
+      cy.get(`[data-cy="description"]`).should('have.value', 'scorn inside amidst');
 
+      cy.setFieldImageAsBytesOfEntity('logo', 'integration-test.png', 'image/png');
+
+      // since cypress clicks submit too fast before the blob fields are validated
+      cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

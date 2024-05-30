@@ -59,6 +59,26 @@
               }[player()!.level ?? 'null']
             }}</span>
           </dd>
+          <dt><span jhiTranslate="padelTmApp.player.avatar">Avatar</span></dt>
+          <dd>
+            @if (player()!.avatar) {
+              <div>
+                <a (click)="openFile(player()!.avatar ?? '', player()!.avatarContentType)">
+                  <img [src]="'data:' + player()!.avatarContentType + ';base64,' + player()!.avatar" style="max-width: 100%" alt="player" />
+                </a>
+                {{ player()!.avatarContentType }}, {{ byteSize(player()!.avatar ?? '') }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.category">Category</span></dt>
+          <dd>
+            @for (category of player()!.categories; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/category', category.id, 'view']">{{ category?.description }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
           <dt><span jhiTranslate="padelTmApp.player.teams">Teams</span></dt>
           <dd>
             @for (teams of player()!.teams; track $index; let last = $last) {

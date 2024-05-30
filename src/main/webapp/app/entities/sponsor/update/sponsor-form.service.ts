@@ -20,6 +20,8 @@ type SponsorFormGroupContent = {
   id: FormControl<ISponsor['id'] | NewSponsor['id']>;
   sponsorName: FormControl<ISponsor['sponsorName']>;
   description: FormControl<ISponsor['description']>;
+  logo: FormControl<ISponsor['logo']>;
+  logoContentType: FormControl<ISponsor['logoContentType']>;
   tournaments: FormControl<ISponsor['tournaments']>;
 };
 
@@ -44,6 +46,8 @@ export class SponsorFormService {
         validators: [Validators.required],
       }),
       description: new FormControl(sponsorRawValue.description),
+      logo: new FormControl(sponsorRawValue.logo),
+      logoContentType: new FormControl(sponsorRawValue.logoContentType),
       tournaments: new FormControl(sponsorRawValue.tournaments ?? []),
     });
   }

@@ -56,6 +56,13 @@ public class Tournament implements Serializable {
     @Column(name = "active")
     private Boolean active;
 
+    @Lob
+    @Column(name = "poster")
+    private byte[] poster;
+
+    @Column(name = "poster_content_type")
+    private String posterContentType;
+
     @JsonIgnoreProperties(value = { "country", "tournament" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
@@ -88,7 +95,7 @@ public class Tournament implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
     private Set<Category> categories = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -246,6 +253,32 @@ public class Tournament implements Serializable {
         this.active = active;
     }
 
+    public byte[] getPoster() {
+        return this.poster;
+    }
+
+    public Tournament poster(byte[] poster) {
+        this.setPoster(poster);
+        return this;
+    }
+
+    public void setPoster(byte[] poster) {
+        this.poster = poster;
+    }
+
+    public String getPosterContentType() {
+        return this.posterContentType;
+    }
+
+    public Tournament posterContentType(String posterContentType) {
+        this.posterContentType = posterContentType;
+        return this;
+    }
+
+    public void setPosterContentType(String posterContentType) {
+        this.posterContentType = posterContentType;
+    }
+
     public Location getLocation() {
         return this.location;
     }
@@ -385,6 +418,8 @@ public class Tournament implements Serializable {
             ", limitPax=" + getLimitPax() +
             ", prices='" + getPrices() + "'" +
             ", active='" + getActive() + "'" +
+            ", poster='" + getPoster() + "'" +
+            ", posterContentType='" + getPosterContentType() + "'" +
             "}";
     }
 }

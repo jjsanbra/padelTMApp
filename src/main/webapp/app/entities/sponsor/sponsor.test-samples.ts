@@ -1,24 +1,26 @@
 import { ISponsor, NewSponsor } from './sponsor.model';
 
 export const sampleWithRequiredData: ISponsor = {
-  id: 13350,
-  sponsorName: 'afore',
+  id: 6486,
+  sponsorName: 'blot',
 };
 
 export const sampleWithPartialData: ISponsor = {
-  id: 8777,
-  sponsorName: 'easily er',
-  description: 'councilor agile',
+  id: 18795,
+  sponsorName: 'unfortunately drat',
+  description: 'whereas barring',
 };
 
 export const sampleWithFullData: ISponsor = {
-  id: 22675,
-  sponsorName: 'before',
-  description: 'taint accurate',
+  id: 31206,
+  sponsorName: 'ha gadzooks',
+  description: 'clutch',
+  logo: '../fake-data/blob/hipster.png',
+  logoContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewSponsor = {
-  sponsorName: 'aboard crew',
+  sponsorName: 'cruelly',
   id: null,
 };
 

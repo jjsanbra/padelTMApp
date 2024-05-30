@@ -17,6 +17,8 @@ export interface ITournament {
   limitPax?: number | null;
   prices?: string | null;
   active?: boolean | null;
+  poster?: string | null;
+  posterContentType?: string | null;
   location?: Pick<ILocation, 'id' | 'city'> | null;
   sponsors?: Pick<ISponsor, 'id' | 'sponsorName'>[] | null;
   teams?: Pick<ITeam, 'id' | 'teamName'>[] | null;

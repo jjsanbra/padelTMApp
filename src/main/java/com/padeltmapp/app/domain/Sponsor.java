@@ -33,6 +33,13 @@ public class Sponsor implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Lob
+    @Column(name = "logo")
+    private byte[] logo;
+
+    @Column(name = "logo_content_type")
+    private String logoContentType;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "sponsors")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "location", "sponsors", "teams", "categories", "levels" }, allowSetters = true)
@@ -77,6 +84,32 @@ public class Sponsor implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getLogo() {
+        return this.logo;
+    }
+
+    public Sponsor logo(byte[] logo) {
+        this.setLogo(logo);
+        return this;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public String getLogoContentType() {
+        return this.logoContentType;
+    }
+
+    public Sponsor logoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
+        return this;
+    }
+
+    public void setLogoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
     }
 
     public Set<Tournament> getTournaments() {
@@ -136,6 +169,8 @@ public class Sponsor implements Serializable {
             "id=" + getId() +
             ", sponsorName='" + getSponsorName() + "'" +
             ", description='" + getDescription() + "'" +
+            ", logo='" + getLogo() + "'" +
+            ", logoContentType='" + getLogoContentType() + "'" +
             "}";
     }
 }

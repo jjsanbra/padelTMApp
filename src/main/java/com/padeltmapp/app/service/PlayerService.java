@@ -89,6 +89,15 @@ public class PlayerService {
     }
 
     /**
+     * Get all the players with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<PlayerDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return playerRepository.findAllWithEagerRelationships(pageable).map(playerMapper::toDto);
+    }
+
+    /**
      * Get one player by id.
      *
      * @param id the id of the entity.
@@ -97,7 +106,7 @@ public class PlayerService {
     @Transactional(readOnly = true)
     public Optional<PlayerDTO> findOne(Long id) {
         log.debug("Request to get Player : {}", id);
-        return playerRepository.findById(id).map(playerMapper::toDto);
+        return playerRepository.findOneWithEagerRelationships(id).map(playerMapper::toDto);
     }
 
     /**

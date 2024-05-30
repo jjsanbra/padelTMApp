@@ -3,6 +3,7 @@ package com.padeltmapp.app.service.dto;
 import com.padeltmapp.app.domain.enumeration.CategoryEnum;
 import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -33,6 +34,13 @@ public class PlayerDTO implements Serializable {
     private CategoryEnum category;
 
     private LevelEnum level;
+
+    @Lob
+    private byte[] avatar;
+
+    private String avatarContentType;
+
+    private Set<CategoryDTO> categories = new HashSet<>();
 
     private Set<TeamDTO> teams = new HashSet<>();
 
@@ -92,6 +100,30 @@ public class PlayerDTO implements Serializable {
         this.level = level;
     }
 
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvatarContentType() {
+        return avatarContentType;
+    }
+
+    public void setAvatarContentType(String avatarContentType) {
+        this.avatarContentType = avatarContentType;
+    }
+
+    public Set<CategoryDTO> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryDTO> categories) {
+        this.categories = categories;
+    }
+
     public Set<TeamDTO> getTeams() {
         return teams;
     }
@@ -132,6 +164,8 @@ public class PlayerDTO implements Serializable {
             ", age=" + getAge() +
             ", category='" + getCategory() + "'" +
             ", level='" + getLevel() + "'" +
+            ", avatar='" + getAvatar() + "'" +
+            ", categories=" + getCategories() +
             ", teams=" + getTeams() +
             "}";
     }

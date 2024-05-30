@@ -4,6 +4,7 @@ import static com.padeltmapp.app.domain.PlayerAsserts.*;
 import static com.padeltmapp.app.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -13,15 +14,23 @@ import com.padeltmapp.app.domain.Player;
 import com.padeltmapp.app.domain.enumeration.CategoryEnum;
 import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import com.padeltmapp.app.repository.PlayerRepository;
+import com.padeltmapp.app.service.PlayerService;
 import com.padeltmapp.app.service.dto.PlayerDTO;
 import com.padeltmapp.app.service.mapper.PlayerMapper;
 import jakarta.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link PlayerResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class PlayerResourceIT {
@@ -53,6 +63,11 @@ class PlayerResourceIT {
     private static final LevelEnum DEFAULT_LEVEL = LevelEnum.L0;
     private static final LevelEnum UPDATED_LEVEL = LevelEnum.L05;
 
+    private static final byte[] DEFAULT_AVATAR = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_AVATAR = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_AVATAR_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_AVATAR_CONTENT_TYPE = "image/png";
+
     private static final String ENTITY_API_URL = "/api/players";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -65,8 +80,14 @@ class PlayerResourceIT {
     @Autowired
     private PlayerRepository playerRepository;
 
+    @Mock
+    private PlayerRepository playerRepositoryMock;
+
     @Autowired
     private PlayerMapper playerMapper;
+
+    @Mock
+    private PlayerService playerServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -89,7 +110,9 @@ class PlayerResourceIT {
             .phoneNumber(DEFAULT_PHONE_NUMBER)
             .age(DEFAULT_AGE)
             .category(DEFAULT_CATEGORY)
-            .level(DEFAULT_LEVEL);
+            .level(DEFAULT_LEVEL)
+            .avatar(DEFAULT_AVATAR)
+            .avatarContentType(DEFAULT_AVATAR_CONTENT_TYPE);
         return player;
     }
 
@@ -106,7 +129,9 @@ class PlayerResourceIT {
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
             .category(UPDATED_CATEGORY)
-            .level(UPDATED_LEVEL);
+            .level(UPDATED_LEVEL)
+            .avatar(UPDATED_AVATAR)
+            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
         return player;
     }
 
@@ -206,7 +231,26 @@ class PlayerResourceIT {
             .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER)))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
-            .andExpect(jsonPath("$.[*].level").value(hasItem(DEFAULT_LEVEL.toString())));
+            .andExpect(jsonPath("$.[*].level").value(hasItem(DEFAULT_LEVEL.toString())))
+            .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_AVATAR))));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPlayersWithEagerRelationshipsIsEnabled() throws Exception {
+        when(playerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPlayerMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(playerServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPlayersWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(playerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPlayerMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(playerRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -226,7 +270,9 @@ class PlayerResourceIT {
             .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER))
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
             .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
-            .andExpect(jsonPath("$.level").value(DEFAULT_LEVEL.toString()));
+            .andExpect(jsonPath("$.level").value(DEFAULT_LEVEL.toString()))
+            .andExpect(jsonPath("$.avatarContentType").value(DEFAULT_AVATAR_CONTENT_TYPE))
+            .andExpect(jsonPath("$.avatar").value(Base64.getEncoder().encodeToString(DEFAULT_AVATAR)));
     }
 
     @Test
@@ -254,7 +300,9 @@ class PlayerResourceIT {
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
             .category(UPDATED_CATEGORY)
-            .level(UPDATED_LEVEL);
+            .level(UPDATED_LEVEL)
+            .avatar(UPDATED_AVATAR)
+            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
         PlayerDTO playerDTO = playerMapper.toDto(updatedPlayer);
 
         restPlayerMockMvc
@@ -345,7 +393,9 @@ class PlayerResourceIT {
             .lastName(UPDATED_LAST_NAME)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
-            .level(UPDATED_LEVEL);
+            .level(UPDATED_LEVEL)
+            .avatar(UPDATED_AVATAR)
+            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
 
         restPlayerMockMvc
             .perform(
@@ -379,7 +429,9 @@ class PlayerResourceIT {
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
             .category(UPDATED_CATEGORY)
-            .level(UPDATED_LEVEL);
+            .level(UPDATED_LEVEL)
+            .avatar(UPDATED_AVATAR)
+            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
 
         restPlayerMockMvc
             .perform(

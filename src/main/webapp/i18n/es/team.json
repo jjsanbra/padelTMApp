@@ -21,6 +21,7 @@
       "teamName": "Team Name",
       "level": "Level",
       "category": "Category",
+      "logo": "Logo",
       "player": "Player",
       "tournaments": "Tournaments"
     }

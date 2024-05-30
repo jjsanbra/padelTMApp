@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ITournament } from 'app/entities/tournament/tournament.model';
 import { TournamentService } from 'app/entities/tournament/service/tournament.service';
+import { IPlayer } from 'app/entities/player/player.model';
+import { PlayerService } from 'app/entities/player/service/player.service';
 import { CategoryEnum } from 'app/entities/enumerations/category-enum.model';
 import { CategoryService } from '../service/category.service';
 import { ICategory } from '../category.model';
@@ -26,16 +28,20 @@ export class CategoryUpdateComponent implements OnInit {
   categoryEnumValues = Object.keys(CategoryEnum);
 
   tournamentsSharedCollection: ITournament[] = [];
+  playersSharedCollection: IPlayer[] = [];
 
   protected categoryService = inject(CategoryService);
   protected categoryFormService = inject(CategoryFormService);
   protected tournamentService = inject(TournamentService);
+  protected playerService = inject(PlayerService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: CategoryFormGroup = this.categoryFormService.createCategoryFormGroup();
 
   compareTournament = (o1: ITournament | null, o2: ITournament | null): boolean => this.tournamentService.compareTournament(o1, o2);
+
+  comparePlayer = (o1: IPlayer | null, o2: IPlayer | null): boolean => this.playerService.comparePlayer(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ category }) => {
@@ -89,6 +95,10 @@ export class CategoryUpdateComponent implements OnInit {
       this.tournamentsSharedCollection,
       ...(category.tournaments ?? []),
     );
+    this.playersSharedCollection = this.playerService.addPlayerToCollectionIfMissing<IPlayer>(
+      this.playersSharedCollection,
+      ...(category.players ?? []),
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -101,5 +111,13 @@ export class CategoryUpdateComponent implements OnInit {
         ),
       )
       .subscribe((tournaments: ITournament[]) => (this.tournamentsSharedCollection = tournaments));
+
+    this.playerService
+      .query()
+      .pipe(map((res: HttpResponse<IPlayer[]>) => res.body ?? []))
+      .pipe(
+        map((players: IPlayer[]) => this.playerService.addPlayerToCollectionIfMissing<IPlayer>(players, ...(this.category?.players ?? []))),
+      )
+      .subscribe((players: IPlayer[]) => (this.playersSharedCollection = players));
   }
 }

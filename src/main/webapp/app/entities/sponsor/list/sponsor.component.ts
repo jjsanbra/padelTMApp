@@ -8,6 +8,7 @@ import { sortStateSignal, SortDirective, SortByDirective, type SortState, SortSe
 import { DurationPipe, FormatMediumDatetimePipe, FormatMediumDatePipe } from 'app/shared/date';
 import { FormsModule } from '@angular/forms';
 import { SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
+import { DataUtils } from 'app/core/util/data-util.service';
 import { ISponsor } from '../sponsor.model';
 import { EntityArrayResponseType, SponsorService } from '../service/sponsor.service';
 import { SponsorDeleteDialogComponent } from '../delete/sponsor-delete-dialog.component';
@@ -38,6 +39,7 @@ export class SponsorComponent implements OnInit {
   protected sponsorService = inject(SponsorService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
+  protected dataUtils = inject(DataUtils);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
@@ -54,6 +56,14 @@ export class SponsorComponent implements OnInit {
         }),
       )
       .subscribe();
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    return this.dataUtils.openFile(base64String, contentType);
   }
 
   delete(sponsor: ISponsor): void {

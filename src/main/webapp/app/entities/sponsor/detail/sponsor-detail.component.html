@@ -23,6 +23,17 @@
           <dd>
             <span>{{ sponsor()!.description }}</span>
           </dd>
+          <dt><span jhiTranslate="padelTmApp.sponsor.logo">Logo</span></dt>
+          <dd>
+            @if (sponsor()!.logo) {
+              <div>
+                <a (click)="openFile(sponsor()!.logo ?? '', sponsor()!.logoContentType)">
+                  <img [src]="'data:' + sponsor()!.logoContentType + ';base64,' + sponsor()!.logo" style="max-width: 100%" alt="sponsor" />
+                </a>
+                {{ sponsor()!.logoContentType }}, {{ byteSize(sponsor()!.logo ?? '') }}
+              </div>
+            }
+          </dd>
           <dt><span jhiTranslate="padelTmApp.sponsor.tournaments">Tournaments</span></dt>
           <dd>
             @for (tournaments of sponsor()!.tournaments; track $index; let last = $last) {

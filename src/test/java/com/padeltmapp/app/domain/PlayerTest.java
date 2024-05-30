@@ -1,5 +1,6 @@
 package com.padeltmapp.app.domain;
 
+import static com.padeltmapp.app.domain.CategoryTestSamples.*;
 import static com.padeltmapp.app.domain.PlayerTestSamples.*;
 import static com.padeltmapp.app.domain.TeamTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +24,24 @@ class PlayerTest {
 
         player2 = getPlayerSample2();
         assertThat(player1).isNotEqualTo(player2);
+    }
+
+    @Test
+    void categoryTest() throws Exception {
+        Player player = getPlayerRandomSampleGenerator();
+        Category categoryBack = getCategoryRandomSampleGenerator();
+
+        player.addCategory(categoryBack);
+        assertThat(player.getCategories()).containsOnly(categoryBack);
+
+        player.removeCategory(categoryBack);
+        assertThat(player.getCategories()).doesNotContain(categoryBack);
+
+        player.categories(new HashSet<>(Set.of(categoryBack)));
+        assertThat(player.getCategories()).containsOnly(categoryBack);
+
+        player.setCategories(new HashSet<>());
+        assertThat(player.getCategories()).doesNotContain(categoryBack);
     }
 
     @Test

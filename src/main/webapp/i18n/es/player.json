@@ -24,6 +24,8 @@
       "age": "Age",
       "category": "Category",
       "level": "Level",
+      "avatar": "Avatar",
+      "category": "Category",
       "teams": "Teams"
     }
   }

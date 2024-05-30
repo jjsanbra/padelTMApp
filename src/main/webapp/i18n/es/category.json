@@ -20,7 +20,8 @@
       "id": "ID",
       "categoryName": "Category Name",
       "description": "Description",
-      "tournaments": "Tournaments"
+      "tournaments": "Tournaments",
+      "players": "Players"
     }
   }
 }

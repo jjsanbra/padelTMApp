@@ -48,7 +48,9 @@ public class SponsorAsserts {
         assertThat(expected)
             .as("Verify Sponsor relevant properties")
             .satisfies(e -> assertThat(e.getSponsorName()).as("check sponsorName").isEqualTo(actual.getSponsorName()))
-            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()));
+            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
+            .satisfies(e -> assertThat(e.getLogo()).as("check logo").isEqualTo(actual.getLogo()))
+            .satisfies(e -> assertThat(e.getLogoContentType()).as("check logo contenty type").isEqualTo(actual.getLogoContentType()));
     }
 
     /**

@@ -52,6 +52,23 @@ public class Player implements Serializable {
     @Column(name = "level")
     private LevelEnum level;
 
+    @Lob
+    @Column(name = "avatar")
+    private byte[] avatar;
+
+    @Column(name = "avatar_content_type")
+    private String avatarContentType;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "rel_player__category",
+        joinColumns = @JoinColumn(name = "player_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
+    private Set<Category> categories = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "players")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "players", "tournaments" }, allowSetters = true)
@@ -150,6 +167,55 @@ public class Player implements Serializable {
         this.level = level;
     }
 
+    public byte[] getAvatar() {
+        return this.avatar;
+    }
+
+    public Player avatar(byte[] avatar) {
+        this.setAvatar(avatar);
+        return this;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvatarContentType() {
+        return this.avatarContentType;
+    }
+
+    public Player avatarContentType(String avatarContentType) {
+        this.avatarContentType = avatarContentType;
+        return this;
+    }
+
+    public void setAvatarContentType(String avatarContentType) {
+        this.avatarContentType = avatarContentType;
+    }
+
+    public Set<Category> getCategories() {
+        return this.categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Player categories(Set<Category> categories) {
+        this.setCategories(categories);
+        return this;
+    }
+
+    public Player addCategory(Category category) {
+        this.categories.add(category);
+        return this;
+    }
+
+    public Player removeCategory(Category category) {
+        this.categories.remove(category);
+        return this;
+    }
+
     public Set<Team> getTeams() {
         return this.teams;
     }
@@ -211,6 +277,8 @@ public class Player implements Serializable {
             ", age=" + getAge() +
             ", category='" + getCategory() + "'" +
             ", level='" + getLevel() + "'" +
+            ", avatar='" + getAvatar() + "'" +
+            ", avatarContentType='" + getAvatarContentType() + "'" +
             "}";
     }
 }

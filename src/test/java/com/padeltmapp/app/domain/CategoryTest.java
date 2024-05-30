@@ -1,6 +1,7 @@
 package com.padeltmapp.app.domain;
 
 import static com.padeltmapp.app.domain.CategoryTestSamples.*;
+import static com.padeltmapp.app.domain.PlayerTestSamples.*;
 import static com.padeltmapp.app.domain.TournamentTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,5 +46,27 @@ class CategoryTest {
         category.setTournaments(new HashSet<>());
         assertThat(category.getTournaments()).doesNotContain(tournamentBack);
         assertThat(tournamentBack.getCategories()).doesNotContain(category);
+    }
+
+    @Test
+    void playersTest() throws Exception {
+        Category category = getCategoryRandomSampleGenerator();
+        Player playerBack = getPlayerRandomSampleGenerator();
+
+        category.addPlayers(playerBack);
+        assertThat(category.getPlayers()).containsOnly(playerBack);
+        assertThat(playerBack.getCategories()).containsOnly(category);
+
+        category.removePlayers(playerBack);
+        assertThat(category.getPlayers()).doesNotContain(playerBack);
+        assertThat(playerBack.getCategories()).doesNotContain(category);
+
+        category.players(new HashSet<>(Set.of(playerBack)));
+        assertThat(category.getPlayers()).containsOnly(playerBack);
+        assertThat(playerBack.getCategories()).containsOnly(category);
+
+        category.setPlayers(new HashSet<>());
+        assertThat(category.getPlayers()).doesNotContain(playerBack);
+        assertThat(playerBack.getCategories()).doesNotContain(category);
     }
 }

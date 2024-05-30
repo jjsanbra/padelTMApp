@@ -12,6 +12,7 @@ entity Tournament {
     limitPax Integer
     prices String
     active Boolean
+    poster ImageBlob
 }
 
 /**
@@ -24,6 +25,7 @@ entity Player {
 	age Integer min(12) max(80)
     category CategoryEnum
     level LevelEnum
+    avatar ImageBlob
 }
 
 /**
@@ -33,6 +35,7 @@ entity Team {
 	teamName String unique
     level LevelEnum
     category CategoryEnum
+    logo ImageBlob
 }
 
 /**
@@ -81,6 +84,7 @@ entity Level {
 entity Sponsor {
 	sponsorName String required
     description String
+    logo ImageBlob
 }
 
 
@@ -134,12 +138,14 @@ relationship ManyToMany {
     Tournament{Sponsor(sponsorName)} to Sponsor{tournaments(tournamentName)}
     /* Multiple tournaments can have multiple teams, with a limit of x teams (handled in business logic, not here) */
     Tournament{Team(teamName)} to Team{tournaments(tournamentName)}
-    /* A tournament can have multiple categories */
+    /* Multiple tournament can have multiple categories */
     Tournament{Category(description)} to Category{tournaments(tournamentName)}
-    /* /* A tournament can have multiple levels */
+    /* Multiple tournament can have multiple levels */
     Tournament{Level(description)} to Level{tournaments(tournamentName)}
     /* Multiple teams can have up to 2 players, and they are required (handled in business logic, not here) */
     Team{Player(firstName) required} to Player{teams(teamName)}
+    /* Multiple Players can have multiple categories */
+    Player{Category(description)} to Category{players(firstName)}
 }
 
 /* Set pagination options */

@@ -4,6 +4,8 @@ export interface ISponsor {
   id: number;
   sponsorName?: string | null;
   description?: string | null;
+  logo?: string | null;
+  logoContentType?: string | null;
   tournaments?: Pick<ITournament, 'id' | 'tournamentName'>[] | null;
 }
 

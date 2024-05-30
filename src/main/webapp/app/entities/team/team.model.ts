@@ -8,6 +8,8 @@ export interface ITeam {
   teamName?: string | null;
   level?: keyof typeof LevelEnum | null;
   category?: keyof typeof CategoryEnum | null;
+  logo?: string | null;
+  logoContentType?: string | null;
   players?: Pick<IPlayer, 'id' | 'firstName'>[] | null;
   tournaments?: Pick<ITournament, 'id' | 'tournamentName'>[] | null;
 }

@@ -39,11 +39,18 @@ public class Team implements Serializable {
     @Column(name = "category")
     private CategoryEnum category;
 
+    @Lob
+    @Column(name = "logo")
+    private byte[] logo;
+
+    @Column(name = "logo_content_type")
+    private String logoContentType;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
     @JoinTable(name = "rel_team__player", joinColumns = @JoinColumn(name = "team_id"), inverseJoinColumns = @JoinColumn(name = "player_id"))
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "teams" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "categories", "teams" }, allowSetters = true)
     private Set<Player> players = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teams")
@@ -103,6 +110,32 @@ public class Team implements Serializable {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public byte[] getLogo() {
+        return this.logo;
+    }
+
+    public Team logo(byte[] logo) {
+        this.setLogo(logo);
+        return this;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public String getLogoContentType() {
+        return this.logoContentType;
+    }
+
+    public Team logoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
+        return this;
+    }
+
+    public void setLogoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
     }
 
     public Set<Player> getPlayers() {
@@ -186,6 +219,8 @@ public class Team implements Serializable {
             ", teamName='" + getTeamName() + "'" +
             ", level='" + getLevel() + "'" +
             ", category='" + getCategory() + "'" +
+            ", logo='" + getLogo() + "'" +
+            ", logoContentType='" + getLogoContentType() + "'" +
             "}";
     }
 }

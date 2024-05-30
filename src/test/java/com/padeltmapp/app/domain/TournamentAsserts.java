@@ -58,7 +58,9 @@ public class TournamentAsserts {
             )
             .satisfies(e -> assertThat(e.getLimitPax()).as("check limitPax").isEqualTo(actual.getLimitPax()))
             .satisfies(e -> assertThat(e.getPrices()).as("check prices").isEqualTo(actual.getPrices()))
-            .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()));
+            .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()))
+            .satisfies(e -> assertThat(e.getPoster()).as("check poster").isEqualTo(actual.getPoster()))
+            .satisfies(e -> assertThat(e.getPosterContentType()).as("check poster contenty type").isEqualTo(actual.getPosterContentType()));
     }
 
     /**

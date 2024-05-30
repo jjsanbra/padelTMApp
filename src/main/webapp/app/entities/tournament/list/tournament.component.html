@@ -112,6 +112,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="poster">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.tournament.poster">Poster</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="location.city">
               <div class="d-flex">
                 <span jhiTranslate="padelTmApp.tournament.location">Location</span>
@@ -137,6 +144,18 @@
               <td>{{ tournament.limitPax }}</td>
               <td>{{ tournament.prices }}</td>
               <td>{{ tournament.active }}</td>
+              <td>
+                @if (tournament.poster) {
+                  <a (click)="openFile(tournament.poster, tournament.posterContentType)">
+                    <img
+                      [src]="'data:' + tournament.posterContentType + ';base64,' + tournament.poster"
+                      style="max-height: 30px"
+                      alt="tournament"
+                    />
+                  </a>
+                  <span>{{ tournament.posterContentType }}, {{ byteSize(tournament.poster) }}</span>
+                }
+              </td>
               <td>
                 @if (tournament.location) {
                   <div>

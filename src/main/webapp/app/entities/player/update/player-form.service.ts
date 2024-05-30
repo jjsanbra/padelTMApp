@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type PlayerFormGroupInput = IPlayer | PartialWithRequiredKeyOf<NewPlayer>;
 
-type PlayerFormDefaults = Pick<NewPlayer, 'id' | 'teams'>;
+type PlayerFormDefaults = Pick<NewPlayer, 'id' | 'categories' | 'teams'>;
 
 type PlayerFormGroupContent = {
   id: FormControl<IPlayer['id'] | NewPlayer['id']>;
@@ -24,6 +24,9 @@ type PlayerFormGroupContent = {
   age: FormControl<IPlayer['age']>;
   category: FormControl<IPlayer['category']>;
   level: FormControl<IPlayer['level']>;
+  avatar: FormControl<IPlayer['avatar']>;
+  avatarContentType: FormControl<IPlayer['avatarContentType']>;
+  categories: FormControl<IPlayer['categories']>;
   teams: FormControl<IPlayer['teams']>;
 };
 
@@ -56,6 +59,9 @@ export class PlayerFormService {
       }),
       category: new FormControl(playerRawValue.category),
       level: new FormControl(playerRawValue.level),
+      avatar: new FormControl(playerRawValue.avatar),
+      avatarContentType: new FormControl(playerRawValue.avatarContentType),
+      categories: new FormControl(playerRawValue.categories ?? []),
       teams: new FormControl(playerRawValue.teams ?? []),
     });
   }
@@ -77,6 +83,7 @@ export class PlayerFormService {
   private getFormDefaults(): PlayerFormDefaults {
     return {
       id: null,
+      categories: [],
       teams: [],
     };
   }

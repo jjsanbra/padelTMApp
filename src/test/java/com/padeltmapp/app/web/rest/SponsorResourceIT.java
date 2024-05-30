@@ -14,6 +14,7 @@ import com.padeltmapp.app.repository.SponsorRepository;
 import com.padeltmapp.app.service.dto.SponsorDTO;
 import com.padeltmapp.app.service.mapper.SponsorMapper;
 import jakarta.persistence.EntityManager;
+import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,11 @@ class SponsorResourceIT {
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final byte[] DEFAULT_LOGO = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_LOGO = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_LOGO_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_LOGO_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/sponsors";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -69,7 +75,11 @@ class SponsorResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Sponsor createEntity(EntityManager em) {
-        Sponsor sponsor = new Sponsor().sponsorName(DEFAULT_SPONSOR_NAME).description(DEFAULT_DESCRIPTION);
+        Sponsor sponsor = new Sponsor()
+            .sponsorName(DEFAULT_SPONSOR_NAME)
+            .description(DEFAULT_DESCRIPTION)
+            .logo(DEFAULT_LOGO)
+            .logoContentType(DEFAULT_LOGO_CONTENT_TYPE);
         return sponsor;
     }
 
@@ -80,7 +90,11 @@ class SponsorResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Sponsor createUpdatedEntity(EntityManager em) {
-        Sponsor sponsor = new Sponsor().sponsorName(UPDATED_SPONSOR_NAME).description(UPDATED_DESCRIPTION);
+        Sponsor sponsor = new Sponsor()
+            .sponsorName(UPDATED_SPONSOR_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .logo(UPDATED_LOGO)
+            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
         return sponsor;
     }
 
@@ -159,7 +173,9 @@ class SponsorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sponsor.getId().intValue())))
             .andExpect(jsonPath("$.[*].sponsorName").value(hasItem(DEFAULT_SPONSOR_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_LOGO))));
     }
 
     @Test
@@ -175,7 +191,9 @@ class SponsorResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(sponsor.getId().intValue()))
             .andExpect(jsonPath("$.sponsorName").value(DEFAULT_SPONSOR_NAME))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.logoContentType").value(DEFAULT_LOGO_CONTENT_TYPE))
+            .andExpect(jsonPath("$.logo").value(Base64.getEncoder().encodeToString(DEFAULT_LOGO)));
     }
 
     @Test
@@ -197,7 +215,11 @@ class SponsorResourceIT {
         Sponsor updatedSponsor = sponsorRepository.findById(sponsor.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedSponsor are not directly saved in db
         em.detach(updatedSponsor);
-        updatedSponsor.sponsorName(UPDATED_SPONSOR_NAME).description(UPDATED_DESCRIPTION);
+        updatedSponsor
+            .sponsorName(UPDATED_SPONSOR_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .logo(UPDATED_LOGO)
+            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
         SponsorDTO sponsorDTO = sponsorMapper.toDto(updatedSponsor);
 
         restSponsorMockMvc
@@ -283,7 +305,7 @@ class SponsorResourceIT {
         Sponsor partialUpdatedSponsor = new Sponsor();
         partialUpdatedSponsor.setId(sponsor.getId());
 
-        partialUpdatedSponsor.description(UPDATED_DESCRIPTION);
+        partialUpdatedSponsor.description(UPDATED_DESCRIPTION).logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE);
 
         restSponsorMockMvc
             .perform(
@@ -311,7 +333,11 @@ class SponsorResourceIT {
         Sponsor partialUpdatedSponsor = new Sponsor();
         partialUpdatedSponsor.setId(sponsor.getId());
 
-        partialUpdatedSponsor.sponsorName(UPDATED_SPONSOR_NAME).description(UPDATED_DESCRIPTION);
+        partialUpdatedSponsor
+            .sponsorName(UPDATED_SPONSOR_NAME)
+            .description(UPDATED_DESCRIPTION)
+            .logo(UPDATED_LOGO)
+            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
 
         restSponsorMockMvc
             .perform(

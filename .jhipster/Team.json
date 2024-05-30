@@ -20,6 +20,11 @@
       "fieldName": "category",
       "fieldType": "CategoryEnum",
       "fieldValues": "F (Femenino),M (Masculino),MIX (Mixto)"
+    },
+    {
+      "fieldName": "logo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
     }
   ],
   "name": "Team",

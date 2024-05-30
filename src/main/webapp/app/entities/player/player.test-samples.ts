@@ -1,33 +1,34 @@
 import { IPlayer, NewPlayer } from './player.model';
 
 export const sampleWithRequiredData: IPlayer = {
-  id: 11678,
-  firstName: 'María Elena',
-  lastName: 'Lemus Borrego',
+  id: 26901,
+  firstName: 'José Emilio',
+  lastName: 'Borrego Barrientos',
 };
 
 export const sampleWithPartialData: IPlayer = {
-  id: 22585,
-  firstName: 'María Elena',
-  lastName: 'Adame Valles',
-  phoneNumber: 'far-off',
-  age: 51,
-  category: 'M',
+  id: 8084,
+  firstName: 'Alberto',
+  lastName: 'Alonzo Cazares',
+  phoneNumber: 'overflow yet irritably',
+  age: 69,
 };
 
 export const sampleWithFullData: IPlayer = {
-  id: 14185,
-  firstName: 'Homero',
-  lastName: 'Borrego Alanis',
-  phoneNumber: 'careful informal respire',
-  age: 65,
-  category: 'MIX',
-  level: 'L45',
+  id: 13161,
+  firstName: 'Rocío',
+  lastName: 'Tapia Hinojosa',
+  phoneNumber: 'phew extremely in',
+  age: 50,
+  category: 'M',
+  level: 'L0',
+  avatar: '../fake-data/blob/hipster.png',
+  avatarContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewPlayer = {
-  firstName: 'Caridad',
-  lastName: 'Balderas Estévez',
+  firstName: 'Soledad',
+  lastName: 'Maya Matos',
   id: null,
 };
 

@@ -83,10 +83,10 @@ describe('Tournament Management Update Component', () => {
 
     it('Should call Sponsor query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const sponsors: ISponsor[] = [{ id: 4073 }];
+      const sponsors: ISponsor[] = [{ id: 27694 }];
       tournament.sponsors = sponsors;
 
-      const sponsorCollection: ISponsor[] = [{ id: 27694 }];
+      const sponsorCollection: ISponsor[] = [{ id: 15987 }];
       jest.spyOn(sponsorService, 'query').mockReturnValue(of(new HttpResponse({ body: sponsorCollection })));
       const additionalSponsors = [...sponsors];
       const expectedCollection: ISponsor[] = [...additionalSponsors, ...sponsorCollection];
@@ -105,10 +105,10 @@ describe('Tournament Management Update Component', () => {
 
     it('Should call Team query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const teams: ITeam[] = [{ id: 26911 }];
+      const teams: ITeam[] = [{ id: 4682 }];
       tournament.teams = teams;
 
-      const teamCollection: ITeam[] = [{ id: 4682 }];
+      const teamCollection: ITeam[] = [{ id: 4869 }];
       jest.spyOn(teamService, 'query').mockReturnValue(of(new HttpResponse({ body: teamCollection })));
       const additionalTeams = [...teams];
       const expectedCollection: ITeam[] = [...additionalTeams, ...teamCollection];
@@ -173,9 +173,9 @@ describe('Tournament Management Update Component', () => {
       const tournament: ITournament = { id: 456 };
       const location: ILocation = { id: 21402 };
       tournament.location = location;
-      const sponsor: ISponsor = { id: 15987 };
+      const sponsor: ISponsor = { id: 13350 };
       tournament.sponsors = [sponsor];
-      const team: ITeam = { id: 4869 };
+      const team: ITeam = { id: 3583 };
       tournament.teams = [team];
       const category: ICategory = { id: 25694 };
       tournament.categories = [category];

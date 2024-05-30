@@ -71,6 +71,8 @@ public class CacheConfiguration {
             createCache(cm, com.padeltmapp.app.domain.Level.class.getName() + ".tournaments");
             createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".categories");
             createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".levels");
+            createCache(cm, com.padeltmapp.app.domain.Player.class.getName() + ".categories");
+            createCache(cm, com.padeltmapp.app.domain.Category.class.getName() + ".players");
             // jhipster-needle-ehcache-add-entry
         };
     }

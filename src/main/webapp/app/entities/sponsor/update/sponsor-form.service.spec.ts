@@ -22,6 +22,7 @@ describe('Sponsor Form Service', () => {
             id: expect.any(Object),
             sponsorName: expect.any(Object),
             description: expect.any(Object),
+            logo: expect.any(Object),
             tournaments: expect.any(Object),
           }),
         );
@@ -35,6 +36,7 @@ describe('Sponsor Form Service', () => {
             id: expect.any(Object),
             sponsorName: expect.any(Object),
             description: expect.any(Object),
+            logo: expect.any(Object),
             tournaments: expect.any(Object),
           }),
         );

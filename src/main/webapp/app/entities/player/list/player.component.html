@@ -84,6 +84,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="avatar">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.player.avatar">Avatar</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -120,6 +127,14 @@
                     L7: '7 - Élite'
                   }[player.level ?? 'null']
                 }}
+              </td>
+              <td>
+                @if (player.avatar) {
+                  <a (click)="openFile(player.avatar, player.avatarContentType)">
+                    <img [src]="'data:' + player.avatarContentType + ';base64,' + player.avatar" style="max-height: 30px" alt="player" />
+                  </a>
+                  <span>{{ player.avatarContentType }}, {{ byteSize(player.avatar) }}</span>
+                }
               </td>
               <td class="text-end">
                 <div class="btn-group">

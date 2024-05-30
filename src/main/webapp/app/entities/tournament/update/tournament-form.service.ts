@@ -61,6 +61,8 @@ type TournamentFormGroupContent = {
   limitPax: FormControl<TournamentFormRawValue['limitPax']>;
   prices: FormControl<TournamentFormRawValue['prices']>;
   active: FormControl<TournamentFormRawValue['active']>;
+  poster: FormControl<TournamentFormRawValue['poster']>;
+  posterContentType: FormControl<TournamentFormRawValue['posterContentType']>;
   location: FormControl<TournamentFormRawValue['location']>;
   sponsors: FormControl<TournamentFormRawValue['sponsors']>;
   teams: FormControl<TournamentFormRawValue['teams']>;
@@ -95,6 +97,8 @@ export class TournamentFormService {
       limitPax: new FormControl(tournamentRawValue.limitPax),
       prices: new FormControl(tournamentRawValue.prices),
       active: new FormControl(tournamentRawValue.active),
+      poster: new FormControl(tournamentRawValue.poster),
+      posterContentType: new FormControl(tournamentRawValue.posterContentType),
       location: new FormControl(tournamentRawValue.location),
       sponsors: new FormControl(tournamentRawValue.sponsors ?? []),
       teams: new FormControl(tournamentRawValue.teams ?? []),

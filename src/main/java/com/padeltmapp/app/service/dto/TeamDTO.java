@@ -3,6 +3,7 @@ package com.padeltmapp.app.service.dto;
 import com.padeltmapp.app.domain.enumeration.CategoryEnum;
 import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -23,6 +24,11 @@ public class TeamDTO implements Serializable {
     private LevelEnum level;
 
     private CategoryEnum category;
+
+    @Lob
+    private byte[] logo;
+
+    private String logoContentType;
 
     @NotNull
     private Set<PlayerDTO> players = new HashSet<>();
@@ -59,6 +65,22 @@ public class TeamDTO implements Serializable {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public String getLogoContentType() {
+        return logoContentType;
+    }
+
+    public void setLogoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
     }
 
     public Set<PlayerDTO> getPlayers() {
@@ -106,6 +128,7 @@ public class TeamDTO implements Serializable {
             ", teamName='" + getTeamName() + "'" +
             ", level='" + getLevel() + "'" +
             ", category='" + getCategory() + "'" +
+            ", logo='" + getLogo() + "'" +
             ", players=" + getPlayers() +
             ", tournaments=" + getTournaments() +
             "}";

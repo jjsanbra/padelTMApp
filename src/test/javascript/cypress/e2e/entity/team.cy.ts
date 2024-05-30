@@ -29,7 +29,16 @@ describe('Team e2e test', () => {
     cy.authenticatedRequest({
       method: 'POST',
       url: '/api/players',
-      body: { firstName: 'Mario', lastName: 'Vela Peralta', phoneNumber: 'repair', age: 71, category: 'MIX', level: 'L0' },
+      body: {
+        firstName: 'Josefina',
+        lastName: 'Zamora Alaníz',
+        phoneNumber: 'kendo alongside healthily',
+        age: 41,
+        category: 'M',
+        level: 'L6',
+        avatar: 'Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci5wbmc=',
+        avatarContentType: 'unknown',
+      },
     }).then(({ body }) => {
       player = body;
     });
@@ -196,15 +205,19 @@ describe('Team e2e test', () => {
     });
 
     it('should create an instance of Team', () => {
-      cy.get(`[data-cy="teamName"]`).type('save bitten and');
-      cy.get(`[data-cy="teamName"]`).should('have.value', 'save bitten and');
+      cy.get(`[data-cy="teamName"]`).type('cap united finally');
+      cy.get(`[data-cy="teamName"]`).should('have.value', 'cap united finally');
 
-      cy.get(`[data-cy="level"]`).select('L05');
+      cy.get(`[data-cy="level"]`).select('L1');
 
-      cy.get(`[data-cy="category"]`).select('F');
+      cy.get(`[data-cy="category"]`).select('M');
+
+      cy.setFieldImageAsBytesOfEntity('logo', 'integration-test.png', 'image/png');
 
       cy.get(`[data-cy="player"]`).select([0]);
 
+      // since cypress clicks submit too fast before the blob fields are validated
+      cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

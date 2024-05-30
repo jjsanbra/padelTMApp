@@ -55,6 +55,21 @@
           <dd>
             <span>{{ tournament()!.active }}</span>
           </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.poster">Poster</span></dt>
+          <dd>
+            @if (tournament()!.poster) {
+              <div>
+                <a (click)="openFile(tournament()!.poster ?? '', tournament()!.posterContentType)">
+                  <img
+                    [src]="'data:' + tournament()!.posterContentType + ';base64,' + tournament()!.poster"
+                    style="max-width: 100%"
+                    alt="tournament"
+                  />
+                </a>
+                {{ tournament()!.posterContentType }}, {{ byteSize(tournament()!.poster ?? '') }}
+              </div>
+            }
+          </dd>
           <dt><span jhiTranslate="padelTmApp.tournament.location">Location</span></dt>
           <dd>
             @if (tournament()!.location) {

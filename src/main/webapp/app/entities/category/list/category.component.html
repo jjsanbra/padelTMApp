@@ -62,6 +62,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="players.firstName">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.category.players">Players</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -81,6 +87,14 @@
                     <a class="form-control-static" [routerLink]="['/tournament', tournaments.id, 'view']">{{
                       tournaments.tournamentName
                     }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td>
+                @for (players of category.players; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/player', players.id, 'view']">{{ players.firstName }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }

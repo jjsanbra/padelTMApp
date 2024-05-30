@@ -44,6 +44,41 @@
         </div>
 
         <div class="mb-3">
+          <label class="form-label" for="field_logo" jhiTranslate="padelTmApp.team.logo">Logo</label>
+          <div>
+            @if (editForm.get('logo')!.value) {
+              <img
+                [src]="'data:' + editForm.get('logoContentType')!.value + ';base64,' + editForm.get('logo')!.value"
+                style="max-height: 100px"
+                alt="team"
+              />
+            }
+            @if (editForm.get('logo')!.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start">{{ editForm.get('logoContentType')!.value }}, {{ byteSize(editForm.get('logo')!.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="clearInputImage('logo', 'logoContentType', 'file_logo')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_logo"
+              data-cy="logo"
+              (change)="setFileData($event, 'logo', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="logo" id="field_logo" data-cy="logo" formControlName="logo" />
+          <input type="hidden" class="form-control" name="logoContentType" id="field_logoContentType" formControlName="logoContentType" />
+        </div>
+
+        <div class="mb-3">
           <label for="field_players" jhiTranslate="padelTmApp.team.player">Player</label>
           <select
             class="form-control"

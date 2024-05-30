@@ -19,6 +19,7 @@ import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -74,6 +75,11 @@ class TournamentResourceIT {
     private static final Boolean DEFAULT_ACTIVE = false;
     private static final Boolean UPDATED_ACTIVE = true;
 
+    private static final byte[] DEFAULT_POSTER = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_POSTER = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_POSTER_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_POSTER_CONTENT_TYPE = "image/png";
+
     private static final String ENTITY_API_URL = "/api/tournaments";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -120,7 +126,9 @@ class TournamentResourceIT {
             .lastInscriptionsDate(DEFAULT_LAST_INSCRIPTIONS_DATE)
             .limitPax(DEFAULT_LIMIT_PAX)
             .prices(DEFAULT_PRICES)
-            .active(DEFAULT_ACTIVE);
+            .active(DEFAULT_ACTIVE)
+            .poster(DEFAULT_POSTER)
+            .posterContentType(DEFAULT_POSTER_CONTENT_TYPE);
         return tournament;
     }
 
@@ -141,7 +149,9 @@ class TournamentResourceIT {
             .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
             .limitPax(UPDATED_LIMIT_PAX)
             .prices(UPDATED_PRICES)
-            .active(UPDATED_ACTIVE);
+            .active(UPDATED_ACTIVE)
+            .poster(UPDATED_POSTER)
+            .posterContentType(UPDATED_POSTER_CONTENT_TYPE);
         return tournament;
     }
 
@@ -211,7 +221,9 @@ class TournamentResourceIT {
             .andExpect(jsonPath("$.[*].lastInscriptionsDate").value(hasItem(DEFAULT_LAST_INSCRIPTIONS_DATE.toString())))
             .andExpect(jsonPath("$.[*].limitPax").value(hasItem(DEFAULT_LIMIT_PAX)))
             .andExpect(jsonPath("$.[*].prices").value(hasItem(DEFAULT_PRICES)))
-            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())))
+            .andExpect(jsonPath("$.[*].posterContentType").value(hasItem(DEFAULT_POSTER_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].poster").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_POSTER))));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -252,7 +264,9 @@ class TournamentResourceIT {
             .andExpect(jsonPath("$.lastInscriptionsDate").value(DEFAULT_LAST_INSCRIPTIONS_DATE.toString()))
             .andExpect(jsonPath("$.limitPax").value(DEFAULT_LIMIT_PAX))
             .andExpect(jsonPath("$.prices").value(DEFAULT_PRICES))
-            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()))
+            .andExpect(jsonPath("$.posterContentType").value(DEFAULT_POSTER_CONTENT_TYPE))
+            .andExpect(jsonPath("$.poster").value(Base64.getEncoder().encodeToString(DEFAULT_POSTER)));
     }
 
     @Test
@@ -284,7 +298,9 @@ class TournamentResourceIT {
             .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
             .limitPax(UPDATED_LIMIT_PAX)
             .prices(UPDATED_PRICES)
-            .active(UPDATED_ACTIVE);
+            .active(UPDATED_ACTIVE)
+            .poster(UPDATED_POSTER)
+            .posterContentType(UPDATED_POSTER_CONTENT_TYPE);
         TournamentDTO tournamentDTO = tournamentMapper.toDto(updatedTournament);
 
         restTournamentMockMvc
@@ -419,7 +435,9 @@ class TournamentResourceIT {
             .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
             .limitPax(UPDATED_LIMIT_PAX)
             .prices(UPDATED_PRICES)
-            .active(UPDATED_ACTIVE);
+            .active(UPDATED_ACTIVE)
+            .poster(UPDATED_POSTER)
+            .posterContentType(UPDATED_POSTER_CONTENT_TYPE);
 
         restTournamentMockMvc
             .perform(

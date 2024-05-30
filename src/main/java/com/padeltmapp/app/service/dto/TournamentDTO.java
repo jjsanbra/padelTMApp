@@ -1,6 +1,7 @@
 package com.padeltmapp.app.service.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Lob;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -35,6 +36,11 @@ public class TournamentDTO implements Serializable {
     private String prices;
 
     private Boolean active;
+
+    @Lob
+    private byte[] poster;
+
+    private String posterContentType;
 
     private LocationDTO location;
 
@@ -134,6 +140,22 @@ public class TournamentDTO implements Serializable {
         this.active = active;
     }
 
+    public byte[] getPoster() {
+        return poster;
+    }
+
+    public void setPoster(byte[] poster) {
+        this.poster = poster;
+    }
+
+    public String getPosterContentType() {
+        return posterContentType;
+    }
+
+    public void setPosterContentType(String posterContentType) {
+        this.posterContentType = posterContentType;
+    }
+
     public LocationDTO getLocation() {
         return location;
     }
@@ -210,6 +232,7 @@ public class TournamentDTO implements Serializable {
             ", limitPax=" + getLimitPax() +
             ", prices='" + getPrices() + "'" +
             ", active='" + getActive() + "'" +
+            ", poster='" + getPoster() + "'" +
             ", location=" + getLocation() +
             ", sponsors=" + getSponsors() +
             ", teams=" + getTeams() +

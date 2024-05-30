@@ -40,6 +40,11 @@ public class Category implements Serializable {
     @JsonIgnoreProperties(value = { "location", "sponsors", "teams", "categories", "levels" }, allowSetters = true)
     private Set<Tournament> tournaments = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "categories", "teams" }, allowSetters = true)
+    private Set<Player> players = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -109,6 +114,37 @@ public class Category implements Serializable {
     public Category removeTournaments(Tournament tournament) {
         this.tournaments.remove(tournament);
         tournament.getCategories().remove(this);
+        return this;
+    }
+
+    public Set<Player> getPlayers() {
+        return this.players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        if (this.players != null) {
+            this.players.forEach(i -> i.removeCategory(this));
+        }
+        if (players != null) {
+            players.forEach(i -> i.addCategory(this));
+        }
+        this.players = players;
+    }
+
+    public Category players(Set<Player> players) {
+        this.setPlayers(players);
+        return this;
+    }
+
+    public Category addPlayers(Player player) {
+        this.players.add(player);
+        player.getCategories().add(this);
+        return this;
+    }
+
+    public Category removePlayers(Player player) {
+        this.players.remove(player);
+        player.getCategories().remove(this);
         return this;
     }
 

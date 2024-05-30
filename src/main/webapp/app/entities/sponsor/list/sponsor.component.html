@@ -56,6 +56,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="logo">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.sponsor.logo">Logo</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="tournaments.tournamentName">
               <div class="d-flex">
                 <span jhiTranslate="padelTmApp.sponsor.tournaments">Tournaments</span>
@@ -73,6 +80,14 @@
               </td>
               <td>{{ sponsor.sponsorName }}</td>
               <td>{{ sponsor.description }}</td>
+              <td>
+                @if (sponsor.logo) {
+                  <a (click)="openFile(sponsor.logo, sponsor.logoContentType)">
+                    <img [src]="'data:' + sponsor.logoContentType + ';base64,' + sponsor.logo" style="max-height: 30px" alt="sponsor" />
+                  </a>
+                  <span>{{ sponsor.logoContentType }}, {{ byteSize(sponsor.logo) }}</span>
+                }
+              </td>
               <td>
                 @for (tournaments of sponsor.tournaments; track $index; let last = $last) {
                   <span>

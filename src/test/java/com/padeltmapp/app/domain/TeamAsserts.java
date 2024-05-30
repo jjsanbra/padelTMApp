@@ -49,7 +49,9 @@ public class TeamAsserts {
             .as("Verify Team relevant properties")
             .satisfies(e -> assertThat(e.getTeamName()).as("check teamName").isEqualTo(actual.getTeamName()))
             .satisfies(e -> assertThat(e.getLevel()).as("check level").isEqualTo(actual.getLevel()))
-            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()));
+            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
+            .satisfies(e -> assertThat(e.getLogo()).as("check logo").isEqualTo(actual.getLogo()))
+            .satisfies(e -> assertThat(e.getLogoContentType()).as("check logo contenty type").isEqualTo(actual.getLogoContentType()));
     }
 
     /**

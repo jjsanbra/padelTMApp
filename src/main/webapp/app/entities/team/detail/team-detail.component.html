@@ -47,6 +47,17 @@
               { null: '', F: 'Femenino', M: 'Masculino', MIX: 'Mixto' }[team()!.category ?? 'null']
             }}</span>
           </dd>
+          <dt><span jhiTranslate="padelTmApp.team.logo">Logo</span></dt>
+          <dd>
+            @if (team()!.logo) {
+              <div>
+                <a (click)="openFile(team()!.logo ?? '', team()!.logoContentType)">
+                  <img [src]="'data:' + team()!.logoContentType + ';base64,' + team()!.logo" style="max-width: 100%" alt="team" />
+                </a>
+                {{ team()!.logoContentType }}, {{ byteSize(team()!.logo ?? '') }}
+              </div>
+            }
+          </dd>
           <dt><span jhiTranslate="padelTmApp.team.player">Player</span></dt>
           <dd>
             @for (player of team()!.players; track $index; let last = $last) {

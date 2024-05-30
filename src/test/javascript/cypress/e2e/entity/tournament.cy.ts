@@ -160,42 +160,46 @@ describe('Tournament e2e test', () => {
     });
 
     it('should create an instance of Tournament', () => {
-      cy.get(`[data-cy="tournamentName"]`).type('likewise after');
-      cy.get(`[data-cy="tournamentName"]`).should('have.value', 'likewise after');
+      cy.get(`[data-cy="tournamentName"]`).type('widow apropos');
+      cy.get(`[data-cy="tournamentName"]`).should('have.value', 'widow apropos');
 
-      cy.get(`[data-cy="description"]`).type('widow apropos');
-      cy.get(`[data-cy="description"]`).should('have.value', 'widow apropos');
+      cy.get(`[data-cy="description"]`).type('oak mmm');
+      cy.get(`[data-cy="description"]`).should('have.value', 'oak mmm');
 
-      cy.get(`[data-cy="startDate"]`).type('2024-05-29T23:10');
+      cy.get(`[data-cy="startDate"]`).type('2024-05-30T02:27');
       cy.get(`[data-cy="startDate"]`).blur();
-      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-05-29T23:10');
+      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-05-30T02:27');
 
-      cy.get(`[data-cy="endDate"]`).type('2024-05-29T15:36');
+      cy.get(`[data-cy="endDate"]`).type('2024-05-30T01:55');
       cy.get(`[data-cy="endDate"]`).blur();
-      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-05-29T15:36');
+      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-05-30T01:55');
 
-      cy.get(`[data-cy="startTime"]`).type('2024-05-30T07:46');
+      cy.get(`[data-cy="startTime"]`).type('2024-05-29T15:59');
       cy.get(`[data-cy="startTime"]`).blur();
-      cy.get(`[data-cy="startTime"]`).should('have.value', '2024-05-30T07:46');
+      cy.get(`[data-cy="startTime"]`).should('have.value', '2024-05-29T15:59');
 
-      cy.get(`[data-cy="endTime"]`).type('2024-05-30T08:50');
+      cy.get(`[data-cy="endTime"]`).type('2024-05-30T01:19');
       cy.get(`[data-cy="endTime"]`).blur();
-      cy.get(`[data-cy="endTime"]`).should('have.value', '2024-05-30T08:50');
+      cy.get(`[data-cy="endTime"]`).should('have.value', '2024-05-30T01:19');
 
-      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-05-29T19:24');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-05-29T21:55');
       cy.get(`[data-cy="lastInscriptionsDate"]`).blur();
-      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-05-29T19:24');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-05-29T21:55');
 
-      cy.get(`[data-cy="limitPax"]`).type('12662');
-      cy.get(`[data-cy="limitPax"]`).should('have.value', '12662');
+      cy.get(`[data-cy="limitPax"]`).type('20288');
+      cy.get(`[data-cy="limitPax"]`).should('have.value', '20288');
 
-      cy.get(`[data-cy="prices"]`).type('wherever pessimistic fully');
-      cy.get(`[data-cy="prices"]`).should('have.value', 'wherever pessimistic fully');
+      cy.get(`[data-cy="prices"]`).type('though');
+      cy.get(`[data-cy="prices"]`).should('have.value', 'though');
 
       cy.get(`[data-cy="active"]`).should('not.be.checked');
       cy.get(`[data-cy="active"]`).click();
       cy.get(`[data-cy="active"]`).should('be.checked');
 
+      cy.setFieldImageAsBytesOfEntity('poster', 'integration-test.png', 'image/png');
+
+      // since cypress clicks submit too fast before the blob fields are validated
+      cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

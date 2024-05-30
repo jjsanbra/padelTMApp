@@ -15,7 +15,7 @@ describe('Player e2e test', () => {
   const playerPageUrlPattern = new RegExp('/player(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const playerSample = { firstName: 'Cristián', lastName: 'Almonte Delacrúz' };
+  const playerSample = { firstName: 'Mónica', lastName: 'Lomeli Loera' };
 
   let player;
 
@@ -160,22 +160,26 @@ describe('Player e2e test', () => {
     });
 
     it('should create an instance of Player', () => {
-      cy.get(`[data-cy="firstName"]`).type('Horacio');
-      cy.get(`[data-cy="firstName"]`).should('have.value', 'Horacio');
+      cy.get(`[data-cy="firstName"]`).type('Miguel');
+      cy.get(`[data-cy="firstName"]`).should('have.value', 'Miguel');
 
-      cy.get(`[data-cy="lastName"]`).type('Alcántar Solano');
-      cy.get(`[data-cy="lastName"]`).should('have.value', 'Alcántar Solano');
+      cy.get(`[data-cy="lastName"]`).type('Báez Padrón');
+      cy.get(`[data-cy="lastName"]`).should('have.value', 'Báez Padrón');
 
-      cy.get(`[data-cy="phoneNumber"]`).type('male but');
-      cy.get(`[data-cy="phoneNumber"]`).should('have.value', 'male but');
+      cy.get(`[data-cy="phoneNumber"]`).type('past');
+      cy.get(`[data-cy="phoneNumber"]`).should('have.value', 'past');
 
-      cy.get(`[data-cy="age"]`).type('31');
-      cy.get(`[data-cy="age"]`).should('have.value', '31');
+      cy.get(`[data-cy="age"]`).type('16');
+      cy.get(`[data-cy="age"]`).should('have.value', '16');
 
       cy.get(`[data-cy="category"]`).select('F');
 
-      cy.get(`[data-cy="level"]`).select('L45');
+      cy.get(`[data-cy="level"]`).select('L0');
 
+      cy.setFieldImageAsBytesOfEntity('avatar', 'integration-test.png', 'image/png');
+
+      // since cypress clicks submit too fast before the blob fields are validated
+      cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

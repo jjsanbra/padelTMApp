@@ -1,6 +1,7 @@
 package com.padeltmapp.app.service.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,6 +21,11 @@ public class SponsorDTO implements Serializable {
     private String sponsorName;
 
     private String description;
+
+    @Lob
+    private byte[] logo;
+
+    private String logoContentType;
 
     private Set<TournamentDTO> tournaments = new HashSet<>();
 
@@ -45,6 +51,22 @@ public class SponsorDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public String getLogoContentType() {
+        return logoContentType;
+    }
+
+    public void setLogoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
     }
 
     public Set<TournamentDTO> getTournaments() {
@@ -83,6 +105,7 @@ public class SponsorDTO implements Serializable {
             "id=" + getId() +
             ", sponsorName='" + getSponsorName() + "'" +
             ", description='" + getDescription() + "'" +
+            ", logo='" + getLogo() + "'" +
             ", tournaments=" + getTournaments() +
             "}";
     }

@@ -45,6 +45,11 @@
     {
       "fieldName": "active",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "poster",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
     }
   ],
   "name": "Tournament",
