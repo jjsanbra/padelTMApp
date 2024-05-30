@@ -11,8 +11,6 @@ entity Tournament {
     lastInscriptionsDate Instant
     limitPax Integer
     prices String
-    // categories CategoryEnum
-    // levels LevelEnum
     active Boolean
 }
 
@@ -125,43 +123,34 @@ enum CountryEnum {
 /** RELATIONSHIPS */
 
 relationship OneToOne {
-	// Tournament
+	/* Tournament */
     Tournament{location(city)} to Location{tournament}
-	// Localtion
+	/* Localtion */
 	Location{country(countryName)} to Country{location(city)}
 }
 
-/** Relationships
- */
-
 relationship ManyToMany {
-	// Multiple tournaments can have multiple sponsors
+	/* Multiple tournaments can have multiple sponsors */
     Tournament{Sponsor(sponsorName)} to Sponsor{tournaments(tournamentName)}
-    // Multiple tournaments can have multiple teams, with a limit of x teams (handled in business logic, not here)
+    /* Multiple tournaments can have multiple teams, with a limit of x teams (handled in business logic, not here) */
     Tournament{Team(teamName)} to Team{tournaments(tournamentName)}
-    // A tournament can have multiple categories
+    /* A tournament can have multiple categories */
     Tournament{Category(description)} to Category{tournaments(tournamentName)}
-    // // A tournament can have multiple levels
+    /* /* A tournament can have multiple levels */
     Tournament{Level(description)} to Level{tournaments(tournamentName)}
-    // Multiple teams can have up to 2 players, and they are required (handled in business logic, not here)
+    /* Multiple teams can have up to 2 players, and they are required (handled in business logic, not here) */
     Team{Player(firstName) required} to Player{teams(teamName)}
 }
 
-
-/* relationship OneToMany {
-    // A team can have up to 2 players, and they are required (handled in business logic, not here)
-    Team{Player(firstName) required} to Player{team(teamName)}
-}*/
-
-// Set pagination options
+/* Set pagination options */
 paginate Tournament with infinite-scroll
 paginate Player with pagination
 
-// Use Data Transfer Objects (DTO)
+/* Use Data Transfer Objects (DTO) */
 dto * with mapstruct
 
-// Set service options to all except few
-// service all with serviceImpl except Employee, Job
+/* Set service options to all except few */
+/* service all with serviceImpl except Employee, Job */
 
-// Set an angular suffix
-// angularSuffix * with mySuffix
+/* Set an angular suffix */
+/* angularSuffix * with mySuffix */
