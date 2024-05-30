@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-team-heading" data-cy="TeamCreateUpdateHeading" jhiTranslate="padelTmApp.team.home.createOrEditLabel">
+        Crear o editar Team
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="padelTmApp.team.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_teamName" jhiTranslate="padelTmApp.team.teamName">Team Name</label>
+          <input type="text" class="form-control" name="teamName" id="field_teamName" data-cy="teamName" formControlName="teamName" />
+          @if (editForm.get('teamName')!.invalid && (editForm.get('teamName')!.dirty || editForm.get('teamName')!.touched)) {
+            <div></div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_level" jhiTranslate="padelTmApp.team.level">Level</label>
+          <select class="form-control" name="level" formControlName="level" id="field_level" data-cy="level">
+            <option [ngValue]="null">{{ 'padelTmApp.LevelEnum.null' | translate }}</option>
+            @for (levelEnum of levelEnumValues; track $index) {
+              <option [value]="levelEnum">{{ 'padelTmApp.LevelEnum.' + levelEnum | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_category" jhiTranslate="padelTmApp.team.category">Category</label>
+          <select class="form-control" name="category" formControlName="category" id="field_category" data-cy="category">
+            <option [ngValue]="null">{{ 'padelTmApp.CategoryEnum.null' | translate }}</option>
+            @for (categoryEnum of categoryEnumValues; track $index) {
+              <option [value]="categoryEnum">{{ 'padelTmApp.CategoryEnum.' + categoryEnum | translate }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_players" jhiTranslate="padelTmApp.team.player">Player</label>
+          <select
+            class="form-control"
+            id="field_players"
+            data-cy="player"
+            multiple
+            name="players"
+            formControlName="players"
+            [compareWith]="comparePlayer"
+          >
+            @for (playerOption of playersSharedCollection; track $index) {
+              <option [ngValue]="playerOption">{{ playerOption.firstName }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['players'])!.invalid && (editForm.get(['players'])!.dirty || editForm.get(['players'])!.touched)) {
+          <div>
+            @if (editForm.get(['players'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label for="field_tournaments" jhiTranslate="padelTmApp.team.tournaments">Tournaments</label>
+          <select
+            class="form-control"
+            id="field_tournaments"
+            data-cy="tournaments"
+            multiple
+            name="tournaments"
+            formControlName="tournaments"
+            [compareWith]="compareTournament"
+          >
+            @for (tournamentOption of tournamentsSharedCollection; track $index) {
+              <option [ngValue]="tournamentOption">{{ tournamentOption.tournamentName }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

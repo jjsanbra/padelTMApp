@@ -50,6 +50,27 @@ public class CacheConfiguration {
             createCache(cm, com.padeltmapp.app.domain.User.class.getName());
             createCache(cm, com.padeltmapp.app.domain.Authority.class.getName());
             createCache(cm, com.padeltmapp.app.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".teams");
+            createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".sponsors");
+            createCache(cm, com.padeltmapp.app.domain.Player.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Player.class.getName() + ".teams");
+            createCache(cm, com.padeltmapp.app.domain.Team.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Team.class.getName() + ".players");
+            createCache(cm, com.padeltmapp.app.domain.Team.class.getName() + ".tournaments");
+            createCache(cm, com.padeltmapp.app.domain.RegisterTeam.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Location.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Country.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Category.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Level.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Sponsor.class.getName());
+            createCache(cm, com.padeltmapp.app.domain.Sponsor.class.getName() + ".tournaments");
+            createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".categoryEnums");
+            createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".levelEnums");
+            createCache(cm, com.padeltmapp.app.domain.Category.class.getName() + ".tournaments");
+            createCache(cm, com.padeltmapp.app.domain.Level.class.getName() + ".tournaments");
+            createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".categories");
+            createCache(cm, com.padeltmapp.app.domain.Tournament.class.getName() + ".levels");
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,0 +1,38 @@
+{
+  "padelTmApp": {
+    "tournament": {
+      "home": {
+        "title": "Tournaments",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Tournament",
+        "createOrEditLabel": "Crear o editar Tournament",
+        "notFound": "Ningún Tournaments encontrado"
+      },
+      "created": "Un nuevo Tournament ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tournament ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tournament ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tournament {{ id }}?"
+      },
+      "detail": {
+        "title": "Tournament"
+      },
+      "id": "ID",
+      "tournamentName": "Tournament Name",
+      "description": "Description",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "lastInscriptionsDate": "Last Inscriptions Date",
+      "limitPax": "Limit Pax",
+      "prices": "Prices",
+      "active": "Active",
+      "location": "Location",
+      "sponsor": "Sponsor",
+      "team": "Team",
+      "category": "Category",
+      "level": "Level"
+    }
+  }
+}

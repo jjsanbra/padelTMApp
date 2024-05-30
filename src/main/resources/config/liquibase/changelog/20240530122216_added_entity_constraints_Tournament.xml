@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Tournament.
+    -->
+    <changeSet id="20240530122216-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="location_id"
+                                 baseTableName="tournament"
+                                 constraintName="fk_tournament__location_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="location"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tournament_id"
+                                 baseTableName="rel_tournament__sponsor"
+                                 constraintName="fk_rel_tournament__sponsor__tournament_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tournament"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="sponsor_id"
+                                 baseTableName="rel_tournament__sponsor"
+                                 constraintName="fk_rel_tournament__sponsor__sponsor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sponsor"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tournament_id"
+                                 baseTableName="rel_tournament__team"
+                                 constraintName="fk_rel_tournament__team__tournament_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tournament"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="team_id"
+                                 baseTableName="rel_tournament__team"
+                                 constraintName="fk_rel_tournament__team__team_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="team"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tournament_id"
+                                 baseTableName="rel_tournament__category"
+                                 constraintName="fk_rel_tournament__category__tournament_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tournament"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="rel_tournament__category"
+                                 constraintName="fk_rel_tournament__category__category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tournament_id"
+                                 baseTableName="rel_tournament__level"
+                                 constraintName="fk_rel_tournament__level__tournament_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tournament"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="level_id"
+                                 baseTableName="rel_tournament__level"
+                                 constraintName="fk_rel_tournament__level__level_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="level"
+                                 />
+    </changeSet>
+</databaseChangeLog>

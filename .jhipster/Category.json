@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240530122222"
+  },
+  "applications": "*",
+  "documentation": "The Category entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "categoryName",
+      "fieldType": "CategoryEnum",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "F (Femenino),M (Masculino),MIX (Mixto)"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Category",
+  "relationships": [
+    {
+      "otherEntityField": "tournamentName",
+      "otherEntityName": "tournament",
+      "otherEntityRelationshipName": "category",
+      "relationshipName": "tournaments",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

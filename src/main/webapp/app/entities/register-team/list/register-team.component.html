@@ -1,0 +1,86 @@
+<div>
+  <h2 id="page-heading" data-cy="RegisterTeamHeading">
+    <span jhiTranslate="padelTmApp.registerTeam.home.title">Register Teams</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="padelTmApp.registerTeam.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-register-team"
+        [routerLink]="['/register-team/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="padelTmApp.registerTeam.home.createLabel">Crear nuevo Register Team</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (registerTeams?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="padelTmApp.registerTeam.home.notFound">Ningún Register Teams encontrado</span>
+    </div>
+  }
+
+  @if (registerTeams && registerTeams.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="teamName">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.registerTeam.teamName">Team Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (registerTeam of registerTeams; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/register-team', registerTeam.id, 'view']">{{ registerTeam.id }}</a>
+              </td>
+              <td>{{ registerTeam.teamName }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/register-team', registerTeam.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a [routerLink]="['/register-team', registerTeam.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(registerTeam)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (level()) {
+      <div>
+        <h2 data-cy="levelDetailsHeading"><span jhiTranslate="padelTmApp.level.detail.title">Level</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ level()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.level.levelName">Level Name</span></dt>
+          <dd>
+            <span [jhiTranslate]="'padelTmApp.LevelEnum.' + (level()!.levelName ?? 'null')">{{
+              {
+                null: '',
+                L0: '0 - Iniciación',
+                L05: '0.5 - Iniciación',
+                L1: '1 - Iniciación',
+                L15: '1.5 - Iniciación Intermedio',
+                L2: '2 - Iniciación Intermedio',
+                L25: '2.5 - Intermedio',
+                L3: '3 - Intermedio',
+                L35: '3.5 - Intermedio',
+                L4: '4 - Intermedio Alto',
+                L45: '4.5 - Intermedio Alto',
+                L5: '5 - Alto Avanzado',
+                L55: '5.5 - Avanzado',
+                L6: '6 - Avanzado',
+                L7: '7 - Élite'
+              }[level()!.levelName ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.level.description">Description</span></dt>
+          <dd>
+            <span>{{ level()!.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.level.tournaments">Tournaments</span></dt>
+          <dd>
+            @for (tournaments of level()!.tournaments; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/tournament', tournaments.id, 'view']">{{ tournaments?.tournamentName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/level', level()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

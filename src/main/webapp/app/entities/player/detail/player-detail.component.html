@@ -1,0 +1,83 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (player()) {
+      <div>
+        <h2 data-cy="playerDetailsHeading"><span jhiTranslate="padelTmApp.player.detail.title">Player</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ player()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ player()!.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ player()!.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.phoneNumber">Phone Number</span></dt>
+          <dd>
+            <span>{{ player()!.phoneNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.age">Age</span></dt>
+          <dd>
+            <span>{{ player()!.age }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.category">Category</span></dt>
+          <dd>
+            <span [jhiTranslate]="'padelTmApp.CategoryEnum.' + (player()!.category ?? 'null')">{{
+              { null: '', F: 'Femenino', M: 'Masculino', MIX: 'Mixto' }[player()!.category ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.level">Level</span></dt>
+          <dd>
+            <span [jhiTranslate]="'padelTmApp.LevelEnum.' + (player()!.level ?? 'null')">{{
+              {
+                null: '',
+                L0: '0 - Iniciación',
+                L05: '0.5 - Iniciación',
+                L1: '1 - Iniciación',
+                L15: '1.5 - Iniciación Intermedio',
+                L2: '2 - Iniciación Intermedio',
+                L25: '2.5 - Intermedio',
+                L3: '3 - Intermedio',
+                L35: '3.5 - Intermedio',
+                L4: '4 - Intermedio Alto',
+                L45: '4.5 - Intermedio Alto',
+                L5: '5 - Alto Avanzado',
+                L55: '5.5 - Avanzado',
+                L6: '6 - Avanzado',
+                L7: '7 - Élite'
+              }[player()!.level ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.teams">Teams</span></dt>
+          <dd>
+            @for (teams of player()!.teams; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/team', teams.id, 'view']">{{ teams?.teamName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/player', player()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

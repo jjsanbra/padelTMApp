@@ -1,0 +1,10 @@
+{
+  "padelTmApp": {
+    "CountryEnum": {
+      "null": "",
+      "FR": "Francia",
+      "PT": "Portugal",
+      "ES": "España"
+    }
+  }
+}

@@ -1,0 +1,237 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-tournament-heading" data-cy="TournamentCreateUpdateHeading" jhiTranslate="padelTmApp.tournament.home.createOrEditLabel">
+        Crear o editar Tournament
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="padelTmApp.tournament.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_tournamentName" jhiTranslate="padelTmApp.tournament.tournamentName">Tournament Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="tournamentName"
+            id="field_tournamentName"
+            data-cy="tournamentName"
+            formControlName="tournamentName"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_description" jhiTranslate="padelTmApp.tournament.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_startDate" jhiTranslate="padelTmApp.tournament.startDate">Start Date</label>
+          <div class="d-flex">
+            <input
+              id="field_startDate"
+              data-cy="startDate"
+              type="datetime-local"
+              class="form-control"
+              name="startDate"
+              formControlName="startDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_endDate" jhiTranslate="padelTmApp.tournament.endDate">End Date</label>
+          <div class="d-flex">
+            <input
+              id="field_endDate"
+              data-cy="endDate"
+              type="datetime-local"
+              class="form-control"
+              name="endDate"
+              formControlName="endDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_startTime" jhiTranslate="padelTmApp.tournament.startTime">Start Time</label>
+          <div class="d-flex">
+            <input
+              id="field_startTime"
+              data-cy="startTime"
+              type="datetime-local"
+              class="form-control"
+              name="startTime"
+              formControlName="startTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_endTime" jhiTranslate="padelTmApp.tournament.endTime">End Time</label>
+          <div class="d-flex">
+            <input
+              id="field_endTime"
+              data-cy="endTime"
+              type="datetime-local"
+              class="form-control"
+              name="endTime"
+              formControlName="endTime"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lastInscriptionsDate" jhiTranslate="padelTmApp.tournament.lastInscriptionsDate"
+            >Last Inscriptions Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_lastInscriptionsDate"
+              data-cy="lastInscriptionsDate"
+              type="datetime-local"
+              class="form-control"
+              name="lastInscriptionsDate"
+              formControlName="lastInscriptionsDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_limitPax" jhiTranslate="padelTmApp.tournament.limitPax">Limit Pax</label>
+          <input type="number" class="form-control" name="limitPax" id="field_limitPax" data-cy="limitPax" formControlName="limitPax" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_prices" jhiTranslate="padelTmApp.tournament.prices">Prices</label>
+          <input type="text" class="form-control" name="prices" id="field_prices" data-cy="prices" formControlName="prices" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_active" jhiTranslate="padelTmApp.tournament.active">Active</label>
+          <input type="checkbox" class="form-check" name="active" id="field_active" data-cy="active" formControlName="active" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_location" jhiTranslate="padelTmApp.tournament.location">Location</label>
+          <select
+            class="form-control"
+            id="field_location"
+            data-cy="location"
+            name="location"
+            formControlName="location"
+            [compareWith]="compareLocation"
+          >
+            <option [ngValue]="null"></option>
+            @for (locationOption of locationsCollection; track $index) {
+              <option [ngValue]="locationOption">{{ locationOption.city }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_sponsors" jhiTranslate="padelTmApp.tournament.sponsor">Sponsor</label>
+          <select
+            class="form-control"
+            id="field_sponsors"
+            data-cy="sponsor"
+            multiple
+            name="sponsors"
+            formControlName="sponsors"
+            [compareWith]="compareSponsor"
+          >
+            @for (sponsorOption of sponsorsSharedCollection; track $index) {
+              <option [ngValue]="sponsorOption">{{ sponsorOption.sponsorName }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_teams" jhiTranslate="padelTmApp.tournament.team">Team</label>
+          <select
+            class="form-control"
+            id="field_teams"
+            data-cy="team"
+            multiple
+            name="teams"
+            formControlName="teams"
+            [compareWith]="compareTeam"
+          >
+            @for (teamOption of teamsSharedCollection; track $index) {
+              <option [ngValue]="teamOption">{{ teamOption.teamName }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_categories" jhiTranslate="padelTmApp.tournament.category">Category</label>
+          <select
+            class="form-control"
+            id="field_categories"
+            data-cy="category"
+            multiple
+            name="categories"
+            formControlName="categories"
+            [compareWith]="compareCategory"
+          >
+            @for (categoryOption of categoriesSharedCollection; track $index) {
+              <option [ngValue]="categoryOption">{{ categoryOption.description }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_levels" jhiTranslate="padelTmApp.tournament.level">Level</label>
+          <select
+            class="form-control"
+            id="field_levels"
+            data-cy="level"
+            multiple
+            name="levels"
+            formControlName="levels"
+            [compareWith]="compareLevel"
+          >
+            @for (levelOption of levelsSharedCollection; track $index) {
+              <option [ngValue]="levelOption">{{ levelOption.description }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

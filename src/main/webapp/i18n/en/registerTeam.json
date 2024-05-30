@@ -1,0 +1,24 @@
+{
+  "padelTmApp": {
+    "registerTeam": {
+      "home": {
+        "title": "Register Teams",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Register Team",
+        "createOrEditLabel": "Create or edit a Register Team",
+        "notFound": "No Register Teams found"
+      },
+      "created": "A new Register Team is created with identifier {{ param }}",
+      "updated": "A Register Team is updated with identifier {{ param }}",
+      "deleted": "A Register Team is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Register Team {{ id }}?"
+      },
+      "detail": {
+        "title": "Register Team"
+      },
+      "id": "ID",
+      "teamName": "Team Name"
+    }
+  }
+}

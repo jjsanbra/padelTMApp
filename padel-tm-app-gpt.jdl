@@ -1,0 +1,167 @@
+/**
+ * Tournament entity.
+ */
+entity Tournament {
+	tournamentName String
+	description String
+    startDate Instant
+    endDate Instant
+    startTime Instant
+    endTime Instant
+    lastInscriptionsDate Instant
+    limitPax Integer
+    prices String
+    // categories CategoryEnum
+    // levels LevelEnum
+    active Boolean
+}
+
+/**
+ * The Player entity.
+ */
+entity Player {
+	firstName String required
+	lastName String required
+	phoneNumber String
+	age Integer min(12) max(80)
+    category CategoryEnum
+    level LevelEnum
+}
+
+/**
+ * The Team entity.
+ */
+entity Team {
+	teamName String unique
+    level LevelEnum
+    category CategoryEnum
+}
+
+/**
+ * The Team Registration entity.
+ */
+entity RegisterTeam {
+    teamName String required
+}
+
+/**
+ * The Location entity.
+ */
+entity Location {
+	streetAddress String
+	postalCode String
+	city String
+	stateProvince String
+}
+
+/**
+ * The Country entity.
+ */
+entity Country {
+    countryName CountryEnum required
+}
+
+/**
+ * The Category entity.
+ */
+entity Category {
+	categoryName CategoryEnum required
+    description String
+}
+
+/**
+ * The Level entity.
+ */
+entity Level {
+	levelName LevelEnum required
+    description String
+}
+
+/**
+ * The Sponsor entity.
+ */
+entity Sponsor {
+	sponsorName String required
+    description String
+}
+
+
+/** ENUMS
+*/
+enum Language {
+    SPANISH, ENGLISH
+}
+
+enum LevelEnum {
+	L0 ("0 - Iniciación"),
+    L05 ("0.5 - Iniciación"),
+    L1 ("1 - Iniciación"),
+    L15 ("1.5 - Iniciación Intermedio"),
+    L2 ("2 - Iniciación Intermedio"),
+    L25 ("2.5 - Intermedio"),
+    L3 ("3 - Intermedio"),
+    L35 ("3.5 - Intermedio"),
+    L4 ("4 - Intermedio Alto"),
+    L45 ("4.5 - Intermedio Alto"),
+    L5 ("5 - Alto Avanzado"),
+    L55 ("5.5 - Avanzado"),
+    L6 ("6 - Avanzado"),
+    L7 ("7 - Élite")
+}
+
+enum CategoryEnum {
+    F ("Femenino"),
+	M ("Masculino"),
+    MIX ("Mixto")
+}
+
+enum CountryEnum {
+    FR ("Francia"),
+    PT ("Portugal"),
+    ES ("España")
+}
+
+
+/** RELATIONSHIPS */
+
+relationship OneToOne {
+	// Tournament
+    Tournament{location(city)} to Location{tournament}
+	// Localtion
+	Location{country(countryName)} to Country{location(city)}
+}
+
+/** Relationships
+ */
+
+relationship ManyToMany {
+	// Multiple tournaments can have multiple sponsors
+    Tournament{Sponsor(sponsorName)} to Sponsor{tournaments(tournamentName)}
+    // Multiple tournaments can have multiple teams, with a limit of x teams (handled in business logic, not here)
+    Tournament{Team(teamName)} to Team{tournaments(tournamentName)}
+    // A tournament can have multiple categories
+    Tournament{Category(description)} to Category{tournaments(tournamentName)}
+    // // A tournament can have multiple levels
+    Tournament{Level(description)} to Level{tournaments(tournamentName)}
+    // Multiple teams can have up to 2 players, and they are required (handled in business logic, not here)
+    Team{Player(firstName) required} to Player{teams(teamName)}
+}
+
+
+/* relationship OneToMany {
+    // A team can have up to 2 players, and they are required (handled in business logic, not here)
+    Team{Player(firstName) required} to Player{team(teamName)}
+}*/
+
+// Set pagination options
+paginate Tournament with infinite-scroll
+paginate Player with pagination
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+// service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

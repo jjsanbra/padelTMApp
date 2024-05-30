@@ -1,0 +1,96 @@
+{
+  "annotations": {
+    "changelogDate": "20240530122216"
+  },
+  "applications": "*",
+  "documentation": "Tournament entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "tournamentName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "startTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "endTime",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "lastInscriptionsDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "limitPax",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "prices",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Tournament",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityField": "city",
+      "otherEntityName": "location",
+      "otherEntityRelationshipName": "tournament",
+      "relationshipName": "location",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "sponsorName",
+      "otherEntityName": "sponsor",
+      "otherEntityRelationshipName": "tournaments",
+      "relationshipName": "sponsor",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "teamName",
+      "otherEntityName": "team",
+      "otherEntityRelationshipName": "tournaments",
+      "relationshipName": "team",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "category",
+      "otherEntityRelationshipName": "tournaments",
+      "relationshipName": "category",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "description",
+      "otherEntityName": "level",
+      "otherEntityRelationshipName": "tournaments",
+      "relationshipName": "level",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

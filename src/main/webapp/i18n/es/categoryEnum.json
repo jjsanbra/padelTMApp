@@ -1,0 +1,10 @@
+{
+  "padelTmApp": {
+    "CategoryEnum": {
+      "null": "",
+      "F": "Femenino",
+      "M": "Masculino",
+      "MIX": "Mixto"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "annotations": {
+    "changelogDate": "20240530122217"
+  },
+  "applications": "*",
+  "documentation": "The Player entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "80",
+      "fieldValidateRulesMin": "12"
+    },
+    {
+      "fieldName": "category",
+      "fieldType": "CategoryEnum",
+      "fieldValues": "F (Femenino),M (Masculino),MIX (Mixto)"
+    },
+    {
+      "fieldName": "level",
+      "fieldType": "LevelEnum",
+      "fieldValues": "L0 (0 - Iniciación),L05 (0.5 - Iniciación),L1 (1 - Iniciación),L15 (1.5 - Iniciación Intermedio),L2 (2 - Iniciación Intermedio),L25 (2.5 - Intermedio),L3 (3 - Intermedio),L35 (3.5 - Intermedio),L4 (4 - Intermedio Alto),L45 (4.5 - Intermedio Alto),L5 (5 - Alto Avanzado),L55 (5.5 - Avanzado),L6 (6 - Avanzado),L7 (7 - Élite)"
+    }
+  ],
+  "name": "Player",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "teamName",
+      "otherEntityName": "team",
+      "otherEntityRelationshipName": "player",
+      "relationshipName": "teams",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

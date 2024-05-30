@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20240530122218"
+  },
+  "applications": "*",
+  "documentation": "The Team entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "teamName",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "level",
+      "fieldType": "LevelEnum",
+      "fieldValues": "L0 (0 - Iniciación),L05 (0.5 - Iniciación),L1 (1 - Iniciación),L15 (1.5 - Iniciación Intermedio),L2 (2 - Iniciación Intermedio),L25 (2.5 - Intermedio),L3 (3 - Intermedio),L35 (3.5 - Intermedio),L4 (4 - Intermedio Alto),L45 (4.5 - Intermedio Alto),L5 (5 - Alto Avanzado),L55 (5.5 - Avanzado),L6 (6 - Avanzado),L7 (7 - Élite)"
+    },
+    {
+      "fieldName": "category",
+      "fieldType": "CategoryEnum",
+      "fieldValues": "F (Femenino),M (Masculino),MIX (Mixto)"
+    }
+  ],
+  "name": "Team",
+  "relationships": [
+    {
+      "otherEntityField": "firstName",
+      "otherEntityName": "player",
+      "otherEntityRelationshipName": "teams",
+      "relationshipName": "player",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "tournamentName",
+      "otherEntityName": "tournament",
+      "otherEntityRelationshipName": "team",
+      "relationshipName": "tournaments",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
