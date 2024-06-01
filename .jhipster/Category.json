@@ -8,9 +8,8 @@
   "fields": [
     {
       "fieldName": "categoryName",
-      "fieldType": "CategoryEnum",
-      "fieldValidateRules": ["required"],
-      "fieldValues": "F (Femenino),M (Masculino),MIX (Mixto)"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "description",
@@ -22,7 +21,7 @@
     {
       "otherEntityField": "tournamentName",
       "otherEntityName": "tournament",
-      "otherEntityRelationshipName": "category",
+      "otherEntityRelationshipName": "categories",
       "relationshipName": "tournaments",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"
@@ -30,7 +29,7 @@
     {
       "otherEntityField": "firstName",
       "otherEntityName": "player",
-      "otherEntityRelationshipName": "category",
+      "otherEntityRelationshipName": "categories",
       "relationshipName": "players",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"

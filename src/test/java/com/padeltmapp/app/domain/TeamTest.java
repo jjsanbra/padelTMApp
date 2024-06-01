@@ -1,5 +1,7 @@
 package com.padeltmapp.app.domain;
 
+import static com.padeltmapp.app.domain.CategoryTestSamples.*;
+import static com.padeltmapp.app.domain.LevelTestSamples.*;
 import static com.padeltmapp.app.domain.PlayerTestSamples.*;
 import static com.padeltmapp.app.domain.TeamTestSamples.*;
 import static com.padeltmapp.app.domain.TournamentTestSamples.*;
@@ -27,14 +29,38 @@ class TeamTest {
     }
 
     @Test
-    void playerTest() throws Exception {
+    void levelTest() throws Exception {
+        Team team = getTeamRandomSampleGenerator();
+        Level levelBack = getLevelRandomSampleGenerator();
+
+        team.setLevel(levelBack);
+        assertThat(team.getLevel()).isEqualTo(levelBack);
+
+        team.level(null);
+        assertThat(team.getLevel()).isNull();
+    }
+
+    @Test
+    void categoryTest() throws Exception {
+        Team team = getTeamRandomSampleGenerator();
+        Category categoryBack = getCategoryRandomSampleGenerator();
+
+        team.setCategory(categoryBack);
+        assertThat(team.getCategory()).isEqualTo(categoryBack);
+
+        team.category(null);
+        assertThat(team.getCategory()).isNull();
+    }
+
+    @Test
+    void playersTest() throws Exception {
         Team team = getTeamRandomSampleGenerator();
         Player playerBack = getPlayerRandomSampleGenerator();
 
-        team.addPlayer(playerBack);
+        team.addPlayers(playerBack);
         assertThat(team.getPlayers()).containsOnly(playerBack);
 
-        team.removePlayer(playerBack);
+        team.removePlayers(playerBack);
         assertThat(team.getPlayers()).doesNotContain(playerBack);
 
         team.players(new HashSet<>(Set.of(playerBack)));

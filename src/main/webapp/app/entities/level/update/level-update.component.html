@@ -17,12 +17,7 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_levelName" jhiTranslate="padelTmApp.level.levelName">Level Name</label>
-          <select class="form-control" name="levelName" formControlName="levelName" id="field_levelName" data-cy="levelName">
-            <option [ngValue]="null">{{ 'padelTmApp.LevelEnum.null' | translate }}</option>
-            @for (levelEnum of levelEnumValues; track $index) {
-              <option [value]="levelEnum">{{ 'padelTmApp.LevelEnum.' + levelEnum | translate }}</option>
-            }
-          </select>
+          <input type="text" class="form-control" name="levelName" id="field_levelName" data-cy="levelName" formControlName="levelName" />
           @if (editForm.get('levelName')!.invalid && (editForm.get('levelName')!.dirty || editForm.get('levelName')!.touched)) {
             <div>
               @if (editForm.get('levelName')?.errors?.required) {

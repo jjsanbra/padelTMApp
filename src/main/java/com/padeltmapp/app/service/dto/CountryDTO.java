@@ -1,6 +1,5 @@
 package com.padeltmapp.app.service.dto;
 
-import com.padeltmapp.app.domain.enumeration.CountryEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -16,7 +15,7 @@ public class CountryDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private CountryEnum countryName;
+    private String countryName;
 
     public Long getId() {
         return id;
@@ -26,11 +25,11 @@ public class CountryDTO implements Serializable {
         this.id = id;
     }
 
-    public CountryEnum getCountryName() {
+    public String getCountryName() {
         return countryName;
     }
 
-    public void setCountryName(CountryEnum countryName) {
+    public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
 

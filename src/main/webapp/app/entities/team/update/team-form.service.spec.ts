@@ -21,9 +21,9 @@ describe('Team Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             teamName: expect.any(Object),
+            logo: expect.any(Object),
             level: expect.any(Object),
             category: expect.any(Object),
-            logo: expect.any(Object),
             players: expect.any(Object),
             tournaments: expect.any(Object),
           }),
@@ -37,9 +37,9 @@ describe('Team Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             teamName: expect.any(Object),
+            logo: expect.any(Object),
             level: expect.any(Object),
             category: expect.any(Object),
-            logo: expect.any(Object),
             players: expect.any(Object),
             tournaments: expect.any(Object),
           }),

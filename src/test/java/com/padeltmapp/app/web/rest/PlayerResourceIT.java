@@ -11,8 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padeltmapp.app.IntegrationTest;
 import com.padeltmapp.app.domain.Player;
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import com.padeltmapp.app.repository.PlayerRepository;
 import com.padeltmapp.app.service.PlayerService;
 import com.padeltmapp.app.service.dto.PlayerDTO;
@@ -56,12 +54,6 @@ class PlayerResourceIT {
 
     private static final Integer DEFAULT_AGE = 12;
     private static final Integer UPDATED_AGE = 13;
-
-    private static final CategoryEnum DEFAULT_CATEGORY = CategoryEnum.F;
-    private static final CategoryEnum UPDATED_CATEGORY = CategoryEnum.M;
-
-    private static final LevelEnum DEFAULT_LEVEL = LevelEnum.L0;
-    private static final LevelEnum UPDATED_LEVEL = LevelEnum.L05;
 
     private static final byte[] DEFAULT_AVATAR = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_AVATAR = TestUtil.createByteArray(1, "1");
@@ -109,8 +101,6 @@ class PlayerResourceIT {
             .lastName(DEFAULT_LAST_NAME)
             .phoneNumber(DEFAULT_PHONE_NUMBER)
             .age(DEFAULT_AGE)
-            .category(DEFAULT_CATEGORY)
-            .level(DEFAULT_LEVEL)
             .avatar(DEFAULT_AVATAR)
             .avatarContentType(DEFAULT_AVATAR_CONTENT_TYPE);
         return player;
@@ -128,8 +118,6 @@ class PlayerResourceIT {
             .lastName(UPDATED_LAST_NAME)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
-            .category(UPDATED_CATEGORY)
-            .level(UPDATED_LEVEL)
             .avatar(UPDATED_AVATAR)
             .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
         return player;
@@ -230,8 +218,6 @@ class PlayerResourceIT {
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
             .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER)))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
-            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
-            .andExpect(jsonPath("$.[*].level").value(hasItem(DEFAULT_LEVEL.toString())))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_AVATAR))));
     }
@@ -269,8 +255,6 @@ class PlayerResourceIT {
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
             .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER))
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
-            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
-            .andExpect(jsonPath("$.level").value(DEFAULT_LEVEL.toString()))
             .andExpect(jsonPath("$.avatarContentType").value(DEFAULT_AVATAR_CONTENT_TYPE))
             .andExpect(jsonPath("$.avatar").value(Base64.getEncoder().encodeToString(DEFAULT_AVATAR)));
     }
@@ -299,8 +283,6 @@ class PlayerResourceIT {
             .lastName(UPDATED_LAST_NAME)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
-            .category(UPDATED_CATEGORY)
-            .level(UPDATED_LEVEL)
             .avatar(UPDATED_AVATAR)
             .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
         PlayerDTO playerDTO = playerMapper.toDto(updatedPlayer);
@@ -388,14 +370,7 @@ class PlayerResourceIT {
         Player partialUpdatedPlayer = new Player();
         partialUpdatedPlayer.setId(player.getId());
 
-        partialUpdatedPlayer
-            .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
-            .phoneNumber(UPDATED_PHONE_NUMBER)
-            .age(UPDATED_AGE)
-            .level(UPDATED_LEVEL)
-            .avatar(UPDATED_AVATAR)
-            .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
+        partialUpdatedPlayer.firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME).phoneNumber(UPDATED_PHONE_NUMBER).age(UPDATED_AGE);
 
         restPlayerMockMvc
             .perform(
@@ -428,8 +403,6 @@ class PlayerResourceIT {
             .lastName(UPDATED_LAST_NAME)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
-            .category(UPDATED_CATEGORY)
-            .level(UPDATED_LEVEL)
             .avatar(UPDATED_AVATAR)
             .avatarContentType(UPDATED_AVATAR_CONTENT_TYPE);
 

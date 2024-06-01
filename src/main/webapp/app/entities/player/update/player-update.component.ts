@@ -10,12 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/service/user.service';
+import { ILevel } from 'app/entities/level/level.model';
+import { LevelService } from 'app/entities/level/service/level.service';
 import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ITeam } from 'app/entities/team/team.model';
 import { TeamService } from 'app/entities/team/service/team.service';
-import { CategoryEnum } from 'app/entities/enumerations/category-enum.model';
-import { LevelEnum } from 'app/entities/enumerations/level-enum.model';
 import { PlayerService } from '../service/player.service';
 import { IPlayer } from '../player.model';
 import { PlayerFormService, PlayerFormGroup } from './player-form.service';
@@ -29,9 +31,9 @@ import { PlayerFormService, PlayerFormGroup } from './player-form.service';
 export class PlayerUpdateComponent implements OnInit {
   isSaving = false;
   player: IPlayer | null = null;
-  categoryEnumValues = Object.keys(CategoryEnum);
-  levelEnumValues = Object.keys(LevelEnum);
 
+  usersSharedCollection: IUser[] = [];
+  levelsSharedCollection: ILevel[] = [];
   categoriesSharedCollection: ICategory[] = [];
   teamsSharedCollection: ITeam[] = [];
 
@@ -39,6 +41,8 @@ export class PlayerUpdateComponent implements OnInit {
   protected eventManager = inject(EventManager);
   protected playerService = inject(PlayerService);
   protected playerFormService = inject(PlayerFormService);
+  protected userService = inject(UserService);
+  protected levelService = inject(LevelService);
   protected categoryService = inject(CategoryService);
   protected teamService = inject(TeamService);
   protected elementRef = inject(ElementRef);
@@ -46,6 +50,10 @@ export class PlayerUpdateComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: PlayerFormGroup = this.playerFormService.createPlayerFormGroup();
+
+  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+
+  compareLevel = (o1: ILevel | null, o2: ILevel | null): boolean => this.levelService.compareLevel(o1, o2);
 
   compareCategory = (o1: ICategory | null, o2: ICategory | null): boolean => this.categoryService.compareCategory(o1, o2);
 
@@ -124,6 +132,8 @@ export class PlayerUpdateComponent implements OnInit {
     this.player = player;
     this.playerFormService.resetForm(this.editForm, player);
 
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, player.user);
+    this.levelsSharedCollection = this.levelService.addLevelToCollectionIfMissing<ILevel>(this.levelsSharedCollection, player.level);
     this.categoriesSharedCollection = this.categoryService.addCategoryToCollectionIfMissing<ICategory>(
       this.categoriesSharedCollection,
       ...(player.categories ?? []),
@@ -132,6 +142,18 @@ export class PlayerUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.userService
+      .query()
+      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.player?.user)))
+      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+
+    this.levelService
+      .query()
+      .pipe(map((res: HttpResponse<ILevel[]>) => res.body ?? []))
+      .pipe(map((levels: ILevel[]) => this.levelService.addLevelToCollectionIfMissing<ILevel>(levels, this.player?.level)))
+      .subscribe((levels: ILevel[]) => (this.levelsSharedCollection = levels));
+
     this.categoryService
       .query()
       .pipe(map((res: HttpResponse<ICategory[]>) => res.body ?? []))

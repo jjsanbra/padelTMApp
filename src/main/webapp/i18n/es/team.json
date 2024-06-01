@@ -19,10 +19,10 @@
       },
       "id": "ID",
       "teamName": "Team Name",
+      "logo": "Logo",
       "level": "Level",
       "category": "Category",
-      "logo": "Logo",
-      "player": "Player",
+      "players": "Players",
       "tournaments": "Tournaments"
     }
   }

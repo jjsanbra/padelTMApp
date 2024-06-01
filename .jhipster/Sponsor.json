@@ -26,7 +26,7 @@
     {
       "otherEntityField": "tournamentName",
       "otherEntityName": "tournament",
-      "otherEntityRelationshipName": "sponsor",
+      "otherEntityRelationshipName": "sponsors",
       "relationshipName": "tournaments",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"

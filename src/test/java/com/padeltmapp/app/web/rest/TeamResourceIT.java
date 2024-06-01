@@ -12,8 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padeltmapp.app.IntegrationTest;
 import com.padeltmapp.app.domain.Player;
 import com.padeltmapp.app.domain.Team;
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import com.padeltmapp.app.repository.TeamRepository;
 import com.padeltmapp.app.service.TeamService;
 import com.padeltmapp.app.service.dto.TeamDTO;
@@ -48,12 +46,6 @@ class TeamResourceIT {
 
     private static final String DEFAULT_TEAM_NAME = "AAAAAAAAAA";
     private static final String UPDATED_TEAM_NAME = "BBBBBBBBBB";
-
-    private static final LevelEnum DEFAULT_LEVEL = LevelEnum.L0;
-    private static final LevelEnum UPDATED_LEVEL = LevelEnum.L05;
-
-    private static final CategoryEnum DEFAULT_CATEGORY = CategoryEnum.F;
-    private static final CategoryEnum UPDATED_CATEGORY = CategoryEnum.M;
 
     private static final byte[] DEFAULT_LOGO = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_LOGO = TestUtil.createByteArray(1, "1");
@@ -96,12 +88,7 @@ class TeamResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Team createEntity(EntityManager em) {
-        Team team = new Team()
-            .teamName(DEFAULT_TEAM_NAME)
-            .level(DEFAULT_LEVEL)
-            .category(DEFAULT_CATEGORY)
-            .logo(DEFAULT_LOGO)
-            .logoContentType(DEFAULT_LOGO_CONTENT_TYPE);
+        Team team = new Team().teamName(DEFAULT_TEAM_NAME).logo(DEFAULT_LOGO).logoContentType(DEFAULT_LOGO_CONTENT_TYPE);
         // Add required entity
         Player player;
         if (TestUtil.findAll(em, Player.class).isEmpty()) {
@@ -122,12 +109,7 @@ class TeamResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Team createUpdatedEntity(EntityManager em) {
-        Team team = new Team()
-            .teamName(UPDATED_TEAM_NAME)
-            .level(UPDATED_LEVEL)
-            .category(UPDATED_CATEGORY)
-            .logo(UPDATED_LOGO)
-            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
+        Team team = new Team().teamName(UPDATED_TEAM_NAME).logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE);
         // Add required entity
         Player player;
         if (TestUtil.findAll(em, Player.class).isEmpty()) {
@@ -199,8 +181,6 @@ class TeamResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(team.getId().intValue())))
             .andExpect(jsonPath("$.[*].teamName").value(hasItem(DEFAULT_TEAM_NAME)))
-            .andExpect(jsonPath("$.[*].level").value(hasItem(DEFAULT_LEVEL.toString())))
-            .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())))
             .andExpect(jsonPath("$.[*].logoContentType").value(hasItem(DEFAULT_LOGO_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_LOGO))));
     }
@@ -235,8 +215,6 @@ class TeamResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(team.getId().intValue()))
             .andExpect(jsonPath("$.teamName").value(DEFAULT_TEAM_NAME))
-            .andExpect(jsonPath("$.level").value(DEFAULT_LEVEL.toString()))
-            .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()))
             .andExpect(jsonPath("$.logoContentType").value(DEFAULT_LOGO_CONTENT_TYPE))
             .andExpect(jsonPath("$.logo").value(Base64.getEncoder().encodeToString(DEFAULT_LOGO)));
     }
@@ -260,12 +238,7 @@ class TeamResourceIT {
         Team updatedTeam = teamRepository.findById(team.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTeam are not directly saved in db
         em.detach(updatedTeam);
-        updatedTeam
-            .teamName(UPDATED_TEAM_NAME)
-            .level(UPDATED_LEVEL)
-            .category(UPDATED_CATEGORY)
-            .logo(UPDATED_LOGO)
-            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
+        updatedTeam.teamName(UPDATED_TEAM_NAME).logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE);
         TeamDTO teamDTO = teamMapper.toDto(updatedTeam);
 
         restTeamMockMvc
@@ -375,12 +348,7 @@ class TeamResourceIT {
         Team partialUpdatedTeam = new Team();
         partialUpdatedTeam.setId(team.getId());
 
-        partialUpdatedTeam
-            .teamName(UPDATED_TEAM_NAME)
-            .level(UPDATED_LEVEL)
-            .category(UPDATED_CATEGORY)
-            .logo(UPDATED_LOGO)
-            .logoContentType(UPDATED_LOGO_CONTENT_TYPE);
+        partialUpdatedTeam.teamName(UPDATED_TEAM_NAME).logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE);
 
         restTeamMockMvc
             .perform(

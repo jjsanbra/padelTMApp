@@ -1,6 +1,5 @@
 package com.padeltmapp.app.service.dto;
 
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -18,7 +17,7 @@ public class CategoryDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private CategoryEnum categoryName;
+    private String categoryName;
 
     private String description;
 
@@ -34,11 +33,11 @@ public class CategoryDTO implements Serializable {
         this.id = id;
     }
 
-    public CategoryEnum getCategoryName() {
+    public String getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(CategoryEnum categoryName) {
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 

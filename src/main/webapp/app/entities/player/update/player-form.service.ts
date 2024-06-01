@@ -22,10 +22,10 @@ type PlayerFormGroupContent = {
   lastName: FormControl<IPlayer['lastName']>;
   phoneNumber: FormControl<IPlayer['phoneNumber']>;
   age: FormControl<IPlayer['age']>;
-  category: FormControl<IPlayer['category']>;
-  level: FormControl<IPlayer['level']>;
   avatar: FormControl<IPlayer['avatar']>;
   avatarContentType: FormControl<IPlayer['avatarContentType']>;
+  user: FormControl<IPlayer['user']>;
+  level: FormControl<IPlayer['level']>;
   categories: FormControl<IPlayer['categories']>;
   teams: FormControl<IPlayer['teams']>;
 };
@@ -57,10 +57,10 @@ export class PlayerFormService {
       age: new FormControl(playerRawValue.age, {
         validators: [Validators.min(12), Validators.max(80)],
       }),
-      category: new FormControl(playerRawValue.category),
-      level: new FormControl(playerRawValue.level),
       avatar: new FormControl(playerRawValue.avatar),
       avatarContentType: new FormControl(playerRawValue.avatarContentType),
+      user: new FormControl(playerRawValue.user),
+      level: new FormControl(playerRawValue.level),
       categories: new FormControl(playerRawValue.categories ?? []),
       teams: new FormControl(playerRawValue.teams ?? []),
     });

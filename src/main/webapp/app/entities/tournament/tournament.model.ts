@@ -11,10 +11,8 @@ export interface ITournament {
   description?: string | null;
   startDate?: dayjs.Dayjs | null;
   endDate?: dayjs.Dayjs | null;
-  startTime?: dayjs.Dayjs | null;
-  endTime?: dayjs.Dayjs | null;
   lastInscriptionsDate?: dayjs.Dayjs | null;
-  limitPax?: number | null;
+  maxTeamsAllowed?: number | null;
   prices?: string | null;
   active?: boolean | null;
   poster?: string | null;
@@ -22,8 +20,8 @@ export interface ITournament {
   location?: Pick<ILocation, 'id' | 'city'> | null;
   sponsors?: Pick<ISponsor, 'id' | 'sponsorName'>[] | null;
   teams?: Pick<ITeam, 'id' | 'teamName'>[] | null;
-  categories?: Pick<ICategory, 'id' | 'description'>[] | null;
-  levels?: Pick<ILevel, 'id' | 'description'>[] | null;
+  categories?: Pick<ICategory, 'id' | 'categoryName'>[] | null;
+  levels?: Pick<ILevel, 'id' | 'levelName'>[] | null;
 }
 
 export type NewTournament = Omit<ITournament, 'id'> & { id: null };

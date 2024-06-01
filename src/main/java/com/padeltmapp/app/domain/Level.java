@@ -1,7 +1,6 @@
 package com.padeltmapp.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -28,9 +27,8 @@ public class Level implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "level_name", nullable = false)
-    private LevelEnum levelName;
+    private String levelName;
 
     @Column(name = "description")
     private String description;
@@ -55,16 +53,16 @@ public class Level implements Serializable {
         this.id = id;
     }
 
-    public LevelEnum getLevelName() {
+    public String getLevelName() {
         return this.levelName;
     }
 
-    public Level levelName(LevelEnum levelName) {
+    public Level levelName(String levelName) {
         this.setLevelName(levelName);
         return this;
     }
 
-    public void setLevelName(LevelEnum levelName) {
+    public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
 
@@ -87,10 +85,10 @@ public class Level implements Serializable {
 
     public void setTournaments(Set<Tournament> tournaments) {
         if (this.tournaments != null) {
-            this.tournaments.forEach(i -> i.removeLevel(this));
+            this.tournaments.forEach(i -> i.removeLevels(this));
         }
         if (tournaments != null) {
-            tournaments.forEach(i -> i.addLevel(this));
+            tournaments.forEach(i -> i.addLevels(this));
         }
         this.tournaments = tournaments;
     }

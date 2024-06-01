@@ -2,6 +2,7 @@ package com.padeltmapp.app.service.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Lob;
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -25,13 +26,11 @@ public class TournamentDTO implements Serializable {
 
     private Instant endDate;
 
-    private Instant startTime;
-
-    private Instant endTime;
-
     private Instant lastInscriptionsDate;
 
-    private Integer limitPax;
+    @Min(value = 4)
+    @Max(value = 120)
+    private Integer maxTeamsAllowed;
 
     private String prices;
 
@@ -92,22 +91,6 @@ public class TournamentDTO implements Serializable {
         this.endDate = endDate;
     }
 
-    public Instant getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public Instant getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
-    }
-
     public Instant getLastInscriptionsDate() {
         return lastInscriptionsDate;
     }
@@ -116,12 +99,12 @@ public class TournamentDTO implements Serializable {
         this.lastInscriptionsDate = lastInscriptionsDate;
     }
 
-    public Integer getLimitPax() {
-        return limitPax;
+    public Integer getMaxTeamsAllowed() {
+        return maxTeamsAllowed;
     }
 
-    public void setLimitPax(Integer limitPax) {
-        this.limitPax = limitPax;
+    public void setMaxTeamsAllowed(Integer maxTeamsAllowed) {
+        this.maxTeamsAllowed = maxTeamsAllowed;
     }
 
     public String getPrices() {
@@ -226,10 +209,8 @@ public class TournamentDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", startTime='" + getStartTime() + "'" +
-            ", endTime='" + getEndTime() + "'" +
             ", lastInscriptionsDate='" + getLastInscriptionsDate() + "'" +
-            ", limitPax=" + getLimitPax() +
+            ", maxTeamsAllowed=" + getMaxTeamsAllowed() +
             ", prices='" + getPrices() + "'" +
             ", active='" + getActive() + "'" +
             ", poster='" + getPoster() + "'" +

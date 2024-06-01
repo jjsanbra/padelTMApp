@@ -51,12 +51,10 @@ public class TournamentAsserts {
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
             .satisfies(e -> assertThat(e.getStartDate()).as("check startDate").isEqualTo(actual.getStartDate()))
             .satisfies(e -> assertThat(e.getEndDate()).as("check endDate").isEqualTo(actual.getEndDate()))
-            .satisfies(e -> assertThat(e.getStartTime()).as("check startTime").isEqualTo(actual.getStartTime()))
-            .satisfies(e -> assertThat(e.getEndTime()).as("check endTime").isEqualTo(actual.getEndTime()))
             .satisfies(
                 e -> assertThat(e.getLastInscriptionsDate()).as("check lastInscriptionsDate").isEqualTo(actual.getLastInscriptionsDate())
             )
-            .satisfies(e -> assertThat(e.getLimitPax()).as("check limitPax").isEqualTo(actual.getLimitPax()))
+            .satisfies(e -> assertThat(e.getMaxTeamsAllowed()).as("check maxTeamsAllowed").isEqualTo(actual.getMaxTeamsAllowed()))
             .satisfies(e -> assertThat(e.getPrices()).as("check prices").isEqualTo(actual.getPrices()))
             .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()))
             .satisfies(e -> assertThat(e.getPoster()).as("check poster").isEqualTo(actual.getPoster()))

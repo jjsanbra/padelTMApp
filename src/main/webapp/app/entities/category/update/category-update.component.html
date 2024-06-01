@@ -17,12 +17,14 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_categoryName" jhiTranslate="padelTmApp.category.categoryName">Category Name</label>
-          <select class="form-control" name="categoryName" formControlName="categoryName" id="field_categoryName" data-cy="categoryName">
-            <option [ngValue]="null">{{ 'padelTmApp.CategoryEnum.null' | translate }}</option>
-            @for (categoryEnum of categoryEnumValues; track $index) {
-              <option [value]="categoryEnum">{{ 'padelTmApp.CategoryEnum.' + categoryEnum | translate }}</option>
-            }
-          </select>
+          <input
+            type="text"
+            class="form-control"
+            name="categoryName"
+            id="field_categoryName"
+            data-cy="categoryName"
+            formControlName="categoryName"
+          />
           @if (editForm.get('categoryName')!.invalid && (editForm.get('categoryName')!.dirty || editForm.get('categoryName')!.touched)) {
             <div>
               @if (editForm.get('categoryName')?.errors?.required) {

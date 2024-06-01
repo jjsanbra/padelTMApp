@@ -160,37 +160,29 @@ describe('Tournament e2e test', () => {
     });
 
     it('should create an instance of Tournament', () => {
-      cy.get(`[data-cy="tournamentName"]`).type('widow apropos');
-      cy.get(`[data-cy="tournamentName"]`).should('have.value', 'widow apropos');
+      cy.get(`[data-cy="tournamentName"]`).type('moist which underneath');
+      cy.get(`[data-cy="tournamentName"]`).should('have.value', 'moist which underneath');
 
-      cy.get(`[data-cy="description"]`).type('oak mmm');
-      cy.get(`[data-cy="description"]`).should('have.value', 'oak mmm');
+      cy.get(`[data-cy="description"]`).type('provided pause defender');
+      cy.get(`[data-cy="description"]`).should('have.value', 'provided pause defender');
 
-      cy.get(`[data-cy="startDate"]`).type('2024-05-30T02:27');
+      cy.get(`[data-cy="startDate"]`).type('2024-05-30T08:36');
       cy.get(`[data-cy="startDate"]`).blur();
-      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-05-30T02:27');
+      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-05-30T08:36');
 
-      cy.get(`[data-cy="endDate"]`).type('2024-05-30T01:55');
+      cy.get(`[data-cy="endDate"]`).type('2024-05-30T05:05');
       cy.get(`[data-cy="endDate"]`).blur();
-      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-05-30T01:55');
+      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-05-30T05:05');
 
-      cy.get(`[data-cy="startTime"]`).type('2024-05-29T15:59');
-      cy.get(`[data-cy="startTime"]`).blur();
-      cy.get(`[data-cy="startTime"]`).should('have.value', '2024-05-29T15:59');
-
-      cy.get(`[data-cy="endTime"]`).type('2024-05-30T01:19');
-      cy.get(`[data-cy="endTime"]`).blur();
-      cy.get(`[data-cy="endTime"]`).should('have.value', '2024-05-30T01:19');
-
-      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-05-29T21:55');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-05-29T17:22');
       cy.get(`[data-cy="lastInscriptionsDate"]`).blur();
-      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-05-29T21:55');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-05-29T17:22');
 
-      cy.get(`[data-cy="limitPax"]`).type('20288');
-      cy.get(`[data-cy="limitPax"]`).should('have.value', '20288');
+      cy.get(`[data-cy="maxTeamsAllowed"]`).type('74');
+      cy.get(`[data-cy="maxTeamsAllowed"]`).should('have.value', '74');
 
-      cy.get(`[data-cy="prices"]`).type('though');
-      cy.get(`[data-cy="prices"]`).should('have.value', 'though');
+      cy.get(`[data-cy="prices"]`).type('instead properly');
+      cy.get(`[data-cy="prices"]`).should('have.value', 'instead properly');
 
       cy.get(`[data-cy="active"]`).should('not.be.checked');
       cy.get(`[data-cy="active"]`).click();

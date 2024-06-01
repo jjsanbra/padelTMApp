@@ -70,20 +70,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="startTime">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.startTime">Start Time</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="endTime">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.endTime">End Time</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="lastInscriptionsDate">
               <div class="d-flex">
                 <span jhiTranslate="padelTmApp.tournament.lastInscriptionsDate">Last Inscriptions Date</span>
@@ -91,9 +77,9 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="limitPax">
+            <th scope="col" jhiSortBy="maxTeamsAllowed">
               <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.limitPax">Limit Pax</span>
+                <span jhiTranslate="padelTmApp.tournament.maxTeamsAllowed">Max Teams Allowed</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -138,10 +124,8 @@
               <td>{{ tournament.description }}</td>
               <td>{{ tournament.startDate | formatMediumDatetime }}</td>
               <td>{{ tournament.endDate | formatMediumDatetime }}</td>
-              <td>{{ tournament.startTime | formatMediumDatetime }}</td>
-              <td>{{ tournament.endTime | formatMediumDatetime }}</td>
               <td>{{ tournament.lastInscriptionsDate | formatMediumDatetime }}</td>
-              <td>{{ tournament.limitPax }}</td>
+              <td>{{ tournament.maxTeamsAllowed }}</td>
               <td>{{ tournament.prices }}</td>
               <td>{{ tournament.active }}</td>
               <td>

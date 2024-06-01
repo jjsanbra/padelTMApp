@@ -1,7 +1,5 @@
 package com.padeltmapp.app.service.dto;
 
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
@@ -31,14 +29,14 @@ public class PlayerDTO implements Serializable {
     @Max(value = 80)
     private Integer age;
 
-    private CategoryEnum category;
-
-    private LevelEnum level;
-
     @Lob
     private byte[] avatar;
 
     private String avatarContentType;
+
+    private UserDTO user;
+
+    private LevelDTO level;
 
     private Set<CategoryDTO> categories = new HashSet<>();
 
@@ -84,22 +82,6 @@ public class PlayerDTO implements Serializable {
         this.age = age;
     }
 
-    public CategoryEnum getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEnum category) {
-        this.category = category;
-    }
-
-    public LevelEnum getLevel() {
-        return level;
-    }
-
-    public void setLevel(LevelEnum level) {
-        this.level = level;
-    }
-
     public byte[] getAvatar() {
         return avatar;
     }
@@ -114,6 +96,22 @@ public class PlayerDTO implements Serializable {
 
     public void setAvatarContentType(String avatarContentType) {
         this.avatarContentType = avatarContentType;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
+    public LevelDTO getLevel() {
+        return level;
+    }
+
+    public void setLevel(LevelDTO level) {
+        this.level = level;
     }
 
     public Set<CategoryDTO> getCategories() {
@@ -162,9 +160,9 @@ public class PlayerDTO implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", age=" + getAge() +
-            ", category='" + getCategory() + "'" +
-            ", level='" + getLevel() + "'" +
             ", avatar='" + getAvatar() + "'" +
+            ", user=" + getUser() +
+            ", level=" + getLevel() +
             ", categories=" + getCategories() +
             ", teams=" + getTeams() +
             "}";

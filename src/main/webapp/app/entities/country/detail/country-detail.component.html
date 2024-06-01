@@ -17,9 +17,7 @@
           </dd>
           <dt><span jhiTranslate="padelTmApp.country.countryName">Country Name</span></dt>
           <dd>
-            <span [jhiTranslate]="'padelTmApp.CountryEnum.' + (country()!.countryName ?? 'null')">{{
-              { null: '', FR: 'Francia', PT: 'Portugal', ES: 'España' }[country()!.countryName ?? 'null']
-            }}</span>
+            <span>{{ country()!.countryName }}</span>
           </dd>
         </dl>
 

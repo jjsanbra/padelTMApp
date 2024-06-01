@@ -49,10 +49,10 @@ describe('Sponsor Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Tournament query and add missing value', () => {
       const sponsor: ISponsor = { id: 456 };
-      const tournaments: ITournament[] = [{ id: 1355 }];
+      const tournaments: ITournament[] = [{ id: 4041 }];
       sponsor.tournaments = tournaments;
 
-      const tournamentCollection: ITournament[] = [{ id: 24380 }];
+      const tournamentCollection: ITournament[] = [{ id: 10528 }];
       jest.spyOn(tournamentService, 'query').mockReturnValue(of(new HttpResponse({ body: tournamentCollection })));
       const additionalTournaments = [...tournaments];
       const expectedCollection: ITournament[] = [...additionalTournaments, ...tournamentCollection];
@@ -71,7 +71,7 @@ describe('Sponsor Management Update Component', () => {
 
     it('Should update editForm', () => {
       const sponsor: ISponsor = { id: 456 };
-      const tournaments: ITournament = { id: 620 };
+      const tournaments: ITournament = { id: 1612 };
       sponsor.tournaments = [tournaments];
 
       activatedRoute.data = of({ sponsor });

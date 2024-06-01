@@ -57,17 +57,11 @@ class TournamentResourceIT {
     private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_START_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_START_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Instant DEFAULT_END_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_END_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
     private static final Instant DEFAULT_LAST_INSCRIPTIONS_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_INSCRIPTIONS_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Integer DEFAULT_LIMIT_PAX = 1;
-    private static final Integer UPDATED_LIMIT_PAX = 2;
+    private static final Integer DEFAULT_MAX_TEAMS_ALLOWED = 4;
+    private static final Integer UPDATED_MAX_TEAMS_ALLOWED = 5;
 
     private static final String DEFAULT_PRICES = "AAAAAAAAAA";
     private static final String UPDATED_PRICES = "BBBBBBBBBB";
@@ -121,10 +115,8 @@ class TournamentResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .startDate(DEFAULT_START_DATE)
             .endDate(DEFAULT_END_DATE)
-            .startTime(DEFAULT_START_TIME)
-            .endTime(DEFAULT_END_TIME)
             .lastInscriptionsDate(DEFAULT_LAST_INSCRIPTIONS_DATE)
-            .limitPax(DEFAULT_LIMIT_PAX)
+            .maxTeamsAllowed(DEFAULT_MAX_TEAMS_ALLOWED)
             .prices(DEFAULT_PRICES)
             .active(DEFAULT_ACTIVE)
             .poster(DEFAULT_POSTER)
@@ -144,10 +136,8 @@ class TournamentResourceIT {
             .description(UPDATED_DESCRIPTION)
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE)
-            .startTime(UPDATED_START_TIME)
-            .endTime(UPDATED_END_TIME)
             .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
-            .limitPax(UPDATED_LIMIT_PAX)
+            .maxTeamsAllowed(UPDATED_MAX_TEAMS_ALLOWED)
             .prices(UPDATED_PRICES)
             .active(UPDATED_ACTIVE)
             .poster(UPDATED_POSTER)
@@ -216,10 +206,8 @@ class TournamentResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
             .andExpect(jsonPath("$.[*].lastInscriptionsDate").value(hasItem(DEFAULT_LAST_INSCRIPTIONS_DATE.toString())))
-            .andExpect(jsonPath("$.[*].limitPax").value(hasItem(DEFAULT_LIMIT_PAX)))
+            .andExpect(jsonPath("$.[*].maxTeamsAllowed").value(hasItem(DEFAULT_MAX_TEAMS_ALLOWED)))
             .andExpect(jsonPath("$.[*].prices").value(hasItem(DEFAULT_PRICES)))
             .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].posterContentType").value(hasItem(DEFAULT_POSTER_CONTENT_TYPE)))
@@ -259,10 +247,8 @@ class TournamentResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()))
             .andExpect(jsonPath("$.lastInscriptionsDate").value(DEFAULT_LAST_INSCRIPTIONS_DATE.toString()))
-            .andExpect(jsonPath("$.limitPax").value(DEFAULT_LIMIT_PAX))
+            .andExpect(jsonPath("$.maxTeamsAllowed").value(DEFAULT_MAX_TEAMS_ALLOWED))
             .andExpect(jsonPath("$.prices").value(DEFAULT_PRICES))
             .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()))
             .andExpect(jsonPath("$.posterContentType").value(DEFAULT_POSTER_CONTENT_TYPE))
@@ -293,10 +279,8 @@ class TournamentResourceIT {
             .description(UPDATED_DESCRIPTION)
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE)
-            .startTime(UPDATED_START_TIME)
-            .endTime(UPDATED_END_TIME)
             .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
-            .limitPax(UPDATED_LIMIT_PAX)
+            .maxTeamsAllowed(UPDATED_MAX_TEAMS_ALLOWED)
             .prices(UPDATED_PRICES)
             .active(UPDATED_ACTIVE)
             .poster(UPDATED_POSTER)
@@ -393,8 +377,9 @@ class TournamentResourceIT {
         partialUpdatedTournament
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE)
-            .startTime(UPDATED_START_TIME)
-            .prices(UPDATED_PRICES);
+            .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
+            .poster(UPDATED_POSTER)
+            .posterContentType(UPDATED_POSTER_CONTENT_TYPE);
 
         restTournamentMockMvc
             .perform(
@@ -430,10 +415,8 @@ class TournamentResourceIT {
             .description(UPDATED_DESCRIPTION)
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE)
-            .startTime(UPDATED_START_TIME)
-            .endTime(UPDATED_END_TIME)
             .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
-            .limitPax(UPDATED_LIMIT_PAX)
+            .maxTeamsAllowed(UPDATED_MAX_TEAMS_ALLOWED)
             .prices(UPDATED_PRICES)
             .active(UPDATED_ACTIVE)
             .poster(UPDATED_POSTER)

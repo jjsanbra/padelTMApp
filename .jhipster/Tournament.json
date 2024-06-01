@@ -23,20 +23,15 @@
       "fieldType": "Instant"
     },
     {
-      "fieldName": "startTime",
-      "fieldType": "Instant"
-    },
-    {
-      "fieldName": "endTime",
-      "fieldType": "Instant"
-    },
-    {
       "fieldName": "lastInscriptionsDate",
       "fieldType": "Instant"
     },
     {
-      "fieldName": "limitPax",
-      "fieldType": "Integer"
+      "fieldName": "maxTeamsAllowed",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "120",
+      "fieldValidateRulesMin": "4"
     },
     {
       "fieldName": "prices",
@@ -67,7 +62,7 @@
       "otherEntityField": "sponsorName",
       "otherEntityName": "sponsor",
       "otherEntityRelationshipName": "tournaments",
-      "relationshipName": "sponsor",
+      "relationshipName": "sponsors",
       "relationshipSide": "left",
       "relationshipType": "many-to-many"
     },
@@ -75,23 +70,23 @@
       "otherEntityField": "teamName",
       "otherEntityName": "team",
       "otherEntityRelationshipName": "tournaments",
-      "relationshipName": "team",
+      "relationshipName": "teams",
       "relationshipSide": "left",
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityField": "description",
+      "otherEntityField": "categoryName",
       "otherEntityName": "category",
       "otherEntityRelationshipName": "tournaments",
-      "relationshipName": "category",
+      "relationshipName": "categories",
       "relationshipSide": "left",
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityField": "description",
+      "otherEntityField": "levelName",
       "otherEntityName": "level",
       "otherEntityRelationshipName": "tournaments",
-      "relationshipName": "level",
+      "relationshipName": "levels",
       "relationshipSide": "left",
       "relationshipType": "many-to-many"
     }

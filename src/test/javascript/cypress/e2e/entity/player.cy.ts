@@ -15,7 +15,7 @@ describe('Player e2e test', () => {
   const playerPageUrlPattern = new RegExp('/player(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const playerSample = { firstName: 'Mónica', lastName: 'Lomeli Loera' };
+  const playerSample = { firstName: 'Berta', lastName: 'Concepción Vega' };
 
   let player;
 
@@ -160,21 +160,17 @@ describe('Player e2e test', () => {
     });
 
     it('should create an instance of Player', () => {
-      cy.get(`[data-cy="firstName"]`).type('Miguel');
-      cy.get(`[data-cy="firstName"]`).should('have.value', 'Miguel');
+      cy.get(`[data-cy="firstName"]`).type('Mario');
+      cy.get(`[data-cy="firstName"]`).should('have.value', 'Mario');
 
-      cy.get(`[data-cy="lastName"]`).type('Báez Padrón');
-      cy.get(`[data-cy="lastName"]`).should('have.value', 'Báez Padrón');
+      cy.get(`[data-cy="lastName"]`).type('Carranza Rael');
+      cy.get(`[data-cy="lastName"]`).should('have.value', 'Carranza Rael');
 
-      cy.get(`[data-cy="phoneNumber"]`).type('past');
-      cy.get(`[data-cy="phoneNumber"]`).should('have.value', 'past');
+      cy.get(`[data-cy="phoneNumber"]`).type('pish');
+      cy.get(`[data-cy="phoneNumber"]`).should('have.value', 'pish');
 
-      cy.get(`[data-cy="age"]`).type('16');
-      cy.get(`[data-cy="age"]`).should('have.value', '16');
-
-      cy.get(`[data-cy="category"]`).select('F');
-
-      cy.get(`[data-cy="level"]`).select('L0');
+      cy.get(`[data-cy="age"]`).type('49');
+      cy.get(`[data-cy="age"]`).should('have.value', '49');
 
       cy.setFieldImageAsBytesOfEntity('avatar', 'integration-test.png', 'image/png');
 

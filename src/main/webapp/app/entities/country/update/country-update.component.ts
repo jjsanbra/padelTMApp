@@ -7,7 +7,6 @@ import { finalize } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CountryEnum } from 'app/entities/enumerations/country-enum.model';
 import { ICountry } from '../country.model';
 import { CountryService } from '../service/country.service';
 import { CountryFormService, CountryFormGroup } from './country-form.service';
@@ -21,7 +20,6 @@ import { CountryFormService, CountryFormGroup } from './country-form.service';
 export class CountryUpdateComponent implements OnInit {
   isSaving = false;
   country: ICountry | null = null;
-  countryEnumValues = Object.keys(CountryEnum);
 
   protected countryService = inject(CountryService);
   protected countryFormService = inject(CountryFormService);

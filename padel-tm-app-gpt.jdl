@@ -6,10 +6,8 @@ entity Tournament {
 	description String
     startDate Instant
     endDate Instant
-    startTime Instant
-    endTime Instant
     lastInscriptionsDate Instant
-    limitPax Integer
+    maxTeamsAllowed Integer min(4) max(120)
     prices String
     active Boolean
     poster ImageBlob
@@ -23,8 +21,6 @@ entity Player {
 	lastName String required
 	phoneNumber String
 	age Integer min(12) max(80)
-    category CategoryEnum
-    level LevelEnum
     avatar ImageBlob
 }
 
@@ -33,8 +29,6 @@ entity Player {
  */
 entity Team {
 	teamName String unique
-    level LevelEnum
-    category CategoryEnum
     logo ImageBlob
 }
 
@@ -59,14 +53,14 @@ entity Location {
  * The Country entity.
  */
 entity Country {
-    countryName CountryEnum required
+    countryName String required
 }
 
 /**
  * The Category entity.
  */
 entity Category {
-	categoryName CategoryEnum required
+	categoryName String required
     description String
 }
 
@@ -74,7 +68,7 @@ entity Category {
  * The Level entity.
  */
 entity Level {
-	levelName LevelEnum required
+	levelName String required
     description String
 }
 
@@ -88,39 +82,9 @@ entity Sponsor {
 }
 
 
-/** ENUMS
-*/
+/** ENUMS */
 enum Language {
     SPANISH, ENGLISH
-}
-
-enum LevelEnum {
-	L0 ("0 - Iniciación"),
-    L05 ("0.5 - Iniciación"),
-    L1 ("1 - Iniciación"),
-    L15 ("1.5 - Iniciación Intermedio"),
-    L2 ("2 - Iniciación Intermedio"),
-    L25 ("2.5 - Intermedio"),
-    L3 ("3 - Intermedio"),
-    L35 ("3.5 - Intermedio"),
-    L4 ("4 - Intermedio Alto"),
-    L45 ("4.5 - Intermedio Alto"),
-    L5 ("5 - Alto Avanzado"),
-    L55 ("5.5 - Avanzado"),
-    L6 ("6 - Avanzado"),
-    L7 ("7 - Élite")
-}
-
-enum CategoryEnum {
-    F ("Femenino"),
-	M ("Masculino"),
-    MIX ("Mixto")
-}
-
-enum CountryEnum {
-    FR ("Francia"),
-    PT ("Portugal"),
-    ES ("España")
 }
 
 
@@ -131,21 +95,29 @@ relationship OneToOne {
     Tournament{location(city)} to Location{tournament}
 	/* Localtion */
 	Location{country(countryName)} to Country{location(city)}
+    /* Player */
+    Player{user(login)} to User with builtInEntity
+}
+
+relationship ManyToOne {
+    Player{Level(levelName)} to Level
+    Team{Level(levelName)} to Level
+    Team{Category(categoryName)} to Category
 }
 
 relationship ManyToMany {
 	/* Multiple tournaments can have multiple sponsors */
-    Tournament{Sponsor(sponsorName)} to Sponsor{tournaments(tournamentName)}
+    Tournament{Sponsors(sponsorName)} to Sponsor{tournaments(tournamentName)}
     /* Multiple tournaments can have multiple teams, with a limit of x teams (handled in business logic, not here) */
-    Tournament{Team(teamName)} to Team{tournaments(tournamentName)}
+    Tournament{Teams(teamName)} to Team{tournaments(tournamentName)}
     /* Multiple tournament can have multiple categories */
-    Tournament{Category(description)} to Category{tournaments(tournamentName)}
+    Tournament{Categories(categoryName)} to Category{tournaments(tournamentName)}
     /* Multiple tournament can have multiple levels */
-    Tournament{Level(description)} to Level{tournaments(tournamentName)}
+    Tournament{Levels(levelName)} to Level{tournaments(tournamentName)}
     /* Multiple teams can have up to 2 players, and they are required (handled in business logic, not here) */
-    Team{Player(firstName) required} to Player{teams(teamName)}
+    Team{Players(firstName) required} to Player{teams(teamName)}
     /* Multiple Players can have multiple categories */
-    Player{Category(description)} to Category{players(firstName)}
+    Player{Categories(categoryName)} to Category{players(firstName)}
 }
 
 /* Set pagination options */
@@ -157,6 +129,7 @@ dto * with mapstruct
 
 /* Set service options to all except few */
 /* service all with serviceImpl except Employee, Job */
+service Player with serviceClass
 
 /* Set an angular suffix */
 /* angularSuffix * with mySuffix */

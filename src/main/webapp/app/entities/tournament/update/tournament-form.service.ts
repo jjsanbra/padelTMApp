@@ -19,14 +19,9 @@ type TournamentFormGroupInput = ITournament | PartialWithRequiredKeyOf<NewTourna
 /**
  * Type that converts some properties for forms.
  */
-type FormValueOf<T extends ITournament | NewTournament> = Omit<
-  T,
-  'startDate' | 'endDate' | 'startTime' | 'endTime' | 'lastInscriptionsDate'
-> & {
+type FormValueOf<T extends ITournament | NewTournament> = Omit<T, 'startDate' | 'endDate' | 'lastInscriptionsDate'> & {
   startDate?: string | null;
   endDate?: string | null;
-  startTime?: string | null;
-  endTime?: string | null;
   lastInscriptionsDate?: string | null;
 };
 
@@ -36,17 +31,7 @@ type NewTournamentFormRawValue = FormValueOf<NewTournament>;
 
 type TournamentFormDefaults = Pick<
   NewTournament,
-  | 'id'
-  | 'startDate'
-  | 'endDate'
-  | 'startTime'
-  | 'endTime'
-  | 'lastInscriptionsDate'
-  | 'active'
-  | 'sponsors'
-  | 'teams'
-  | 'categories'
-  | 'levels'
+  'id' | 'startDate' | 'endDate' | 'lastInscriptionsDate' | 'active' | 'sponsors' | 'teams' | 'categories' | 'levels'
 >;
 
 type TournamentFormGroupContent = {
@@ -55,10 +40,8 @@ type TournamentFormGroupContent = {
   description: FormControl<TournamentFormRawValue['description']>;
   startDate: FormControl<TournamentFormRawValue['startDate']>;
   endDate: FormControl<TournamentFormRawValue['endDate']>;
-  startTime: FormControl<TournamentFormRawValue['startTime']>;
-  endTime: FormControl<TournamentFormRawValue['endTime']>;
   lastInscriptionsDate: FormControl<TournamentFormRawValue['lastInscriptionsDate']>;
-  limitPax: FormControl<TournamentFormRawValue['limitPax']>;
+  maxTeamsAllowed: FormControl<TournamentFormRawValue['maxTeamsAllowed']>;
   prices: FormControl<TournamentFormRawValue['prices']>;
   active: FormControl<TournamentFormRawValue['active']>;
   poster: FormControl<TournamentFormRawValue['poster']>;
@@ -91,10 +74,10 @@ export class TournamentFormService {
       description: new FormControl(tournamentRawValue.description),
       startDate: new FormControl(tournamentRawValue.startDate),
       endDate: new FormControl(tournamentRawValue.endDate),
-      startTime: new FormControl(tournamentRawValue.startTime),
-      endTime: new FormControl(tournamentRawValue.endTime),
       lastInscriptionsDate: new FormControl(tournamentRawValue.lastInscriptionsDate),
-      limitPax: new FormControl(tournamentRawValue.limitPax),
+      maxTeamsAllowed: new FormControl(tournamentRawValue.maxTeamsAllowed, {
+        validators: [Validators.min(4), Validators.max(120)],
+      }),
       prices: new FormControl(tournamentRawValue.prices),
       active: new FormControl(tournamentRawValue.active),
       poster: new FormControl(tournamentRawValue.poster),
@@ -128,8 +111,6 @@ export class TournamentFormService {
       id: null,
       startDate: currentTime,
       endDate: currentTime,
-      startTime: currentTime,
-      endTime: currentTime,
       lastInscriptionsDate: currentTime,
       active: false,
       sponsors: [],
@@ -146,8 +127,6 @@ export class TournamentFormService {
       ...rawTournament,
       startDate: dayjs(rawTournament.startDate, DATE_TIME_FORMAT),
       endDate: dayjs(rawTournament.endDate, DATE_TIME_FORMAT),
-      startTime: dayjs(rawTournament.startTime, DATE_TIME_FORMAT),
-      endTime: dayjs(rawTournament.endTime, DATE_TIME_FORMAT),
       lastInscriptionsDate: dayjs(rawTournament.lastInscriptionsDate, DATE_TIME_FORMAT),
     };
   }
@@ -159,8 +138,6 @@ export class TournamentFormService {
       ...tournament,
       startDate: tournament.startDate ? tournament.startDate.format(DATE_TIME_FORMAT) : undefined,
       endDate: tournament.endDate ? tournament.endDate.format(DATE_TIME_FORMAT) : undefined,
-      startTime: tournament.startTime ? tournament.startTime.format(DATE_TIME_FORMAT) : undefined,
-      endTime: tournament.endTime ? tournament.endTime.format(DATE_TIME_FORMAT) : undefined,
       lastInscriptionsDate: tournament.lastInscriptionsDate ? tournament.lastInscriptionsDate.format(DATE_TIME_FORMAT) : undefined,
       sponsors: tournament.sponsors ?? [],
       teams: tournament.teams ?? [],

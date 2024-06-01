@@ -22,10 +22,10 @@
       "lastName": "Last Name",
       "phoneNumber": "Phone Number",
       "age": "Age",
-      "category": "Category",
-      "level": "Level",
       "avatar": "Avatar",
-      "category": "Category",
+      "user": "User",
+      "level": "Level",
+      "categories": "Categories",
       "teams": "Teams"
     }
   }

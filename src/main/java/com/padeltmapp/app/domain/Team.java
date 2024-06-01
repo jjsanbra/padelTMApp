@@ -1,8 +1,6 @@
 package com.padeltmapp.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -31,14 +29,6 @@ public class Team implements Serializable {
     @Column(name = "team_name", unique = true)
     private String teamName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "level")
-    private LevelEnum level;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private CategoryEnum category;
-
     @Lob
     @Column(name = "logo")
     private byte[] logo;
@@ -46,11 +36,23 @@ public class Team implements Serializable {
     @Column(name = "logo_content_type")
     private String logoContentType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
+    private Level level;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
+    private Category category;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
-    @JoinTable(name = "rel_team__player", joinColumns = @JoinColumn(name = "team_id"), inverseJoinColumns = @JoinColumn(name = "player_id"))
+    @JoinTable(
+        name = "rel_team__players",
+        joinColumns = @JoinColumn(name = "team_id"),
+        inverseJoinColumns = @JoinColumn(name = "players_id")
+    )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "categories", "teams" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "level", "categories", "teams" }, allowSetters = true)
     private Set<Player> players = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teams")
@@ -86,32 +88,6 @@ public class Team implements Serializable {
         this.teamName = teamName;
     }
 
-    public LevelEnum getLevel() {
-        return this.level;
-    }
-
-    public Team level(LevelEnum level) {
-        this.setLevel(level);
-        return this;
-    }
-
-    public void setLevel(LevelEnum level) {
-        this.level = level;
-    }
-
-    public CategoryEnum getCategory() {
-        return this.category;
-    }
-
-    public Team category(CategoryEnum category) {
-        this.setCategory(category);
-        return this;
-    }
-
-    public void setCategory(CategoryEnum category) {
-        this.category = category;
-    }
-
     public byte[] getLogo() {
         return this.logo;
     }
@@ -138,6 +114,32 @@ public class Team implements Serializable {
         this.logoContentType = logoContentType;
     }
 
+    public Level getLevel() {
+        return this.level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Team level(Level level) {
+        this.setLevel(level);
+        return this;
+    }
+
+    public Category getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Team category(Category category) {
+        this.setCategory(category);
+        return this;
+    }
+
     public Set<Player> getPlayers() {
         return this.players;
     }
@@ -151,12 +153,12 @@ public class Team implements Serializable {
         return this;
     }
 
-    public Team addPlayer(Player player) {
+    public Team addPlayers(Player player) {
         this.players.add(player);
         return this;
     }
 
-    public Team removePlayer(Player player) {
+    public Team removePlayers(Player player) {
         this.players.remove(player);
         return this;
     }
@@ -167,10 +169,10 @@ public class Team implements Serializable {
 
     public void setTournaments(Set<Tournament> tournaments) {
         if (this.tournaments != null) {
-            this.tournaments.forEach(i -> i.removeTeam(this));
+            this.tournaments.forEach(i -> i.removeTeams(this));
         }
         if (tournaments != null) {
-            tournaments.forEach(i -> i.addTeam(this));
+            tournaments.forEach(i -> i.addTeams(this));
         }
         this.tournaments = tournaments;
     }
@@ -217,8 +219,6 @@ public class Team implements Serializable {
         return "Team{" +
             "id=" + getId() +
             ", teamName='" + getTeamName() + "'" +
-            ", level='" + getLevel() + "'" +
-            ", category='" + getCategory() + "'" +
             ", logo='" + getLogo() + "'" +
             ", logoContentType='" + getLogoContentType() + "'" +
             "}";

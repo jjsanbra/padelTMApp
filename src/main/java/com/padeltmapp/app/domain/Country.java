@@ -1,7 +1,6 @@
 package com.padeltmapp.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.padeltmapp.app.domain.enumeration.CountryEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -26,9 +25,8 @@ public class Country implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "country_name", nullable = false)
-    private CountryEnum countryName;
+    private String countryName;
 
     @JsonIgnoreProperties(value = { "country", "tournament" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "country")
@@ -49,16 +47,16 @@ public class Country implements Serializable {
         this.id = id;
     }
 
-    public CountryEnum getCountryName() {
+    public String getCountryName() {
         return this.countryName;
     }
 
-    public Country countryName(CountryEnum countryName) {
+    public Country countryName(String countryName) {
         this.setCountryName(countryName);
         return this;
     }
 
-    public void setCountryName(CountryEnum countryName) {
+    public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
 

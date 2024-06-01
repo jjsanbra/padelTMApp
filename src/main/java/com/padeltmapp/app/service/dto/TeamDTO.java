@@ -1,7 +1,5 @@
 package com.padeltmapp.app.service.dto;
 
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
@@ -21,14 +19,14 @@ public class TeamDTO implements Serializable {
 
     private String teamName;
 
-    private LevelEnum level;
-
-    private CategoryEnum category;
-
     @Lob
     private byte[] logo;
 
     private String logoContentType;
+
+    private LevelDTO level;
+
+    private CategoryDTO category;
 
     @NotNull
     private Set<PlayerDTO> players = new HashSet<>();
@@ -51,22 +49,6 @@ public class TeamDTO implements Serializable {
         this.teamName = teamName;
     }
 
-    public LevelEnum getLevel() {
-        return level;
-    }
-
-    public void setLevel(LevelEnum level) {
-        this.level = level;
-    }
-
-    public CategoryEnum getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEnum category) {
-        this.category = category;
-    }
-
     public byte[] getLogo() {
         return logo;
     }
@@ -81,6 +63,22 @@ public class TeamDTO implements Serializable {
 
     public void setLogoContentType(String logoContentType) {
         this.logoContentType = logoContentType;
+    }
+
+    public LevelDTO getLevel() {
+        return level;
+    }
+
+    public void setLevel(LevelDTO level) {
+        this.level = level;
+    }
+
+    public CategoryDTO getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryDTO category) {
+        this.category = category;
     }
 
     public Set<PlayerDTO> getPlayers() {
@@ -126,9 +124,9 @@ public class TeamDTO implements Serializable {
         return "TeamDTO{" +
             "id=" + getId() +
             ", teamName='" + getTeamName() + "'" +
-            ", level='" + getLevel() + "'" +
-            ", category='" + getCategory() + "'" +
             ", logo='" + getLogo() + "'" +
+            ", level=" + getLevel() +
+            ", category=" + getCategory() +
             ", players=" + getPlayers() +
             ", tournaments=" + getTournaments() +
             "}";

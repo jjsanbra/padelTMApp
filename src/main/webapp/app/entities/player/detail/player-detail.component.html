@@ -31,34 +31,6 @@
           <dd>
             <span>{{ player()!.age }}</span>
           </dd>
-          <dt><span jhiTranslate="padelTmApp.player.category">Category</span></dt>
-          <dd>
-            <span [jhiTranslate]="'padelTmApp.CategoryEnum.' + (player()!.category ?? 'null')">{{
-              { null: '', F: 'Femenino', M: 'Masculino', MIX: 'Mixto' }[player()!.category ?? 'null']
-            }}</span>
-          </dd>
-          <dt><span jhiTranslate="padelTmApp.player.level">Level</span></dt>
-          <dd>
-            <span [jhiTranslate]="'padelTmApp.LevelEnum.' + (player()!.level ?? 'null')">{{
-              {
-                null: '',
-                L0: '0 - Iniciación',
-                L05: '0.5 - Iniciación',
-                L1: '1 - Iniciación',
-                L15: '1.5 - Iniciación Intermedio',
-                L2: '2 - Iniciación Intermedio',
-                L25: '2.5 - Intermedio',
-                L3: '3 - Intermedio',
-                L35: '3.5 - Intermedio',
-                L4: '4 - Intermedio Alto',
-                L45: '4.5 - Intermedio Alto',
-                L5: '5 - Alto Avanzado',
-                L55: '5.5 - Avanzado',
-                L6: '6 - Avanzado',
-                L7: '7 - Élite'
-              }[player()!.level ?? 'null']
-            }}</span>
-          </dd>
           <dt><span jhiTranslate="padelTmApp.player.avatar">Avatar</span></dt>
           <dd>
             @if (player()!.avatar) {
@@ -70,11 +42,23 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.player.category">Category</span></dt>
+          <dt><span jhiTranslate="padelTmApp.player.user">User</span></dt>
           <dd>
-            @for (category of player()!.categories; track $index; let last = $last) {
+            <span>{{ player()!.user?.login }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.level">Level</span></dt>
+          <dd>
+            @if (player()!.level) {
+              <div>
+                <a [routerLink]="['/level', player()!.level?.id, 'view']">{{ player()!.level?.levelName }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.categories">Categories</span></dt>
+          <dd>
+            @for (categories of player()!.categories; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/category', category.id, 'view']">{{ category?.description }}</a
+                <a [routerLink]="['/category', categories.id, 'view']">{{ categories?.categoryName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

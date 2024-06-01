@@ -8,9 +8,8 @@
   "fields": [
     {
       "fieldName": "countryName",
-      "fieldType": "CountryEnum",
-      "fieldValidateRules": ["required"],
-      "fieldValues": "FR (Francia),PT (Portugal),ES (España)"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     }
   ],
   "name": "Country",

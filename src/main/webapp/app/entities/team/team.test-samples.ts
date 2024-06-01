@@ -1,20 +1,18 @@
 import { ITeam, NewTeam } from './team.model';
 
 export const sampleWithRequiredData: ITeam = {
-  id: 15724,
+  id: 19477,
 };
 
 export const sampleWithPartialData: ITeam = {
-  id: 31546,
-  level: 'L0',
-  category: 'M',
+  id: 24921,
+  logo: '../fake-data/blob/hipster.png',
+  logoContentType: 'unknown',
 };
 
 export const sampleWithFullData: ITeam = {
-  id: 12981,
-  teamName: 'partially',
-  level: 'L25',
-  category: 'F',
+  id: 9416,
+  teamName: 'oh',
   logo: '../fake-data/blob/hipster.png',
   logoContentType: 'unknown',
 };

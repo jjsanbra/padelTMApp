@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padeltmapp.app.IntegrationTest;
 import com.padeltmapp.app.domain.Category;
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
 import com.padeltmapp.app.repository.CategoryRepository;
 import com.padeltmapp.app.service.dto.CategoryDTO;
 import com.padeltmapp.app.service.mapper.CategoryMapper;
@@ -34,8 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CategoryResourceIT {
 
-    private static final CategoryEnum DEFAULT_CATEGORY_NAME = CategoryEnum.F;
-    private static final CategoryEnum UPDATED_CATEGORY_NAME = CategoryEnum.M;
+    private static final String DEFAULT_CATEGORY_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_CATEGORY_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -159,7 +158,7 @@ class CategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue())))
-            .andExpect(jsonPath("$.[*].categoryName").value(hasItem(DEFAULT_CATEGORY_NAME.toString())))
+            .andExpect(jsonPath("$.[*].categoryName").value(hasItem(DEFAULT_CATEGORY_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
 
@@ -175,7 +174,7 @@ class CategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(category.getId().intValue()))
-            .andExpect(jsonPath("$.categoryName").value(DEFAULT_CATEGORY_NAME.toString()))
+            .andExpect(jsonPath("$.categoryName").value(DEFAULT_CATEGORY_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
 

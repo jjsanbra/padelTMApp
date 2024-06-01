@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padeltmapp.app.IntegrationTest;
 import com.padeltmapp.app.domain.Country;
-import com.padeltmapp.app.domain.enumeration.CountryEnum;
 import com.padeltmapp.app.repository.CountryRepository;
 import com.padeltmapp.app.service.dto.CountryDTO;
 import com.padeltmapp.app.service.mapper.CountryMapper;
@@ -34,8 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CountryResourceIT {
 
-    private static final CountryEnum DEFAULT_COUNTRY_NAME = CountryEnum.FR;
-    private static final CountryEnum UPDATED_COUNTRY_NAME = CountryEnum.PT;
+    private static final String DEFAULT_COUNTRY_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_COUNTRY_NAME = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/countries";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -156,7 +155,7 @@ class CountryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(country.getId().intValue())))
-            .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME.toString())));
+            .andExpect(jsonPath("$.[*].countryName").value(hasItem(DEFAULT_COUNTRY_NAME)));
     }
 
     @Test
@@ -171,7 +170,7 @@ class CountryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(country.getId().intValue()))
-            .andExpect(jsonPath("$.countryName").value(DEFAULT_COUNTRY_NAME.toString()));
+            .andExpect(jsonPath("$.countryName").value(DEFAULT_COUNTRY_NAME));
     }
 
     @Test

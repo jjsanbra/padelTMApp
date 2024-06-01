@@ -1,6 +1,7 @@
 package com.padeltmapp.app.domain;
 
 import static com.padeltmapp.app.domain.CategoryTestSamples.*;
+import static com.padeltmapp.app.domain.LevelTestSamples.*;
 import static com.padeltmapp.app.domain.PlayerTestSamples.*;
 import static com.padeltmapp.app.domain.TeamTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,14 +28,26 @@ class PlayerTest {
     }
 
     @Test
-    void categoryTest() throws Exception {
+    void levelTest() throws Exception {
+        Player player = getPlayerRandomSampleGenerator();
+        Level levelBack = getLevelRandomSampleGenerator();
+
+        player.setLevel(levelBack);
+        assertThat(player.getLevel()).isEqualTo(levelBack);
+
+        player.level(null);
+        assertThat(player.getLevel()).isNull();
+    }
+
+    @Test
+    void categoriesTest() throws Exception {
         Player player = getPlayerRandomSampleGenerator();
         Category categoryBack = getCategoryRandomSampleGenerator();
 
-        player.addCategory(categoryBack);
+        player.addCategories(categoryBack);
         assertThat(player.getCategories()).containsOnly(categoryBack);
 
-        player.removeCategory(categoryBack);
+        player.removeCategories(categoryBack);
         assertThat(player.getCategories()).doesNotContain(categoryBack);
 
         player.categories(new HashSet<>(Set.of(categoryBack)));

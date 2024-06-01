@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padeltmapp.app.IntegrationTest;
 import com.padeltmapp.app.domain.Level;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import com.padeltmapp.app.repository.LevelRepository;
 import com.padeltmapp.app.service.dto.LevelDTO;
 import com.padeltmapp.app.service.mapper.LevelMapper;
@@ -34,8 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class LevelResourceIT {
 
-    private static final LevelEnum DEFAULT_LEVEL_NAME = LevelEnum.L0;
-    private static final LevelEnum UPDATED_LEVEL_NAME = LevelEnum.L05;
+    private static final String DEFAULT_LEVEL_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LEVEL_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -159,7 +158,7 @@ class LevelResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(level.getId().intValue())))
-            .andExpect(jsonPath("$.[*].levelName").value(hasItem(DEFAULT_LEVEL_NAME.toString())))
+            .andExpect(jsonPath("$.[*].levelName").value(hasItem(DEFAULT_LEVEL_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
 
@@ -175,7 +174,7 @@ class LevelResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(level.getId().intValue()))
-            .andExpect(jsonPath("$.levelName").value(DEFAULT_LEVEL_NAME.toString()))
+            .andExpect(jsonPath("$.levelName").value(DEFAULT_LEVEL_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
 

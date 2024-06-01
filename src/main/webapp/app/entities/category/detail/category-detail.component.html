@@ -17,9 +17,7 @@
           </dd>
           <dt><span jhiTranslate="padelTmApp.category.categoryName">Category Name</span></dt>
           <dd>
-            <span [jhiTranslate]="'padelTmApp.CategoryEnum.' + (category()!.categoryName ?? 'null')">{{
-              { null: '', F: 'Femenino', M: 'Masculino', MIX: 'Mixto' }[category()!.categoryName ?? 'null']
-            }}</span>
+            <span>{{ category()!.categoryName }}</span>
           </dd>
           <dt><span jhiTranslate="padelTmApp.category.description">Description</span></dt>
           <dd>

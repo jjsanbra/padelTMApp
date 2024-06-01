@@ -1,7 +1,7 @@
+import { IUser } from 'app/entities/user/user.model';
+import { ILevel } from 'app/entities/level/level.model';
 import { ICategory } from 'app/entities/category/category.model';
 import { ITeam } from 'app/entities/team/team.model';
-import { CategoryEnum } from 'app/entities/enumerations/category-enum.model';
-import { LevelEnum } from 'app/entities/enumerations/level-enum.model';
 
 export interface IPlayer {
   id: number;
@@ -9,11 +9,11 @@ export interface IPlayer {
   lastName?: string | null;
   phoneNumber?: string | null;
   age?: number | null;
-  category?: keyof typeof CategoryEnum | null;
-  level?: keyof typeof LevelEnum | null;
   avatar?: string | null;
   avatarContentType?: string | null;
-  categories?: Pick<ICategory, 'id' | 'description'>[] | null;
+  user?: Pick<IUser, 'id' | 'login'> | null;
+  level?: Pick<ILevel, 'id' | 'levelName'> | null;
+  categories?: Pick<ICategory, 'id' | 'categoryName'>[] | null;
   teams?: Pick<ITeam, 'id' | 'teamName'>[] | null;
 }
 

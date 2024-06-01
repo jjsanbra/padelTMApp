@@ -10,8 +10,6 @@ const requireRestSample: RestTournament = {
   ...sampleWithRequiredData,
   startDate: sampleWithRequiredData.startDate?.toJSON(),
   endDate: sampleWithRequiredData.endDate?.toJSON(),
-  startTime: sampleWithRequiredData.startTime?.toJSON(),
-  endTime: sampleWithRequiredData.endTime?.toJSON(),
   lastInscriptionsDate: sampleWithRequiredData.lastInscriptionsDate?.toJSON(),
 };
 

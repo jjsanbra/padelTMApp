@@ -11,11 +11,9 @@ import { ITournament, NewTournament } from '../tournament.model';
 
 export type PartialUpdateTournament = Partial<ITournament> & Pick<ITournament, 'id'>;
 
-type RestOf<T extends ITournament | NewTournament> = Omit<T, 'startDate' | 'endDate' | 'startTime' | 'endTime' | 'lastInscriptionsDate'> & {
+type RestOf<T extends ITournament | NewTournament> = Omit<T, 'startDate' | 'endDate' | 'lastInscriptionsDate'> & {
   startDate?: string | null;
   endDate?: string | null;
-  startTime?: string | null;
-  endTime?: string | null;
   lastInscriptionsDate?: string | null;
 };
 
@@ -106,8 +104,6 @@ export class TournamentService {
       ...tournament,
       startDate: tournament.startDate?.toJSON() ?? null,
       endDate: tournament.endDate?.toJSON() ?? null,
-      startTime: tournament.startTime?.toJSON() ?? null,
-      endTime: tournament.endTime?.toJSON() ?? null,
       lastInscriptionsDate: tournament.lastInscriptionsDate?.toJSON() ?? null,
     };
   }
@@ -117,8 +113,6 @@ export class TournamentService {
       ...restTournament,
       startDate: restTournament.startDate ? dayjs(restTournament.startDate) : undefined,
       endDate: restTournament.endDate ? dayjs(restTournament.endDate) : undefined,
-      startTime: restTournament.startTime ? dayjs(restTournament.startTime) : undefined,
-      endTime: restTournament.endTime ? dayjs(restTournament.endTime) : undefined,
       lastInscriptionsDate: restTournament.lastInscriptionsDate ? dayjs(restTournament.lastInscriptionsDate) : undefined,
     };
   }

@@ -58,9 +58,7 @@
               <td>
                 <a [routerLink]="['/country', country.id, 'view']">{{ country.id }}</a>
               </td>
-              <td [jhiTranslate]="'padelTmApp.CountryEnum.' + (country.countryName ?? 'null')">
-                {{ { null: '', FR: 'Francia', PT: 'Portugal', ES: 'España' }[country.countryName ?? 'null'] }}
-              </td>
+              <td>{{ country.countryName }}</td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/country', country.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

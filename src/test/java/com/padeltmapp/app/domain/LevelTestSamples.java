@@ -10,14 +10,17 @@ public class LevelTestSamples {
     private static final AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     public static Level getLevelSample1() {
-        return new Level().id(1L).description("description1");
+        return new Level().id(1L).levelName("levelName1").description("description1");
     }
 
     public static Level getLevelSample2() {
-        return new Level().id(2L).description("description2");
+        return new Level().id(2L).levelName("levelName2").description("description2");
     }
 
     public static Level getLevelRandomSampleGenerator() {
-        return new Level().id(longCount.incrementAndGet()).description(UUID.randomUUID().toString());
+        return new Level()
+            .id(longCount.incrementAndGet())
+            .levelName(UUID.randomUUID().toString())
+            .description(UUID.randomUUID().toString());
     }
 }

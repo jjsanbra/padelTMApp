@@ -9,9 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ITournament } from 'app/entities/tournament/tournament.model';
 import { TournamentService } from 'app/entities/tournament/service/tournament.service';
-import { LevelEnum } from 'app/entities/enumerations/level-enum.model';
-import { LevelService } from '../service/level.service';
 import { ILevel } from '../level.model';
+import { LevelService } from '../service/level.service';
 import { LevelFormService, LevelFormGroup } from './level-form.service';
 
 @Component({
@@ -23,7 +22,6 @@ import { LevelFormService, LevelFormGroup } from './level-form.service';
 export class LevelUpdateComponent implements OnInit {
   isSaving = false;
   level: ILevel | null = null;
-  levelEnumValues = Object.keys(LevelEnum);
 
   tournamentsSharedCollection: ITournament[] = [];
 

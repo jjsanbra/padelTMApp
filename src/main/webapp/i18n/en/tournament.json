@@ -22,18 +22,16 @@
       "description": "Description",
       "startDate": "Start Date",
       "endDate": "End Date",
-      "startTime": "Start Time",
-      "endTime": "End Time",
       "lastInscriptionsDate": "Last Inscriptions Date",
-      "limitPax": "Limit Pax",
+      "maxTeamsAllowed": "Max Teams Allowed",
       "prices": "Prices",
       "active": "Active",
       "poster": "Poster",
       "location": "Location",
-      "sponsor": "Sponsor",
-      "team": "Team",
-      "category": "Category",
-      "level": "Level"
+      "sponsors": "Sponsors",
+      "teams": "Teams",
+      "categories": "Categories",
+      "levels": "Levels"
     }
   }
 }

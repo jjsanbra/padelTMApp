@@ -31,21 +31,13 @@
           <dd>
             <span>{{ tournament()!.endDate | formatMediumDatetime }}</span>
           </dd>
-          <dt><span jhiTranslate="padelTmApp.tournament.startTime">Start Time</span></dt>
-          <dd>
-            <span>{{ tournament()!.startTime | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span jhiTranslate="padelTmApp.tournament.endTime">End Time</span></dt>
-          <dd>
-            <span>{{ tournament()!.endTime | formatMediumDatetime }}</span>
-          </dd>
           <dt><span jhiTranslate="padelTmApp.tournament.lastInscriptionsDate">Last Inscriptions Date</span></dt>
           <dd>
             <span>{{ tournament()!.lastInscriptionsDate | formatMediumDatetime }}</span>
           </dd>
-          <dt><span jhiTranslate="padelTmApp.tournament.limitPax">Limit Pax</span></dt>
+          <dt><span jhiTranslate="padelTmApp.tournament.maxTeamsAllowed">Max Teams Allowed</span></dt>
           <dd>
-            <span>{{ tournament()!.limitPax }}</span>
+            <span>{{ tournament()!.maxTeamsAllowed }}</span>
           </dd>
           <dt><span jhiTranslate="padelTmApp.tournament.prices">Prices</span></dt>
           <dd>
@@ -78,38 +70,38 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.tournament.sponsor">Sponsor</span></dt>
+          <dt><span jhiTranslate="padelTmApp.tournament.sponsors">Sponsors</span></dt>
           <dd>
-            @for (sponsor of tournament()!.sponsors; track $index; let last = $last) {
+            @for (sponsors of tournament()!.sponsors; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/sponsor', sponsor.id, 'view']">{{ sponsor?.sponsorName }}</a
+                <a [routerLink]="['/sponsor', sponsors.id, 'view']">{{ sponsors?.sponsorName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.tournament.team">Team</span></dt>
+          <dt><span jhiTranslate="padelTmApp.tournament.teams">Teams</span></dt>
           <dd>
-            @for (team of tournament()!.teams; track $index; let last = $last) {
+            @for (teams of tournament()!.teams; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/team', team.id, 'view']">{{ team?.teamName }}</a
+                <a [routerLink]="['/team', teams.id, 'view']">{{ teams?.teamName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.tournament.category">Category</span></dt>
+          <dt><span jhiTranslate="padelTmApp.tournament.categories">Categories</span></dt>
           <dd>
-            @for (category of tournament()!.categories; track $index; let last = $last) {
+            @for (categories of tournament()!.categories; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/category', category.id, 'view']">{{ category?.description }}</a
+                <a [routerLink]="['/category', categories.id, 'view']">{{ categories?.categoryName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.tournament.level">Level</span></dt>
+          <dt><span jhiTranslate="padelTmApp.tournament.levels">Levels</span></dt>
           <dd>
-            @for (level of tournament()!.levels; track $index; let last = $last) {
+            @for (levels of tournament()!.levels; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/level', level.id, 'view']">{{ level?.description }}</a
+                <a [routerLink]="['/level', levels.id, 'view']">{{ levels?.levelName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

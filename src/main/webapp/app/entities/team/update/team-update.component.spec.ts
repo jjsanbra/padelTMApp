@@ -5,6 +5,10 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
+import { ILevel } from 'app/entities/level/level.model';
+import { LevelService } from 'app/entities/level/service/level.service';
+import { ICategory } from 'app/entities/category/category.model';
+import { CategoryService } from 'app/entities/category/service/category.service';
 import { IPlayer } from 'app/entities/player/player.model';
 import { PlayerService } from 'app/entities/player/service/player.service';
 import { ITournament } from 'app/entities/tournament/tournament.model';
@@ -21,6 +25,8 @@ describe('Team Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let teamFormService: TeamFormService;
   let teamService: TeamService;
+  let levelService: LevelService;
+  let categoryService: CategoryService;
   let playerService: PlayerService;
   let tournamentService: TournamentService;
 
@@ -44,6 +50,8 @@ describe('Team Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     teamFormService = TestBed.inject(TeamFormService);
     teamService = TestBed.inject(TeamService);
+    levelService = TestBed.inject(LevelService);
+    categoryService = TestBed.inject(CategoryService);
     playerService = TestBed.inject(PlayerService);
     tournamentService = TestBed.inject(TournamentService);
 
@@ -51,12 +59,56 @@ describe('Team Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
+    it('Should call Level query and add missing value', () => {
+      const team: ITeam = { id: 456 };
+      const level: ILevel = { id: 30808 };
+      team.level = level;
+
+      const levelCollection: ILevel[] = [{ id: 29573 }];
+      jest.spyOn(levelService, 'query').mockReturnValue(of(new HttpResponse({ body: levelCollection })));
+      const additionalLevels = [level];
+      const expectedCollection: ILevel[] = [...additionalLevels, ...levelCollection];
+      jest.spyOn(levelService, 'addLevelToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ team });
+      comp.ngOnInit();
+
+      expect(levelService.query).toHaveBeenCalled();
+      expect(levelService.addLevelToCollectionIfMissing).toHaveBeenCalledWith(
+        levelCollection,
+        ...additionalLevels.map(expect.objectContaining),
+      );
+      expect(comp.levelsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should call Category query and add missing value', () => {
+      const team: ITeam = { id: 456 };
+      const category: ICategory = { id: 14415 };
+      team.category = category;
+
+      const categoryCollection: ICategory[] = [{ id: 19363 }];
+      jest.spyOn(categoryService, 'query').mockReturnValue(of(new HttpResponse({ body: categoryCollection })));
+      const additionalCategories = [category];
+      const expectedCollection: ICategory[] = [...additionalCategories, ...categoryCollection];
+      jest.spyOn(categoryService, 'addCategoryToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ team });
+      comp.ngOnInit();
+
+      expect(categoryService.query).toHaveBeenCalled();
+      expect(categoryService.addCategoryToCollectionIfMissing).toHaveBeenCalledWith(
+        categoryCollection,
+        ...additionalCategories.map(expect.objectContaining),
+      );
+      expect(comp.categoriesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call Player query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const players: IPlayer[] = [{ id: 10784 }];
+      const players: IPlayer[] = [{ id: 22370 }];
       team.players = players;
 
-      const playerCollection: IPlayer[] = [{ id: 8482 }];
+      const playerCollection: IPlayer[] = [{ id: 17837 }];
       jest.spyOn(playerService, 'query').mockReturnValue(of(new HttpResponse({ body: playerCollection })));
       const additionalPlayers = [...players];
       const expectedCollection: IPlayer[] = [...additionalPlayers, ...playerCollection];
@@ -75,10 +127,10 @@ describe('Team Management Update Component', () => {
 
     it('Should call Tournament query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const tournaments: ITournament[] = [{ id: 5002 }];
+      const tournaments: ITournament[] = [{ id: 8938 }];
       team.tournaments = tournaments;
 
-      const tournamentCollection: ITournament[] = [{ id: 30543 }];
+      const tournamentCollection: ITournament[] = [{ id: 7302 }];
       jest.spyOn(tournamentService, 'query').mockReturnValue(of(new HttpResponse({ body: tournamentCollection })));
       const additionalTournaments = [...tournaments];
       const expectedCollection: ITournament[] = [...additionalTournaments, ...tournamentCollection];
@@ -97,15 +149,21 @@ describe('Team Management Update Component', () => {
 
     it('Should update editForm', () => {
       const team: ITeam = { id: 456 };
-      const player: IPlayer = { id: 30937 };
-      team.players = [player];
-      const tournaments: ITournament = { id: 9187 };
+      const level: ILevel = { id: 23123 };
+      team.level = level;
+      const category: ICategory = { id: 9874 };
+      team.category = category;
+      const players: IPlayer = { id: 27514 };
+      team.players = [players];
+      const tournaments: ITournament = { id: 7108 };
       team.tournaments = [tournaments];
 
       activatedRoute.data = of({ team });
       comp.ngOnInit();
 
-      expect(comp.playersSharedCollection).toContain(player);
+      expect(comp.levelsSharedCollection).toContain(level);
+      expect(comp.categoriesSharedCollection).toContain(category);
+      expect(comp.playersSharedCollection).toContain(players);
       expect(comp.tournamentsSharedCollection).toContain(tournaments);
       expect(comp.team).toEqual(team);
     });
@@ -180,6 +238,26 @@ describe('Team Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareLevel', () => {
+      it('Should forward to levelService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(levelService, 'compareLevel');
+        comp.compareLevel(entity, entity2);
+        expect(levelService.compareLevel).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareCategory', () => {
+      it('Should forward to categoryService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(categoryService, 'compareCategory');
+        comp.compareCategory(entity, entity2);
+        expect(categoryService.compareCategory).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('comparePlayer', () => {
       it('Should forward to playerService', () => {
         const entity = { id: 123 };

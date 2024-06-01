@@ -19,10 +19,10 @@ type TeamFormDefaults = Pick<NewTeam, 'id' | 'players' | 'tournaments'>;
 type TeamFormGroupContent = {
   id: FormControl<ITeam['id'] | NewTeam['id']>;
   teamName: FormControl<ITeam['teamName']>;
-  level: FormControl<ITeam['level']>;
-  category: FormControl<ITeam['category']>;
   logo: FormControl<ITeam['logo']>;
   logoContentType: FormControl<ITeam['logoContentType']>;
+  level: FormControl<ITeam['level']>;
+  category: FormControl<ITeam['category']>;
   players: FormControl<ITeam['players']>;
   tournaments: FormControl<ITeam['tournaments']>;
 };
@@ -45,10 +45,10 @@ export class TeamFormService {
         },
       ),
       teamName: new FormControl(teamRawValue.teamName),
-      level: new FormControl(teamRawValue.level),
-      category: new FormControl(teamRawValue.category),
       logo: new FormControl(teamRawValue.logo),
       logoContentType: new FormControl(teamRawValue.logoContentType),
+      level: new FormControl(teamRawValue.level),
+      category: new FormControl(teamRawValue.category),
       players: new FormControl(teamRawValue.players ?? []),
       tournaments: new FormControl(teamRawValue.tournaments ?? []),
     });

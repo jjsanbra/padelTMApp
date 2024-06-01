@@ -24,14 +24,14 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
     @Mapping(target = "location", source = "location", qualifiedByName = "locationCity")
     @Mapping(target = "sponsors", source = "sponsors", qualifiedByName = "sponsorSponsorNameSet")
     @Mapping(target = "teams", source = "teams", qualifiedByName = "teamTeamNameSet")
-    @Mapping(target = "categories", source = "categories", qualifiedByName = "categoryDescriptionSet")
-    @Mapping(target = "levels", source = "levels", qualifiedByName = "levelDescriptionSet")
+    @Mapping(target = "categories", source = "categories", qualifiedByName = "categoryCategoryNameSet")
+    @Mapping(target = "levels", source = "levels", qualifiedByName = "levelLevelNameSet")
     TournamentDTO toDto(Tournament s);
 
-    @Mapping(target = "removeSponsor", ignore = true)
-    @Mapping(target = "removeTeam", ignore = true)
-    @Mapping(target = "removeCategory", ignore = true)
-    @Mapping(target = "removeLevel", ignore = true)
+    @Mapping(target = "removeSponsors", ignore = true)
+    @Mapping(target = "removeTeams", ignore = true)
+    @Mapping(target = "removeCategories", ignore = true)
+    @Mapping(target = "removeLevels", ignore = true)
     Tournament toEntity(TournamentDTO tournamentDTO);
 
     @Named("locationCity")
@@ -62,25 +62,25 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
         return team.stream().map(this::toDtoTeamTeamName).collect(Collectors.toSet());
     }
 
-    @Named("categoryDescription")
+    @Named("categoryCategoryName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "description", source = "description")
-    CategoryDTO toDtoCategoryDescription(Category category);
+    @Mapping(target = "categoryName", source = "categoryName")
+    CategoryDTO toDtoCategoryCategoryName(Category category);
 
-    @Named("categoryDescriptionSet")
-    default Set<CategoryDTO> toDtoCategoryDescriptionSet(Set<Category> category) {
-        return category.stream().map(this::toDtoCategoryDescription).collect(Collectors.toSet());
+    @Named("categoryCategoryNameSet")
+    default Set<CategoryDTO> toDtoCategoryCategoryNameSet(Set<Category> category) {
+        return category.stream().map(this::toDtoCategoryCategoryName).collect(Collectors.toSet());
     }
 
-    @Named("levelDescription")
+    @Named("levelLevelName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "description", source = "description")
-    LevelDTO toDtoLevelDescription(Level level);
+    @Mapping(target = "levelName", source = "levelName")
+    LevelDTO toDtoLevelLevelName(Level level);
 
-    @Named("levelDescriptionSet")
-    default Set<LevelDTO> toDtoLevelDescriptionSet(Set<Level> level) {
-        return level.stream().map(this::toDtoLevelDescription).collect(Collectors.toSet());
+    @Named("levelLevelNameSet")
+    default Set<LevelDTO> toDtoLevelLevelNameSet(Set<Level> level) {
+        return level.stream().map(this::toDtoLevelLevelName).collect(Collectors.toSet());
     }
 }

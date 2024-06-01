@@ -1,8 +1,6 @@
 package com.padeltmapp.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -44,14 +42,6 @@ public class Player implements Serializable {
     @Column(name = "age")
     private Integer age;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private CategoryEnum category;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "level")
-    private LevelEnum level;
-
     @Lob
     @Column(name = "avatar")
     private byte[] avatar;
@@ -59,11 +49,19 @@ public class Player implements Serializable {
     @Column(name = "avatar_content_type")
     private String avatarContentType;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
+    private Level level;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_player__category",
+        name = "rel_player__categories",
         joinColumns = @JoinColumn(name = "player_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
+        inverseJoinColumns = @JoinColumn(name = "categories_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
@@ -71,7 +69,7 @@ public class Player implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "players")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "players", "tournaments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "level", "category", "players", "tournaments" }, allowSetters = true)
     private Set<Team> teams = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -141,32 +139,6 @@ public class Player implements Serializable {
         this.age = age;
     }
 
-    public CategoryEnum getCategory() {
-        return this.category;
-    }
-
-    public Player category(CategoryEnum category) {
-        this.setCategory(category);
-        return this;
-    }
-
-    public void setCategory(CategoryEnum category) {
-        this.category = category;
-    }
-
-    public LevelEnum getLevel() {
-        return this.level;
-    }
-
-    public Player level(LevelEnum level) {
-        this.setLevel(level);
-        return this;
-    }
-
-    public void setLevel(LevelEnum level) {
-        this.level = level;
-    }
-
     public byte[] getAvatar() {
         return this.avatar;
     }
@@ -193,6 +165,32 @@ public class Player implements Serializable {
         this.avatarContentType = avatarContentType;
     }
 
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Player user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
+    public Level getLevel() {
+        return this.level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Player level(Level level) {
+        this.setLevel(level);
+        return this;
+    }
+
     public Set<Category> getCategories() {
         return this.categories;
     }
@@ -206,12 +204,12 @@ public class Player implements Serializable {
         return this;
     }
 
-    public Player addCategory(Category category) {
+    public Player addCategories(Category category) {
         this.categories.add(category);
         return this;
     }
 
-    public Player removeCategory(Category category) {
+    public Player removeCategories(Category category) {
         this.categories.remove(category);
         return this;
     }
@@ -222,10 +220,10 @@ public class Player implements Serializable {
 
     public void setTeams(Set<Team> teams) {
         if (this.teams != null) {
-            this.teams.forEach(i -> i.removePlayer(this));
+            this.teams.forEach(i -> i.removePlayers(this));
         }
         if (teams != null) {
-            teams.forEach(i -> i.addPlayer(this));
+            teams.forEach(i -> i.addPlayers(this));
         }
         this.teams = teams;
     }
@@ -275,8 +273,6 @@ public class Player implements Serializable {
             ", lastName='" + getLastName() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", age=" + getAge() +
-            ", category='" + getCategory() + "'" +
-            ", level='" + getLevel() + "'" +
             ", avatar='" + getAvatar() + "'" +
             ", avatarContentType='" + getAvatarContentType() + "'" +
             "}";

@@ -24,26 +24,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_level" jhiTranslate="padelTmApp.team.level">Level</label>
-          <select class="form-control" name="level" formControlName="level" id="field_level" data-cy="level">
-            <option [ngValue]="null">{{ 'padelTmApp.LevelEnum.null' | translate }}</option>
-            @for (levelEnum of levelEnumValues; track $index) {
-              <option [value]="levelEnum">{{ 'padelTmApp.LevelEnum.' + levelEnum | translate }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_category" jhiTranslate="padelTmApp.team.category">Category</label>
-          <select class="form-control" name="category" formControlName="category" id="field_category" data-cy="category">
-            <option [ngValue]="null">{{ 'padelTmApp.CategoryEnum.null' | translate }}</option>
-            @for (categoryEnum of categoryEnumValues; track $index) {
-              <option [value]="categoryEnum">{{ 'padelTmApp.CategoryEnum.' + categoryEnum | translate }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_logo" jhiTranslate="padelTmApp.team.logo">Logo</label>
           <div>
             @if (editForm.get('logo')!.value) {
@@ -79,11 +59,38 @@
         </div>
 
         <div class="mb-3">
-          <label for="field_players" jhiTranslate="padelTmApp.team.player">Player</label>
+          <label class="form-label" for="field_level" jhiTranslate="padelTmApp.team.level">Level</label>
+          <select class="form-control" id="field_level" data-cy="level" name="level" formControlName="level" [compareWith]="compareLevel">
+            <option [ngValue]="null"></option>
+            @for (levelOption of levelsSharedCollection; track $index) {
+              <option [ngValue]="levelOption">{{ levelOption.levelName }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_category" jhiTranslate="padelTmApp.team.category">Category</label>
+          <select
+            class="form-control"
+            id="field_category"
+            data-cy="category"
+            name="category"
+            formControlName="category"
+            [compareWith]="compareCategory"
+          >
+            <option [ngValue]="null"></option>
+            @for (categoryOption of categoriesSharedCollection; track $index) {
+              <option [ngValue]="categoryOption">{{ categoryOption.categoryName }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_players" jhiTranslate="padelTmApp.team.players">Players</label>
           <select
             class="form-control"
             id="field_players"
-            data-cy="player"
+            data-cy="players"
             multiple
             name="players"
             formControlName="players"

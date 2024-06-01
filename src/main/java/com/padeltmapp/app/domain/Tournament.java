@@ -2,6 +2,7 @@ package com.padeltmapp.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -38,17 +39,13 @@ public class Tournament implements Serializable {
     @Column(name = "end_date")
     private Instant endDate;
 
-    @Column(name = "start_time")
-    private Instant startTime;
-
-    @Column(name = "end_time")
-    private Instant endTime;
-
     @Column(name = "last_inscriptions_date")
     private Instant lastInscriptionsDate;
 
-    @Column(name = "limit_pax")
-    private Integer limitPax;
+    @Min(value = 4)
+    @Max(value = 120)
+    @Column(name = "max_teams_allowed")
+    private Integer maxTeamsAllowed;
 
     @Column(name = "prices")
     private String prices;
@@ -70,9 +67,9 @@ public class Tournament implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_tournament__sponsor",
+        name = "rel_tournament__sponsors",
         joinColumns = @JoinColumn(name = "tournament_id"),
-        inverseJoinColumns = @JoinColumn(name = "sponsor_id")
+        inverseJoinColumns = @JoinColumn(name = "sponsors_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
@@ -80,19 +77,19 @@ public class Tournament implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_tournament__team",
+        name = "rel_tournament__teams",
         joinColumns = @JoinColumn(name = "tournament_id"),
-        inverseJoinColumns = @JoinColumn(name = "team_id")
+        inverseJoinColumns = @JoinColumn(name = "teams_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "players", "tournaments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "level", "category", "players", "tournaments" }, allowSetters = true)
     private Set<Team> teams = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_tournament__category",
+        name = "rel_tournament__categories",
         joinColumns = @JoinColumn(name = "tournament_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
+        inverseJoinColumns = @JoinColumn(name = "categories_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
@@ -100,9 +97,9 @@ public class Tournament implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_tournament__level",
+        name = "rel_tournament__levels",
         joinColumns = @JoinColumn(name = "tournament_id"),
-        inverseJoinColumns = @JoinColumn(name = "level_id")
+        inverseJoinColumns = @JoinColumn(name = "levels_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
@@ -175,32 +172,6 @@ public class Tournament implements Serializable {
         this.endDate = endDate;
     }
 
-    public Instant getStartTime() {
-        return this.startTime;
-    }
-
-    public Tournament startTime(Instant startTime) {
-        this.setStartTime(startTime);
-        return this;
-    }
-
-    public void setStartTime(Instant startTime) {
-        this.startTime = startTime;
-    }
-
-    public Instant getEndTime() {
-        return this.endTime;
-    }
-
-    public Tournament endTime(Instant endTime) {
-        this.setEndTime(endTime);
-        return this;
-    }
-
-    public void setEndTime(Instant endTime) {
-        this.endTime = endTime;
-    }
-
     public Instant getLastInscriptionsDate() {
         return this.lastInscriptionsDate;
     }
@@ -214,17 +185,17 @@ public class Tournament implements Serializable {
         this.lastInscriptionsDate = lastInscriptionsDate;
     }
 
-    public Integer getLimitPax() {
-        return this.limitPax;
+    public Integer getMaxTeamsAllowed() {
+        return this.maxTeamsAllowed;
     }
 
-    public Tournament limitPax(Integer limitPax) {
-        this.setLimitPax(limitPax);
+    public Tournament maxTeamsAllowed(Integer maxTeamsAllowed) {
+        this.setMaxTeamsAllowed(maxTeamsAllowed);
         return this;
     }
 
-    public void setLimitPax(Integer limitPax) {
-        this.limitPax = limitPax;
+    public void setMaxTeamsAllowed(Integer maxTeamsAllowed) {
+        this.maxTeamsAllowed = maxTeamsAllowed;
     }
 
     public String getPrices() {
@@ -305,12 +276,12 @@ public class Tournament implements Serializable {
         return this;
     }
 
-    public Tournament addSponsor(Sponsor sponsor) {
+    public Tournament addSponsors(Sponsor sponsor) {
         this.sponsors.add(sponsor);
         return this;
     }
 
-    public Tournament removeSponsor(Sponsor sponsor) {
+    public Tournament removeSponsors(Sponsor sponsor) {
         this.sponsors.remove(sponsor);
         return this;
     }
@@ -328,12 +299,12 @@ public class Tournament implements Serializable {
         return this;
     }
 
-    public Tournament addTeam(Team team) {
+    public Tournament addTeams(Team team) {
         this.teams.add(team);
         return this;
     }
 
-    public Tournament removeTeam(Team team) {
+    public Tournament removeTeams(Team team) {
         this.teams.remove(team);
         return this;
     }
@@ -351,12 +322,12 @@ public class Tournament implements Serializable {
         return this;
     }
 
-    public Tournament addCategory(Category category) {
+    public Tournament addCategories(Category category) {
         this.categories.add(category);
         return this;
     }
 
-    public Tournament removeCategory(Category category) {
+    public Tournament removeCategories(Category category) {
         this.categories.remove(category);
         return this;
     }
@@ -374,12 +345,12 @@ public class Tournament implements Serializable {
         return this;
     }
 
-    public Tournament addLevel(Level level) {
+    public Tournament addLevels(Level level) {
         this.levels.add(level);
         return this;
     }
 
-    public Tournament removeLevel(Level level) {
+    public Tournament removeLevels(Level level) {
         this.levels.remove(level);
         return this;
     }
@@ -412,10 +383,8 @@ public class Tournament implements Serializable {
             ", description='" + getDescription() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
-            ", startTime='" + getStartTime() + "'" +
-            ", endTime='" + getEndTime() + "'" +
             ", lastInscriptionsDate='" + getLastInscriptionsDate() + "'" +
-            ", limitPax=" + getLimitPax() +
+            ", maxTeamsAllowed=" + getMaxTeamsAllowed() +
             ", prices='" + getPrices() + "'" +
             ", active='" + getActive() + "'" +
             ", poster='" + getPoster() + "'" +

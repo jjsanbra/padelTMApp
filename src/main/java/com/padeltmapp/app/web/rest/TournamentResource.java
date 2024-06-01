@@ -4,6 +4,8 @@ import com.padeltmapp.app.repository.TournamentRepository;
 import com.padeltmapp.app.service.TournamentService;
 import com.padeltmapp.app.service.dto.TournamentDTO;
 import com.padeltmapp.app.web.rest.errors.BadRequestAlertException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -53,7 +55,7 @@ public class TournamentResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<TournamentDTO> createTournament(@RequestBody TournamentDTO tournamentDTO) throws URISyntaxException {
+    public ResponseEntity<TournamentDTO> createTournament(@Valid @RequestBody TournamentDTO tournamentDTO) throws URISyntaxException {
         log.debug("REST request to save Tournament : {}", tournamentDTO);
         if (tournamentDTO.getId() != null) {
             throw new BadRequestAlertException("A new tournament cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,7 +79,7 @@ public class TournamentResource {
     @PutMapping("/{id}")
     public ResponseEntity<TournamentDTO> updateTournament(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TournamentDTO tournamentDTO
+        @Valid @RequestBody TournamentDTO tournamentDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Tournament : {}, {}", id, tournamentDTO);
         if (tournamentDTO.getId() == null) {
@@ -111,7 +113,7 @@ public class TournamentResource {
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<TournamentDTO> partialUpdateTournament(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody TournamentDTO tournamentDTO
+        @NotNull @RequestBody TournamentDTO tournamentDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Tournament partially : {}, {}", id, tournamentDTO);
         if (tournamentDTO.getId() == null) {

@@ -30,12 +30,10 @@ describe('Team e2e test', () => {
       method: 'POST',
       url: '/api/players',
       body: {
-        firstName: 'Josefina',
-        lastName: 'Zamora Alaníz',
-        phoneNumber: 'kendo alongside healthily',
-        age: 41,
-        category: 'M',
-        level: 'L6',
+        firstName: 'Marcela',
+        lastName: 'Gálvez Esquibel',
+        phoneNumber: 'helpfully',
+        age: 39,
         avatar: 'Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci5wbmc=',
         avatarContentType: 'unknown',
       },
@@ -52,6 +50,16 @@ describe('Team e2e test', () => {
 
   beforeEach(() => {
     // Simulate relationships api for better performance and reproducibility.
+    cy.intercept('GET', '/api/levels', {
+      statusCode: 200,
+      body: [],
+    });
+
+    cy.intercept('GET', '/api/categories', {
+      statusCode: 200,
+      body: [],
+    });
+
     cy.intercept('GET', '/api/players', {
       statusCode: 200,
       body: [player],
@@ -126,7 +134,7 @@ describe('Team e2e test', () => {
           url: '/api/teams',
           body: {
             ...teamSample,
-            player: player,
+            players: player,
           },
         }).then(({ body }) => {
           team = body;
@@ -205,16 +213,12 @@ describe('Team e2e test', () => {
     });
 
     it('should create an instance of Team', () => {
-      cy.get(`[data-cy="teamName"]`).type('cap united finally');
-      cy.get(`[data-cy="teamName"]`).should('have.value', 'cap united finally');
-
-      cy.get(`[data-cy="level"]`).select('L1');
-
-      cy.get(`[data-cy="category"]`).select('M');
+      cy.get(`[data-cy="teamName"]`).type('consequently whoever');
+      cy.get(`[data-cy="teamName"]`).should('have.value', 'consequently whoever');
 
       cy.setFieldImageAsBytesOfEntity('logo', 'integration-test.png', 'image/png');
 
-      cy.get(`[data-cy="player"]`).select([0]);
+      cy.get(`[data-cy="players"]`).select([0]);
 
       // since cypress clicks submit too fast before the blob fields are validated
       cy.wait(200); // eslint-disable-line cypress/no-unnecessary-waiting

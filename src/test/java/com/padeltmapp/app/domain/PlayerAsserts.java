@@ -51,8 +51,6 @@ public class PlayerAsserts {
             .satisfies(e -> assertThat(e.getLastName()).as("check lastName").isEqualTo(actual.getLastName()))
             .satisfies(e -> assertThat(e.getPhoneNumber()).as("check phoneNumber").isEqualTo(actual.getPhoneNumber()))
             .satisfies(e -> assertThat(e.getAge()).as("check age").isEqualTo(actual.getAge()))
-            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
-            .satisfies(e -> assertThat(e.getLevel()).as("check level").isEqualTo(actual.getLevel()))
             .satisfies(e -> assertThat(e.getAvatar()).as("check avatar").isEqualTo(actual.getAvatar()))
             .satisfies(e -> assertThat(e.getAvatarContentType()).as("check avatar contenty type").isEqualTo(actual.getAvatarContentType()));
     }
@@ -66,6 +64,7 @@ public class PlayerAsserts {
     public static void assertPlayerUpdatableRelationshipsEquals(Player expected, Player actual) {
         assertThat(expected)
             .as("Verify Player relationships")
+            .satisfies(e -> assertThat(e.getLevel()).as("check level").isEqualTo(actual.getLevel()))
             .satisfies(e -> assertThat(e.getCategories()).as("check categories").isEqualTo(actual.getCategories()))
             .satisfies(e -> assertThat(e.getTeams()).as("check teams").isEqualTo(actual.getTeams()));
     }

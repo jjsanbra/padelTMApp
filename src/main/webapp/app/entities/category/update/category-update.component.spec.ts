@@ -53,10 +53,10 @@ describe('Category Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Tournament query and add missing value', () => {
       const category: ICategory = { id: 456 };
-      const tournaments: ITournament[] = [{ id: 30292 }];
+      const tournaments: ITournament[] = [{ id: 3214 }];
       category.tournaments = tournaments;
 
-      const tournamentCollection: ITournament[] = [{ id: 13754 }];
+      const tournamentCollection: ITournament[] = [{ id: 19555 }];
       jest.spyOn(tournamentService, 'query').mockReturnValue(of(new HttpResponse({ body: tournamentCollection })));
       const additionalTournaments = [...tournaments];
       const expectedCollection: ITournament[] = [...additionalTournaments, ...tournamentCollection];
@@ -75,10 +75,10 @@ describe('Category Management Update Component', () => {
 
     it('Should call Player query and add missing value', () => {
       const category: ICategory = { id: 456 };
-      const players: IPlayer[] = [{ id: 25916 }];
+      const players: IPlayer[] = [{ id: 3689 }];
       category.players = players;
 
-      const playerCollection: IPlayer[] = [{ id: 1892 }];
+      const playerCollection: IPlayer[] = [{ id: 11238 }];
       jest.spyOn(playerService, 'query').mockReturnValue(of(new HttpResponse({ body: playerCollection })));
       const additionalPlayers = [...players];
       const expectedCollection: IPlayer[] = [...additionalPlayers, ...playerCollection];
@@ -97,9 +97,9 @@ describe('Category Management Update Component', () => {
 
     it('Should update editForm', () => {
       const category: ICategory = { id: 456 };
-      const tournaments: ITournament = { id: 14356 };
+      const tournaments: ITournament = { id: 26998 };
       category.tournaments = [tournaments];
-      const players: IPlayer = { id: 12288 };
+      const players: IPlayer = { id: 7259 };
       category.players = [players];
 
       activatedRoute.data = of({ category });

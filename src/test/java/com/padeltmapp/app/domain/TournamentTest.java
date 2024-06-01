@@ -42,14 +42,14 @@ class TournamentTest {
     }
 
     @Test
-    void sponsorTest() throws Exception {
+    void sponsorsTest() throws Exception {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Sponsor sponsorBack = getSponsorRandomSampleGenerator();
 
-        tournament.addSponsor(sponsorBack);
+        tournament.addSponsors(sponsorBack);
         assertThat(tournament.getSponsors()).containsOnly(sponsorBack);
 
-        tournament.removeSponsor(sponsorBack);
+        tournament.removeSponsors(sponsorBack);
         assertThat(tournament.getSponsors()).doesNotContain(sponsorBack);
 
         tournament.sponsors(new HashSet<>(Set.of(sponsorBack)));
@@ -60,14 +60,14 @@ class TournamentTest {
     }
 
     @Test
-    void teamTest() throws Exception {
+    void teamsTest() throws Exception {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Team teamBack = getTeamRandomSampleGenerator();
 
-        tournament.addTeam(teamBack);
+        tournament.addTeams(teamBack);
         assertThat(tournament.getTeams()).containsOnly(teamBack);
 
-        tournament.removeTeam(teamBack);
+        tournament.removeTeams(teamBack);
         assertThat(tournament.getTeams()).doesNotContain(teamBack);
 
         tournament.teams(new HashSet<>(Set.of(teamBack)));
@@ -78,14 +78,14 @@ class TournamentTest {
     }
 
     @Test
-    void categoryTest() throws Exception {
+    void categoriesTest() throws Exception {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Category categoryBack = getCategoryRandomSampleGenerator();
 
-        tournament.addCategory(categoryBack);
+        tournament.addCategories(categoryBack);
         assertThat(tournament.getCategories()).containsOnly(categoryBack);
 
-        tournament.removeCategory(categoryBack);
+        tournament.removeCategories(categoryBack);
         assertThat(tournament.getCategories()).doesNotContain(categoryBack);
 
         tournament.categories(new HashSet<>(Set.of(categoryBack)));
@@ -96,14 +96,14 @@ class TournamentTest {
     }
 
     @Test
-    void levelTest() throws Exception {
+    void levelsTest() throws Exception {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Level levelBack = getLevelRandomSampleGenerator();
 
-        tournament.addLevel(levelBack);
+        tournament.addLevels(levelBack);
         assertThat(tournament.getLevels()).containsOnly(levelBack);
 
-        tournament.removeLevel(levelBack);
+        tournament.removeLevels(levelBack);
         assertThat(tournament.getLevels()).doesNotContain(levelBack);
 
         tournament.levels(new HashSet<>(Set.of(levelBack)));

@@ -77,9 +77,7 @@
               <td>
                 <a [routerLink]="['/category', category.id, 'view']">{{ category.id }}</a>
               </td>
-              <td [jhiTranslate]="'padelTmApp.CategoryEnum.' + (category.categoryName ?? 'null')">
-                {{ { null: '', F: 'Femenino', M: 'Masculino', MIX: 'Mixto' }[category.categoryName ?? 'null'] }}
-              </td>
+              <td>{{ category.categoryName }}</td>
               <td>{{ category.description }}</td>
               <td>
                 @for (tournaments of category.tournaments; track $index; let last = $last) {

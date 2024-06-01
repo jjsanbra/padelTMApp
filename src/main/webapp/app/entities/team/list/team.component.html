@@ -49,20 +49,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="level">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.team.level">Level</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="category">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.team.category">Category</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="logo">
               <div class="d-flex">
                 <span jhiTranslate="padelTmApp.team.logo">Logo</span>
@@ -70,9 +56,21 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="player.firstName">
+            <th scope="col" jhiSortBy="level.levelName">
               <div class="d-flex">
-                <span jhiTranslate="padelTmApp.team.player">Player</span>
+                <span jhiTranslate="padelTmApp.team.level">Level</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="category.categoryName">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.team.category">Category</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="players.firstName">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.team.players">Players</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -92,30 +90,6 @@
                 <a [routerLink]="['/team', team.id, 'view']">{{ team.id }}</a>
               </td>
               <td>{{ team.teamName }}</td>
-              <td [jhiTranslate]="'padelTmApp.LevelEnum.' + (team.level ?? 'null')">
-                {{
-                  {
-                    null: '',
-                    L0: '0 - Iniciación',
-                    L05: '0.5 - Iniciación',
-                    L1: '1 - Iniciación',
-                    L15: '1.5 - Iniciación Intermedio',
-                    L2: '2 - Iniciación Intermedio',
-                    L25: '2.5 - Intermedio',
-                    L3: '3 - Intermedio',
-                    L35: '3.5 - Intermedio',
-                    L4: '4 - Intermedio Alto',
-                    L45: '4.5 - Intermedio Alto',
-                    L5: '5 - Alto Avanzado',
-                    L55: '5.5 - Avanzado',
-                    L6: '6 - Avanzado',
-                    L7: '7 - Élite'
-                  }[team.level ?? 'null']
-                }}
-              </td>
-              <td [jhiTranslate]="'padelTmApp.CategoryEnum.' + (team.category ?? 'null')">
-                {{ { null: '', F: 'Femenino', M: 'Masculino', MIX: 'Mixto' }[team.category ?? 'null'] }}
-              </td>
               <td>
                 @if (team.logo) {
                   <a (click)="openFile(team.logo, team.logoContentType)">
@@ -125,9 +99,23 @@
                 }
               </td>
               <td>
-                @for (player of team.players; track $index; let last = $last) {
+                @if (team.level) {
+                  <div>
+                    <a [routerLink]="['/level', team.level.id, 'view']">{{ team.level.levelName }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (team.category) {
+                  <div>
+                    <a [routerLink]="['/category', team.category.id, 'view']">{{ team.category.categoryName }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @for (players of team.players; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/player', player.id, 'view']">{{ player.firstName }}</a
+                    <a class="form-control-static" [routerLink]="['/player', players.id, 'view']">{{ players.firstName }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }

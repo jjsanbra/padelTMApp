@@ -3,32 +3,27 @@ import dayjs from 'dayjs/esm';
 import { ITournament, NewTournament } from './tournament.model';
 
 export const sampleWithRequiredData: ITournament = {
-  id: 1343,
+  id: 30880,
 };
 
 export const sampleWithPartialData: ITournament = {
-  id: 77,
-  description: 'quarrelsomely unless wherever',
-  startDate: dayjs('2024-05-30T06:49'),
-  endDate: dayjs('2024-05-30T09:55'),
-  endTime: dayjs('2024-05-30T08:20'),
-  limitPax: 19170,
-  prices: 'among mid and',
-  poster: '../fake-data/blob/hipster.png',
-  posterContentType: 'unknown',
+  id: 11026,
+  description: 'ingredient',
+  endDate: dayjs('2024-05-29T22:42'),
+  lastInscriptionsDate: dayjs('2024-05-30T08:12'),
+  maxTeamsAllowed: 44,
+  active: false,
 };
 
 export const sampleWithFullData: ITournament = {
-  id: 24189,
-  tournamentName: 'under',
-  description: 'wherever',
-  startDate: dayjs('2024-05-29T16:02'),
-  endDate: dayjs('2024-05-29T18:34'),
-  startTime: dayjs('2024-05-30T04:55'),
-  endTime: dayjs('2024-05-30T09:24'),
-  lastInscriptionsDate: dayjs('2024-05-30T04:39'),
-  limitPax: 1612,
-  prices: 'moist which underneath',
+  id: 18070,
+  tournamentName: 'prophet',
+  description: 'deliberately beautifully ha',
+  startDate: dayjs('2024-05-30T01:09'),
+  endDate: dayjs('2024-05-29T22:57'),
+  lastInscriptionsDate: dayjs('2024-05-29T19:41'),
+  maxTeamsAllowed: 25,
+  prices: 'cripple whoa',
   active: false,
   poster: '../fake-data/blob/hipster.png',
   posterContentType: 'unknown',

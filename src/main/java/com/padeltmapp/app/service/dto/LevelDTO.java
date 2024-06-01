@@ -1,6 +1,5 @@
 package com.padeltmapp.app.service.dto;
 
-import com.padeltmapp.app.domain.enumeration.LevelEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -18,7 +17,7 @@ public class LevelDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private LevelEnum levelName;
+    private String levelName;
 
     private String description;
 
@@ -32,11 +31,11 @@ public class LevelDTO implements Serializable {
         this.id = id;
     }
 
-    public LevelEnum getLevelName() {
+    public String getLevelName() {
         return levelName;
     }
 
-    public void setLevelName(LevelEnum levelName) {
+    public void setLevelName(String levelName) {
         this.levelName = levelName;
     }
 

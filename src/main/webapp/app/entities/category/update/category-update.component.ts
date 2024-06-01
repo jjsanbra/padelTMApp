@@ -11,7 +11,6 @@ import { ITournament } from 'app/entities/tournament/tournament.model';
 import { TournamentService } from 'app/entities/tournament/service/tournament.service';
 import { IPlayer } from 'app/entities/player/player.model';
 import { PlayerService } from 'app/entities/player/service/player.service';
-import { CategoryEnum } from 'app/entities/enumerations/category-enum.model';
 import { CategoryService } from '../service/category.service';
 import { ICategory } from '../category.model';
 import { CategoryFormService, CategoryFormGroup } from './category-form.service';
@@ -25,7 +24,6 @@ import { CategoryFormService, CategoryFormGroup } from './category-form.service'
 export class CategoryUpdateComponent implements OnInit {
   isSaving = false;
   category: ICategory | null = null;
-  categoryEnumValues = Object.keys(CategoryEnum);
 
   tournamentsSharedCollection: ITournament[] = [];
   playersSharedCollection: IPlayer[] = [];

@@ -10,12 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { ILevel } from 'app/entities/level/level.model';
+import { LevelService } from 'app/entities/level/service/level.service';
+import { ICategory } from 'app/entities/category/category.model';
+import { CategoryService } from 'app/entities/category/service/category.service';
 import { IPlayer } from 'app/entities/player/player.model';
 import { PlayerService } from 'app/entities/player/service/player.service';
 import { ITournament } from 'app/entities/tournament/tournament.model';
 import { TournamentService } from 'app/entities/tournament/service/tournament.service';
-import { LevelEnum } from 'app/entities/enumerations/level-enum.model';
-import { CategoryEnum } from 'app/entities/enumerations/category-enum.model';
 import { TeamService } from '../service/team.service';
 import { ITeam } from '../team.model';
 import { TeamFormService, TeamFormGroup } from './team-form.service';
@@ -29,9 +31,9 @@ import { TeamFormService, TeamFormGroup } from './team-form.service';
 export class TeamUpdateComponent implements OnInit {
   isSaving = false;
   team: ITeam | null = null;
-  levelEnumValues = Object.keys(LevelEnum);
-  categoryEnumValues = Object.keys(CategoryEnum);
 
+  levelsSharedCollection: ILevel[] = [];
+  categoriesSharedCollection: ICategory[] = [];
   playersSharedCollection: IPlayer[] = [];
   tournamentsSharedCollection: ITournament[] = [];
 
@@ -39,6 +41,8 @@ export class TeamUpdateComponent implements OnInit {
   protected eventManager = inject(EventManager);
   protected teamService = inject(TeamService);
   protected teamFormService = inject(TeamFormService);
+  protected levelService = inject(LevelService);
+  protected categoryService = inject(CategoryService);
   protected playerService = inject(PlayerService);
   protected tournamentService = inject(TournamentService);
   protected elementRef = inject(ElementRef);
@@ -46,6 +50,10 @@ export class TeamUpdateComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: TeamFormGroup = this.teamFormService.createTeamFormGroup();
+
+  compareLevel = (o1: ILevel | null, o2: ILevel | null): boolean => this.levelService.compareLevel(o1, o2);
+
+  compareCategory = (o1: ICategory | null, o2: ICategory | null): boolean => this.categoryService.compareCategory(o1, o2);
 
   comparePlayer = (o1: IPlayer | null, o2: IPlayer | null): boolean => this.playerService.comparePlayer(o1, o2);
 
@@ -124,6 +132,11 @@ export class TeamUpdateComponent implements OnInit {
     this.team = team;
     this.teamFormService.resetForm(this.editForm, team);
 
+    this.levelsSharedCollection = this.levelService.addLevelToCollectionIfMissing<ILevel>(this.levelsSharedCollection, team.level);
+    this.categoriesSharedCollection = this.categoryService.addCategoryToCollectionIfMissing<ICategory>(
+      this.categoriesSharedCollection,
+      team.category,
+    );
     this.playersSharedCollection = this.playerService.addPlayerToCollectionIfMissing<IPlayer>(
       this.playersSharedCollection,
       ...(team.players ?? []),
@@ -135,6 +148,20 @@ export class TeamUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.levelService
+      .query()
+      .pipe(map((res: HttpResponse<ILevel[]>) => res.body ?? []))
+      .pipe(map((levels: ILevel[]) => this.levelService.addLevelToCollectionIfMissing<ILevel>(levels, this.team?.level)))
+      .subscribe((levels: ILevel[]) => (this.levelsSharedCollection = levels));
+
+    this.categoryService
+      .query()
+      .pipe(map((res: HttpResponse<ICategory[]>) => res.body ?? []))
+      .pipe(
+        map((categories: ICategory[]) => this.categoryService.addCategoryToCollectionIfMissing<ICategory>(categories, this.team?.category)),
+      )
+      .subscribe((categories: ICategory[]) => (this.categoriesSharedCollection = categories));
+
     this.playerService
       .query()
       .pipe(map((res: HttpResponse<IPlayer[]>) => res.body ?? []))

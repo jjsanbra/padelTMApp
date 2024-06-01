@@ -70,36 +70,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_startTime" jhiTranslate="padelTmApp.tournament.startTime">Start Time</label>
-          <div class="d-flex">
-            <input
-              id="field_startTime"
-              data-cy="startTime"
-              type="datetime-local"
-              class="form-control"
-              name="startTime"
-              formControlName="startTime"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_endTime" jhiTranslate="padelTmApp.tournament.endTime">End Time</label>
-          <div class="d-flex">
-            <input
-              id="field_endTime"
-              data-cy="endTime"
-              type="datetime-local"
-              class="form-control"
-              name="endTime"
-              formControlName="endTime"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_lastInscriptionsDate" jhiTranslate="padelTmApp.tournament.lastInscriptionsDate"
             >Last Inscriptions Date</label
           >
@@ -117,8 +87,39 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_limitPax" jhiTranslate="padelTmApp.tournament.limitPax">Limit Pax</label>
-          <input type="number" class="form-control" name="limitPax" id="field_limitPax" data-cy="limitPax" formControlName="limitPax" />
+          <label class="form-label" for="field_maxTeamsAllowed" jhiTranslate="padelTmApp.tournament.maxTeamsAllowed"
+            >Max Teams Allowed</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="maxTeamsAllowed"
+            id="field_maxTeamsAllowed"
+            data-cy="maxTeamsAllowed"
+            formControlName="maxTeamsAllowed"
+          />
+          @if (
+            editForm.get('maxTeamsAllowed')!.invalid && (editForm.get('maxTeamsAllowed')!.dirty || editForm.get('maxTeamsAllowed')!.touched)
+          ) {
+            <div>
+              @if (editForm.get('maxTeamsAllowed')?.errors?.min) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '4' }"
+                  >Este campo debe ser mayor que 4.</small
+                >
+              }
+              @if (editForm.get('maxTeamsAllowed')?.errors?.max) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.max" [translateValues]="{ max: '120' }"
+                  >Este campo no puede ser mayor que 120.</small
+                >
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('maxTeamsAllowed')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >Este campo debe ser un número.</small
+              >
+            </div>
+          }
         </div>
 
         <div class="mb-3">
@@ -192,11 +193,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="field_sponsors" jhiTranslate="padelTmApp.tournament.sponsor">Sponsor</label>
+          <label for="field_sponsors" jhiTranslate="padelTmApp.tournament.sponsors">Sponsors</label>
           <select
             class="form-control"
             id="field_sponsors"
-            data-cy="sponsor"
+            data-cy="sponsors"
             multiple
             name="sponsors"
             formControlName="sponsors"
@@ -209,11 +210,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="field_teams" jhiTranslate="padelTmApp.tournament.team">Team</label>
+          <label for="field_teams" jhiTranslate="padelTmApp.tournament.teams">Teams</label>
           <select
             class="form-control"
             id="field_teams"
-            data-cy="team"
+            data-cy="teams"
             multiple
             name="teams"
             formControlName="teams"
@@ -226,35 +227,35 @@
         </div>
 
         <div class="mb-3">
-          <label for="field_categories" jhiTranslate="padelTmApp.tournament.category">Category</label>
+          <label for="field_categories" jhiTranslate="padelTmApp.tournament.categories">Categories</label>
           <select
             class="form-control"
             id="field_categories"
-            data-cy="category"
+            data-cy="categories"
             multiple
             name="categories"
             formControlName="categories"
             [compareWith]="compareCategory"
           >
             @for (categoryOption of categoriesSharedCollection; track $index) {
-              <option [ngValue]="categoryOption">{{ categoryOption.description }}</option>
+              <option [ngValue]="categoryOption">{{ categoryOption.categoryName }}</option>
             }
           </select>
         </div>
 
         <div class="mb-3">
-          <label for="field_levels" jhiTranslate="padelTmApp.tournament.level">Level</label>
+          <label for="field_levels" jhiTranslate="padelTmApp.tournament.levels">Levels</label>
           <select
             class="form-control"
             id="field_levels"
-            data-cy="level"
+            data-cy="levels"
             multiple
             name="levels"
             formControlName="levels"
             [compareWith]="compareLevel"
           >
             @for (levelOption of levelsSharedCollection; track $index) {
-              <option [ngValue]="levelOption">{{ levelOption.description }}</option>
+              <option [ngValue]="levelOption">{{ levelOption.levelName }}</option>
             }
           </select>
         </div>

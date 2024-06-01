@@ -105,10 +105,10 @@ describe('Tournament Management Update Component', () => {
 
     it('Should call Team query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const teams: ITeam[] = [{ id: 4682 }];
+      const teams: ITeam[] = [{ id: 31380 }];
       tournament.teams = teams;
 
-      const teamCollection: ITeam[] = [{ id: 4869 }];
+      const teamCollection: ITeam[] = [{ id: 26911 }];
       jest.spyOn(teamService, 'query').mockReturnValue(of(new HttpResponse({ body: teamCollection })));
       const additionalTeams = [...teams];
       const expectedCollection: ITeam[] = [...additionalTeams, ...teamCollection];
@@ -173,23 +173,23 @@ describe('Tournament Management Update Component', () => {
       const tournament: ITournament = { id: 456 };
       const location: ILocation = { id: 21402 };
       tournament.location = location;
-      const sponsor: ISponsor = { id: 13350 };
-      tournament.sponsors = [sponsor];
-      const team: ITeam = { id: 3583 };
-      tournament.teams = [team];
-      const category: ICategory = { id: 25694 };
-      tournament.categories = [category];
-      const level: ILevel = { id: 32353 };
-      tournament.levels = [level];
+      const sponsors: ISponsor = { id: 13350 };
+      tournament.sponsors = [sponsors];
+      const teams: ITeam = { id: 4682 };
+      tournament.teams = [teams];
+      const categories: ICategory = { id: 25694 };
+      tournament.categories = [categories];
+      const levels: ILevel = { id: 32353 };
+      tournament.levels = [levels];
 
       activatedRoute.data = of({ tournament });
       comp.ngOnInit();
 
       expect(comp.locationsCollection).toContain(location);
-      expect(comp.sponsorsSharedCollection).toContain(sponsor);
-      expect(comp.teamsSharedCollection).toContain(team);
-      expect(comp.categoriesSharedCollection).toContain(category);
-      expect(comp.levelsSharedCollection).toContain(level);
+      expect(comp.sponsorsSharedCollection).toContain(sponsors);
+      expect(comp.teamsSharedCollection).toContain(teams);
+      expect(comp.categoriesSharedCollection).toContain(categories);
+      expect(comp.levelsSharedCollection).toContain(levels);
       expect(comp.tournament).toEqual(tournament);
     });
   });

@@ -1,23 +1,24 @@
 import { ILevel, NewLevel } from './level.model';
 
 export const sampleWithRequiredData: ILevel = {
-  id: 21078,
-  levelName: 'L7',
+  id: 24725,
+  levelName: 'incidentally nearly ornery',
 };
 
 export const sampleWithPartialData: ILevel = {
-  id: 30808,
-  levelName: 'L6',
+  id: 19459,
+  levelName: 'throughout',
+  description: 'phooey',
 };
 
 export const sampleWithFullData: ILevel = {
-  id: 23123,
-  levelName: 'L5',
-  description: 'incidentally nearly ornery',
+  id: 15672,
+  levelName: 'reliable management',
+  description: 'on fruitful',
 };
 
 export const sampleWithNewData: NewLevel = {
-  levelName: 'L1',
+  levelName: 'closely overhead begrudge',
   id: null,
 };
 

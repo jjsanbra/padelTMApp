@@ -118,10 +118,10 @@ public class Sponsor implements Serializable {
 
     public void setTournaments(Set<Tournament> tournaments) {
         if (this.tournaments != null) {
-            this.tournaments.forEach(i -> i.removeSponsor(this));
+            this.tournaments.forEach(i -> i.removeSponsors(this));
         }
         if (tournaments != null) {
-            tournaments.forEach(i -> i.addSponsor(this));
+            tournaments.forEach(i -> i.addSponsors(this));
         }
         this.tournaments = tournaments;
     }

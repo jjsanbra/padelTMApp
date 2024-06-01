@@ -1,7 +1,6 @@
 package com.padeltmapp.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.padeltmapp.app.domain.enumeration.CategoryEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -28,9 +27,8 @@ public class Category implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     @Column(name = "category_name", nullable = false)
-    private CategoryEnum categoryName;
+    private String categoryName;
 
     @Column(name = "description")
     private String description;
@@ -42,7 +40,7 @@ public class Category implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "categories", "teams" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "level", "categories", "teams" }, allowSetters = true)
     private Set<Player> players = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -60,16 +58,16 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public CategoryEnum getCategoryName() {
+    public String getCategoryName() {
         return this.categoryName;
     }
 
-    public Category categoryName(CategoryEnum categoryName) {
+    public Category categoryName(String categoryName) {
         this.setCategoryName(categoryName);
         return this;
     }
 
-    public void setCategoryName(CategoryEnum categoryName) {
+    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
 
@@ -92,10 +90,10 @@ public class Category implements Serializable {
 
     public void setTournaments(Set<Tournament> tournaments) {
         if (this.tournaments != null) {
-            this.tournaments.forEach(i -> i.removeCategory(this));
+            this.tournaments.forEach(i -> i.removeCategories(this));
         }
         if (tournaments != null) {
-            tournaments.forEach(i -> i.addCategory(this));
+            tournaments.forEach(i -> i.addCategories(this));
         }
         this.tournaments = tournaments;
     }
@@ -123,10 +121,10 @@ public class Category implements Serializable {
 
     public void setPlayers(Set<Player> players) {
         if (this.players != null) {
-            this.players.forEach(i -> i.removeCategory(this));
+            this.players.forEach(i -> i.removeCategories(this));
         }
         if (players != null) {
-            players.forEach(i -> i.addCategory(this));
+            players.forEach(i -> i.addCategories(this));
         }
         this.players = players;
     }

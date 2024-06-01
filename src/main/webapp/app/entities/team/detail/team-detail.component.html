@@ -19,34 +19,6 @@
           <dd>
             <span>{{ team()!.teamName }}</span>
           </dd>
-          <dt><span jhiTranslate="padelTmApp.team.level">Level</span></dt>
-          <dd>
-            <span [jhiTranslate]="'padelTmApp.LevelEnum.' + (team()!.level ?? 'null')">{{
-              {
-                null: '',
-                L0: '0 - Iniciación',
-                L05: '0.5 - Iniciación',
-                L1: '1 - Iniciación',
-                L15: '1.5 - Iniciación Intermedio',
-                L2: '2 - Iniciación Intermedio',
-                L25: '2.5 - Intermedio',
-                L3: '3 - Intermedio',
-                L35: '3.5 - Intermedio',
-                L4: '4 - Intermedio Alto',
-                L45: '4.5 - Intermedio Alto',
-                L5: '5 - Alto Avanzado',
-                L55: '5.5 - Avanzado',
-                L6: '6 - Avanzado',
-                L7: '7 - Élite'
-              }[team()!.level ?? 'null']
-            }}</span>
-          </dd>
-          <dt><span jhiTranslate="padelTmApp.team.category">Category</span></dt>
-          <dd>
-            <span [jhiTranslate]="'padelTmApp.CategoryEnum.' + (team()!.category ?? 'null')">{{
-              { null: '', F: 'Femenino', M: 'Masculino', MIX: 'Mixto' }[team()!.category ?? 'null']
-            }}</span>
-          </dd>
           <dt><span jhiTranslate="padelTmApp.team.logo">Logo</span></dt>
           <dd>
             @if (team()!.logo) {
@@ -58,11 +30,27 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.team.player">Player</span></dt>
+          <dt><span jhiTranslate="padelTmApp.team.level">Level</span></dt>
           <dd>
-            @for (player of team()!.players; track $index; let last = $last) {
+            @if (team()!.level) {
+              <div>
+                <a [routerLink]="['/level', team()!.level?.id, 'view']">{{ team()!.level?.levelName }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.team.category">Category</span></dt>
+          <dd>
+            @if (team()!.category) {
+              <div>
+                <a [routerLink]="['/category', team()!.category?.id, 'view']">{{ team()!.category?.categoryName }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.team.players">Players</span></dt>
+          <dd>
+            @for (players of team()!.players; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/player', player.id, 'view']">{{ player?.firstName }}</a
+                <a [routerLink]="['/player', players.id, 'view']">{{ players?.firstName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
