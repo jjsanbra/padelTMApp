@@ -92,7 +92,7 @@ public class Tournament implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "categories_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
     private Set<Category> categories = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)

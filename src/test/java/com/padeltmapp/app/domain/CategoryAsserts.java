@@ -60,7 +60,6 @@ public class CategoryAsserts {
     public static void assertCategoryUpdatableRelationshipsEquals(Category expected, Category actual) {
         assertThat(expected)
             .as("Verify Category relationships")
-            .satisfies(e -> assertThat(e.getTournaments()).as("check tournaments").isEqualTo(actual.getTournaments()))
-            .satisfies(e -> assertThat(e.getPlayers()).as("check players").isEqualTo(actual.getPlayers()));
+            .satisfies(e -> assertThat(e.getTournaments()).as("check tournaments").isEqualTo(actual.getTournaments()));
     }
 }

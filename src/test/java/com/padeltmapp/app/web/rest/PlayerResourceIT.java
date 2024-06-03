@@ -43,11 +43,20 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class PlayerResourceIT {
 
+    private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PASSWORD = "AAAAAAAAAA";
+    private static final String UPDATED_PASSWORD = "BBBBBBBBBB";
+
     private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
     private static final String DEFAULT_PHONE_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PHONE_NUMBER = "BBBBBBBBBB";
@@ -97,8 +106,11 @@ class PlayerResourceIT {
      */
     public static Player createEntity(EntityManager em) {
         Player player = new Player()
+            .userName(DEFAULT_USER_NAME)
+            .password(DEFAULT_PASSWORD)
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
+            .email(DEFAULT_EMAIL)
             .phoneNumber(DEFAULT_PHONE_NUMBER)
             .age(DEFAULT_AGE)
             .avatar(DEFAULT_AVATAR)
@@ -114,8 +126,11 @@ class PlayerResourceIT {
      */
     public static Player createUpdatedEntity(EntityManager em) {
         Player player = new Player()
+            .userName(UPDATED_USER_NAME)
+            .password(UPDATED_PASSWORD)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
+            .email(UPDATED_EMAIL)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
             .avatar(UPDATED_AVATAR)
@@ -170,6 +185,40 @@ class PlayerResourceIT {
 
     @Test
     @Transactional
+    void checkUserNameIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        player.setUserName(null);
+
+        // Create the Player, which fails.
+        PlayerDTO playerDTO = playerMapper.toDto(player);
+
+        restPlayerMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(playerDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkPasswordIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        player.setPassword(null);
+
+        // Create the Player, which fails.
+        PlayerDTO playerDTO = playerMapper.toDto(player);
+
+        restPlayerMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(playerDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkFirstNameIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
@@ -204,6 +253,23 @@ class PlayerResourceIT {
 
     @Test
     @Transactional
+    void checkEmailIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        player.setEmail(null);
+
+        // Create the Player, which fails.
+        PlayerDTO playerDTO = playerMapper.toDto(player);
+
+        restPlayerMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(playerDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllPlayers() throws Exception {
         // Initialize the database
         playerRepository.saveAndFlush(player);
@@ -214,8 +280,11 @@ class PlayerResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(player.getId().intValue())))
+            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME)))
+            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD)))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER)))
             .andExpect(jsonPath("$.[*].age").value(hasItem(DEFAULT_AGE)))
             .andExpect(jsonPath("$.[*].avatarContentType").value(hasItem(DEFAULT_AVATAR_CONTENT_TYPE)))
@@ -251,8 +320,11 @@ class PlayerResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(player.getId().intValue()))
+            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME))
+            .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER))
             .andExpect(jsonPath("$.age").value(DEFAULT_AGE))
             .andExpect(jsonPath("$.avatarContentType").value(DEFAULT_AVATAR_CONTENT_TYPE))
@@ -279,8 +351,11 @@ class PlayerResourceIT {
         // Disconnect from session so that the updates on updatedPlayer are not directly saved in db
         em.detach(updatedPlayer);
         updatedPlayer
+            .userName(UPDATED_USER_NAME)
+            .password(UPDATED_PASSWORD)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
+            .email(UPDATED_EMAIL)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
             .avatar(UPDATED_AVATAR)
@@ -370,7 +445,13 @@ class PlayerResourceIT {
         Player partialUpdatedPlayer = new Player();
         partialUpdatedPlayer.setId(player.getId());
 
-        partialUpdatedPlayer.firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME).phoneNumber(UPDATED_PHONE_NUMBER).age(UPDATED_AGE);
+        partialUpdatedPlayer
+            .userName(UPDATED_USER_NAME)
+            .password(UPDATED_PASSWORD)
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .phoneNumber(UPDATED_PHONE_NUMBER)
+            .age(UPDATED_AGE);
 
         restPlayerMockMvc
             .perform(
@@ -399,8 +480,11 @@ class PlayerResourceIT {
         partialUpdatedPlayer.setId(player.getId());
 
         partialUpdatedPlayer
+            .userName(UPDATED_USER_NAME)
+            .password(UPDATED_PASSWORD)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
+            .email(UPDATED_EMAIL)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE)
             .avatar(UPDATED_AVATAR)

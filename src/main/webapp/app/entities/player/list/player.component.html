@@ -42,6 +42,20 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="userName">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.player.userName">User Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="password">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.player.password">Password</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="firstName">
               <div class="d-flex">
                 <span jhiTranslate="padelTmApp.player.firstName">First Name</span>
@@ -52,6 +66,13 @@
             <th scope="col" jhiSortBy="lastName">
               <div class="d-flex">
                 <span jhiTranslate="padelTmApp.player.lastName">Last Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="email">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.player.email">Email</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -77,12 +98,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="user.login">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.player.user">User</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="level.levelName">
               <div class="d-flex">
                 <span jhiTranslate="padelTmApp.player.level">Level</span>
@@ -98,8 +113,11 @@
               <td>
                 <a [routerLink]="['/player', player.id, 'view']">{{ player.id }}</a>
               </td>
+              <td>{{ player.userName }}</td>
+              <td>{{ player.password }}</td>
               <td>{{ player.firstName }}</td>
               <td>{{ player.lastName }}</td>
+              <td>{{ player.email }}</td>
               <td>{{ player.phoneNumber }}</td>
               <td>{{ player.age }}</td>
               <td>
@@ -109,9 +127,6 @@
                   </a>
                   <span>{{ player.avatarContentType }}, {{ byteSize(player.avatar) }}</span>
                 }
-              </td>
-              <td>
-                {{ player.user?.login }}
               </td>
               <td>
                 @if (player.level) {

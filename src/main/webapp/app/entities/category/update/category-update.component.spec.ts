@@ -7,10 +7,8 @@ import { of, Subject, from } from 'rxjs';
 
 import { ITournament } from 'app/entities/tournament/tournament.model';
 import { TournamentService } from 'app/entities/tournament/service/tournament.service';
-import { IPlayer } from 'app/entities/player/player.model';
-import { PlayerService } from 'app/entities/player/service/player.service';
-import { ICategory } from '../category.model';
 import { CategoryService } from '../service/category.service';
+import { ICategory } from '../category.model';
 import { CategoryFormService } from './category-form.service';
 
 import { CategoryUpdateComponent } from './category-update.component';
@@ -22,7 +20,6 @@ describe('Category Management Update Component', () => {
   let categoryFormService: CategoryFormService;
   let categoryService: CategoryService;
   let tournamentService: TournamentService;
-  let playerService: PlayerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -45,7 +42,6 @@ describe('Category Management Update Component', () => {
     categoryFormService = TestBed.inject(CategoryFormService);
     categoryService = TestBed.inject(CategoryService);
     tournamentService = TestBed.inject(TournamentService);
-    playerService = TestBed.inject(PlayerService);
 
     comp = fixture.componentInstance;
   });
@@ -73,40 +69,15 @@ describe('Category Management Update Component', () => {
       expect(comp.tournamentsSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Player query and add missing value', () => {
-      const category: ICategory = { id: 456 };
-      const players: IPlayer[] = [{ id: 3689 }];
-      category.players = players;
-
-      const playerCollection: IPlayer[] = [{ id: 11238 }];
-      jest.spyOn(playerService, 'query').mockReturnValue(of(new HttpResponse({ body: playerCollection })));
-      const additionalPlayers = [...players];
-      const expectedCollection: IPlayer[] = [...additionalPlayers, ...playerCollection];
-      jest.spyOn(playerService, 'addPlayerToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ category });
-      comp.ngOnInit();
-
-      expect(playerService.query).toHaveBeenCalled();
-      expect(playerService.addPlayerToCollectionIfMissing).toHaveBeenCalledWith(
-        playerCollection,
-        ...additionalPlayers.map(expect.objectContaining),
-      );
-      expect(comp.playersSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const category: ICategory = { id: 456 };
       const tournaments: ITournament = { id: 26998 };
       category.tournaments = [tournaments];
-      const players: IPlayer = { id: 7259 };
-      category.players = [players];
 
       activatedRoute.data = of({ category });
       comp.ngOnInit();
 
       expect(comp.tournamentsSharedCollection).toContain(tournaments);
-      expect(comp.playersSharedCollection).toContain(players);
       expect(comp.category).toEqual(category);
     });
   });
@@ -187,16 +158,6 @@ describe('Category Management Update Component', () => {
         jest.spyOn(tournamentService, 'compareTournament');
         comp.compareTournament(entity, entity2);
         expect(tournamentService.compareTournament).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('comparePlayer', () => {
-      it('Should forward to playerService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(playerService, 'comparePlayer');
-        comp.comparePlayer(entity, entity2);
-        expect(playerService.comparePlayer).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

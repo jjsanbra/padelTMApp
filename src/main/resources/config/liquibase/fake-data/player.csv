@@ -1,11 +1,11 @@
-id;first_name;last_name;phone_number;age;avatar;avatar_content_type
-1;Sara;Badillo Quintanilla;brr;16;../fake-data/blob/hipster.png;image/png
-2;Elsa;Ruíz Mateo;yowza wherever fluke;68;../fake-data/blob/hipster.png;image/png
-3;Benito;Carrión Garibay;spike;46;../fake-data/blob/hipster.png;image/png
-4;Antonia;Alejandro Trujillo;inveigle;40;../fake-data/blob/hipster.png;image/png
-5;Lorenzo;Armenta Benavides;wherever;33;../fake-data/blob/hipster.png;image/png
-6;Fernando;Montemayor Barrios;inwardly;72;../fake-data/blob/hipster.png;image/png
-7;Octavio;Barrera Armenta;stall meld;22;../fake-data/blob/hipster.png;image/png
-8;Susana;Téllez Reyes;fumbling;27;../fake-data/blob/hipster.png;image/png
-9;Isabel;Domínguez Porras;morph;26;../fake-data/blob/hipster.png;image/png
-10;José Luis;Sánchez Carrera;underwear offshore;56;../fake-data/blob/hipster.png;image/png
+id;user_name;password;first_name;last_name;email;phone_number;age;avatar;avatar_content_type
+1;grant how for;a why gild;Gonzalo;Guajardo Delarosa;Gilberto_SantillanMadera@hotmail.com;as;20;../fake-data/blob/hipster.png;image/png
+2;kitsch yum;pry;Clara;Fonseca Galarza;Octavio_BarreraArmenta@hotmail.com;after way;27;../fake-data/blob/hipster.png;image/png
+3;next quota through;consequently but;Miguel;Padrón Mascareñas;Cecilia_OsorioAvalos@yahoo.com;silent;41;../fake-data/blob/hipster.png;image/png
+4;with never fearful;below ah;José María;Delgado Olivares;Ana.DeleonColon77@gmail.com;top eek;75;../fake-data/blob/hipster.png;image/png
+5;pish;blah faithfully;Alfredo;Santana Apodaca;Sara.OlmosEsparza94@yahoo.com;transfer;38;../fake-data/blob/hipster.png;image/png
+6;failing wisely;up shinny this;Ramona;Valdez Figueroa;Jeronimo.BanuelosMenchaca@yahoo.com;beneath but;26;../fake-data/blob/hipster.png;image/png
+7;uh-huh greedily;dark ha youthfully;Emilio;Durán Carvajal;Manuela.GomezBenavides@yahoo.com;whoever;69;../fake-data/blob/hipster.png;image/png
+8;excuse save ah;glimmer ruins following;Luis Miguel;Alanis Villarreal;Beatriz.OlivasZayas@gmail.com;duh detailed;16;../fake-data/blob/hipster.png;image/png
+9;repurpose incidentally;psst towards;Irene;Acosta Delatorre;Virginia.OlmosLaureano38@gmail.com;small intestine;42;../fake-data/blob/hipster.png;image/png
+10;when cooked angrily;jovially sauerkraut;Sergio;Olivares Paz;LuisMiguel.CasanovaJasso@gmail.com;stem blah faraway;77;../fake-data/blob/hipster.png;image/png

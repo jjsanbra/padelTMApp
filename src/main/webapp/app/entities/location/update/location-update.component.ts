@@ -23,7 +23,7 @@ export class LocationUpdateComponent implements OnInit {
   isSaving = false;
   location: ILocation | null = null;
 
-  countriesCollection: ICountry[] = [];
+  countriesSharedCollection: ICountry[] = [];
 
   protected locationService = inject(LocationService);
   protected locationFormService = inject(LocationFormService);
@@ -83,16 +83,19 @@ export class LocationUpdateComponent implements OnInit {
     this.location = location;
     this.locationFormService.resetForm(this.editForm, location);
 
-    this.countriesCollection = this.countryService.addCountryToCollectionIfMissing<ICountry>(this.countriesCollection, location.country);
+    this.countriesSharedCollection = this.countryService.addCountryToCollectionIfMissing<ICountry>(
+      this.countriesSharedCollection,
+      location.country,
+    );
   }
 
   protected loadRelationshipsOptions(): void {
     this.countryService
-      .query({ filter: 'location-is-null' })
+      .query()
       .pipe(map((res: HttpResponse<ICountry[]>) => res.body ?? []))
       .pipe(
         map((countries: ICountry[]) => this.countryService.addCountryToCollectionIfMissing<ICountry>(countries, this.location?.country)),
       )
-      .subscribe((countries: ICountry[]) => (this.countriesCollection = countries));
+      .subscribe((countries: ICountry[]) => (this.countriesSharedCollection = countries));
   }
 }

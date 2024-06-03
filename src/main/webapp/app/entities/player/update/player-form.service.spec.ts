@@ -20,14 +20,15 @@ describe('Player Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            userName: expect.any(Object),
+            password: expect.any(Object),
             firstName: expect.any(Object),
             lastName: expect.any(Object),
+            email: expect.any(Object),
             phoneNumber: expect.any(Object),
             age: expect.any(Object),
             avatar: expect.any(Object),
-            user: expect.any(Object),
             level: expect.any(Object),
-            categories: expect.any(Object),
             teams: expect.any(Object),
           }),
         );
@@ -39,14 +40,15 @@ describe('Player Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            userName: expect.any(Object),
+            password: expect.any(Object),
             firstName: expect.any(Object),
             lastName: expect.any(Object),
+            email: expect.any(Object),
             phoneNumber: expect.any(Object),
             age: expect.any(Object),
             avatar: expect.any(Object),
-            user: expect.any(Object),
             level: expect.any(Object),
-            categories: expect.any(Object),
             teams: expect.any(Object),
           }),
         );

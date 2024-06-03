@@ -41,7 +41,7 @@ public class Team implements Serializable {
     private Level level;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
     private Category category;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -52,7 +52,7 @@ public class Team implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "players_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "user", "level", "categories", "teams" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "level", "teams" }, allowSetters = true)
     private Set<Player> players = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teams")

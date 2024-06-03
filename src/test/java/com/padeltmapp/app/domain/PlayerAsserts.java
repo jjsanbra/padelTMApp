@@ -47,8 +47,11 @@ public class PlayerAsserts {
     public static void assertPlayerUpdatableFieldsEquals(Player expected, Player actual) {
         assertThat(expected)
             .as("Verify Player relevant properties")
+            .satisfies(e -> assertThat(e.getUserName()).as("check userName").isEqualTo(actual.getUserName()))
+            .satisfies(e -> assertThat(e.getPassword()).as("check password").isEqualTo(actual.getPassword()))
             .satisfies(e -> assertThat(e.getFirstName()).as("check firstName").isEqualTo(actual.getFirstName()))
             .satisfies(e -> assertThat(e.getLastName()).as("check lastName").isEqualTo(actual.getLastName()))
+            .satisfies(e -> assertThat(e.getEmail()).as("check email").isEqualTo(actual.getEmail()))
             .satisfies(e -> assertThat(e.getPhoneNumber()).as("check phoneNumber").isEqualTo(actual.getPhoneNumber()))
             .satisfies(e -> assertThat(e.getAge()).as("check age").isEqualTo(actual.getAge()))
             .satisfies(e -> assertThat(e.getAvatar()).as("check avatar").isEqualTo(actual.getAvatar()))
@@ -65,7 +68,6 @@ public class PlayerAsserts {
         assertThat(expected)
             .as("Verify Player relationships")
             .satisfies(e -> assertThat(e.getLevel()).as("check level").isEqualTo(actual.getLevel()))
-            .satisfies(e -> assertThat(e.getCategories()).as("check categories").isEqualTo(actual.getCategories()))
             .satisfies(e -> assertThat(e.getTeams()).as("check teams").isEqualTo(actual.getTeams()));
     }
 }

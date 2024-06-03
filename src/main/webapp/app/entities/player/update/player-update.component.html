@@ -16,6 +16,30 @@
         }
 
         <div class="mb-3">
+          <label class="form-label" for="field_userName" jhiTranslate="padelTmApp.player.userName">User Name</label>
+          <input type="text" class="form-control" name="userName" id="field_userName" data-cy="userName" formControlName="userName" />
+          @if (editForm.get('userName')!.invalid && (editForm.get('userName')!.dirty || editForm.get('userName')!.touched)) {
+            <div>
+              @if (editForm.get('userName')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_password" jhiTranslate="padelTmApp.player.password">Password</label>
+          <input type="text" class="form-control" name="password" id="field_password" data-cy="password" formControlName="password" />
+          @if (editForm.get('password')!.invalid && (editForm.get('password')!.dirty || editForm.get('password')!.touched)) {
+            <div>
+              @if (editForm.get('password')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
           <label class="form-label" for="field_firstName" jhiTranslate="padelTmApp.player.firstName">First Name</label>
           <input type="text" class="form-control" name="firstName" id="field_firstName" data-cy="firstName" formControlName="firstName" />
           @if (editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)) {
@@ -33,6 +57,18 @@
           @if (editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)) {
             <div>
               @if (editForm.get('lastName')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_email" jhiTranslate="padelTmApp.player.email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          @if (editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)) {
+            <div>
+              @if (editForm.get('email')?.errors?.required) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
               }
             </div>
@@ -117,38 +153,11 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_user" jhiTranslate="padelTmApp.player.user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
-            <option [ngValue]="null"></option>
-            @for (userOption of usersSharedCollection; track $index) {
-              <option [ngValue]="userOption">{{ userOption.login }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_level" jhiTranslate="padelTmApp.player.level">Level</label>
           <select class="form-control" id="field_level" data-cy="level" name="level" formControlName="level" [compareWith]="compareLevel">
             <option [ngValue]="null"></option>
             @for (levelOption of levelsSharedCollection; track $index) {
               <option [ngValue]="levelOption">{{ levelOption.levelName }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
-          <label for="field_categories" jhiTranslate="padelTmApp.player.categories">Categories</label>
-          <select
-            class="form-control"
-            id="field_categories"
-            data-cy="categories"
-            multiple
-            name="categories"
-            formControlName="categories"
-            [compareWith]="compareCategory"
-          >
-            @for (categoryOption of categoriesSharedCollection; track $index) {
-              <option [ngValue]="categoryOption">{{ categoryOption.categoryName }}</option>
             }
           </select>
         </div>

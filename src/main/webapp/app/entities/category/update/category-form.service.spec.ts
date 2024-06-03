@@ -23,7 +23,6 @@ describe('Category Form Service', () => {
             categoryName: expect.any(Object),
             description: expect.any(Object),
             tournaments: expect.any(Object),
-            players: expect.any(Object),
           }),
         );
       });
@@ -37,7 +36,6 @@ describe('Category Form Service', () => {
             categoryName: expect.any(Object),
             description: expect.any(Object),
             tournaments: expect.any(Object),
-            players: expect.any(Object),
           }),
         );
       });

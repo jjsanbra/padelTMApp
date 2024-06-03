@@ -47,22 +47,26 @@ describe('Location Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('Should call country query and add missing value', () => {
+    it('Should call Country query and add missing value', () => {
       const location: ILocation = { id: 456 };
       const country: ICountry = { id: 31730 };
       location.country = country;
 
       const countryCollection: ICountry[] = [{ id: 32577 }];
       jest.spyOn(countryService, 'query').mockReturnValue(of(new HttpResponse({ body: countryCollection })));
-      const expectedCollection: ICountry[] = [country, ...countryCollection];
+      const additionalCountries = [country];
+      const expectedCollection: ICountry[] = [...additionalCountries, ...countryCollection];
       jest.spyOn(countryService, 'addCountryToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ location });
       comp.ngOnInit();
 
       expect(countryService.query).toHaveBeenCalled();
-      expect(countryService.addCountryToCollectionIfMissing).toHaveBeenCalledWith(countryCollection, country);
-      expect(comp.countriesCollection).toEqual(expectedCollection);
+      expect(countryService.addCountryToCollectionIfMissing).toHaveBeenCalledWith(
+        countryCollection,
+        ...additionalCountries.map(expect.objectContaining),
+      );
+      expect(comp.countriesSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
@@ -73,7 +77,7 @@ describe('Location Management Update Component', () => {
       activatedRoute.data = of({ location });
       comp.ngOnInit();
 
-      expect(comp.countriesCollection).toContain(country);
+      expect(comp.countriesSharedCollection).toContain(country);
       expect(comp.location).toEqual(location);
     });
   });

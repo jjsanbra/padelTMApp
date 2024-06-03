@@ -17,8 +17,11 @@ entity Tournament {
  * The Player entity.
  */
 entity Player {
+    userName String required
+    password String required
 	firstName String required
 	lastName String required
+    email String required
 	phoneNumber String
 	age Integer min(12) max(80)
     avatar ImageBlob
@@ -93,16 +96,16 @@ enum Language {
 relationship OneToOne {
 	/* Tournament */
     Tournament{location(city)} to Location{tournament}
-	/* Localtion */
-	Location{country(countryName)} to Country{location(city)}
-    /* Player */
-    Player{user(login)} to User with builtInEntity
 }
 
 relationship ManyToOne {
     Player{Level(levelName)} to Level
     Team{Level(levelName)} to Level
     Team{Category(categoryName)} to Category
+	/* Localtion */
+	Location{country(countryName)} to Country{location(city)}
+    /* Player */
+    // Player{user(login)} to @OnDelete("CASCADE") @Id User with builtInEntity
 }
 
 relationship ManyToMany {
@@ -116,8 +119,6 @@ relationship ManyToMany {
     Tournament{Levels(levelName)} to Level{tournaments(tournamentName)}
     /* Multiple teams can have up to 2 players, and they are required (handled in business logic, not here) */
     Team{Players(firstName) required} to Player{teams(teamName)}
-    /* Multiple Players can have multiple categories */
-    Player{Categories(categoryName)} to Category{players(firstName)}
 }
 
 /* Set pagination options */

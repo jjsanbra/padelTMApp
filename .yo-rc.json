@@ -21,7 +21,7 @@
     "jhipsterVersion": "8.4.0",
     "jwtSecretKey": "YWVmZjIyNmQ5YTBiNDIxYTIzYjg5MzI5ODBhNzFmYWNkYzM0NmIzNWQzYzc3Y2JjYmY5ZThmZWVmN2QzMTFhNzAwNGRmZGYyNWI4OTg3MTA5OTAyNmVhNjQ0YTlkZGZlNTRiZmU4MDk4YTgwNWI2YmRhNzQ1NTVlNjAzMzU0OWM=",
     "languages": ["es", "en"],
-    "lastLiquibaseTimestamp": 1717071744000,
+    "lastLiquibaseTimestamp": 1717325738000,
     "messageBroker": false,
     "nativeLanguage": "es",
     "packageFolder": "com/padeltmapp/app",

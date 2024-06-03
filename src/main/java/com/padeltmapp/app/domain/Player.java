@@ -27,12 +27,24 @@ public class Player implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "user_name", nullable = false)
+    private String userName;
+
+    @NotNull
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @NotNull
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @NotNull
     @Column(name = "last_name", nullable = false)
     private String lastName;
+
+    @NotNull
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -49,23 +61,9 @@ public class Player implements Serializable {
     @Column(name = "avatar_content_type")
     private String avatarContentType;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private User user;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
     private Level level;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "rel_player__categories",
-        joinColumns = @JoinColumn(name = "player_id"),
-        inverseJoinColumns = @JoinColumn(name = "categories_id")
-    )
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tournaments", "players" }, allowSetters = true)
-    private Set<Category> categories = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "players")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -85,6 +83,32 @@ public class Player implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public Player userName(String userName) {
+        this.setUserName(userName);
+        return this;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public Player password(String password) {
+        this.setPassword(password);
+        return this;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -111,6 +135,19 @@ public class Player implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public Player email(String email) {
+        this.setEmail(email);
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhoneNumber() {
@@ -165,19 +202,6 @@ public class Player implements Serializable {
         this.avatarContentType = avatarContentType;
     }
 
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Player user(User user) {
-        this.setUser(user);
-        return this;
-    }
-
     public Level getLevel() {
         return this.level;
     }
@@ -188,29 +212,6 @@ public class Player implements Serializable {
 
     public Player level(Level level) {
         this.setLevel(level);
-        return this;
-    }
-
-    public Set<Category> getCategories() {
-        return this.categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
-    public Player categories(Set<Category> categories) {
-        this.setCategories(categories);
-        return this;
-    }
-
-    public Player addCategories(Category category) {
-        this.categories.add(category);
-        return this;
-    }
-
-    public Player removeCategories(Category category) {
-        this.categories.remove(category);
         return this;
     }
 
@@ -269,8 +270,11 @@ public class Player implements Serializable {
     public String toString() {
         return "Player{" +
             "id=" + getId() +
+            ", userName='" + getUserName() + "'" +
+            ", password='" + getPassword() + "'" +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
+            ", email='" + getEmail() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", age=" + getAge() +
             ", avatar='" + getAvatar() + "'" +

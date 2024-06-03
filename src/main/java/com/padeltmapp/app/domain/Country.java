@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,9 +30,10 @@ public class Country implements Serializable {
     @Column(name = "country_name", nullable = false)
     private String countryName;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "country", "tournament" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "country")
-    private Location location;
+    private Set<Location> locations = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -60,22 +63,34 @@ public class Country implements Serializable {
         this.countryName = countryName;
     }
 
-    public Location getLocation() {
-        return this.location;
+    public Set<Location> getLocations() {
+        return this.locations;
     }
 
-    public void setLocation(Location location) {
-        if (this.location != null) {
-            this.location.setCountry(null);
+    public void setLocations(Set<Location> locations) {
+        if (this.locations != null) {
+            this.locations.forEach(i -> i.setCountry(null));
         }
-        if (location != null) {
-            location.setCountry(this);
+        if (locations != null) {
+            locations.forEach(i -> i.setCountry(this));
         }
-        this.location = location;
+        this.locations = locations;
     }
 
-    public Country location(Location location) {
-        this.setLocation(location);
+    public Country locations(Set<Location> locations) {
+        this.setLocations(locations);
+        return this;
+    }
+
+    public Country addLocation(Location location) {
+        this.locations.add(location);
+        location.setCountry(this);
+        return this;
+    }
+
+    public Country removeLocation(Location location) {
+        this.locations.remove(location);
+        location.setCountry(null);
         return this;
     }
 

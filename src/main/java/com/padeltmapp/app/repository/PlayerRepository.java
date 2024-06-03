@@ -11,33 +11,27 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Spring Data JPA repository for the Player entity.
- *
- * When extending this class, extend PlayerRepositoryWithBagRelationships too.
- * For more information refer to https://github.com/jhipster/generator-jhipster/issues/17990.
  */
 @Repository
-public interface PlayerRepository extends PlayerRepositoryWithBagRelationships, JpaRepository<Player, Long> {
+public interface PlayerRepository extends JpaRepository<Player, Long> {
     default Optional<Player> findOneWithEagerRelationships(Long id) {
-        return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
+        return this.findOneWithToOneRelationships(id);
     }
 
     default List<Player> findAllWithEagerRelationships() {
-        return this.fetchBagRelationships(this.findAllWithToOneRelationships());
+        return this.findAllWithToOneRelationships();
     }
 
     default Page<Player> findAllWithEagerRelationships(Pageable pageable) {
-        return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
+        return this.findAllWithToOneRelationships(pageable);
     }
 
-    @Query(
-        value = "select player from Player player left join fetch player.user left join fetch player.level",
-        countQuery = "select count(player) from Player player"
-    )
+    @Query(value = "select player from Player player left join fetch player.level", countQuery = "select count(player) from Player player")
     Page<Player> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select player from Player player left join fetch player.user left join fetch player.level")
+    @Query("select player from Player player left join fetch player.level")
     List<Player> findAllWithToOneRelationships();
 
-    @Query("select player from Player player left join fetch player.user left join fetch player.level where player.id =:id")
+    @Query("select player from Player player left join fetch player.level where player.id =:id")
     Optional<Player> findOneWithToOneRelationships(@Param("id") Long id);
 }

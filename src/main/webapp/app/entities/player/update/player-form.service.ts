@@ -14,19 +14,20 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type PlayerFormGroupInput = IPlayer | PartialWithRequiredKeyOf<NewPlayer>;
 
-type PlayerFormDefaults = Pick<NewPlayer, 'id' | 'categories' | 'teams'>;
+type PlayerFormDefaults = Pick<NewPlayer, 'id' | 'teams'>;
 
 type PlayerFormGroupContent = {
   id: FormControl<IPlayer['id'] | NewPlayer['id']>;
+  userName: FormControl<IPlayer['userName']>;
+  password: FormControl<IPlayer['password']>;
   firstName: FormControl<IPlayer['firstName']>;
   lastName: FormControl<IPlayer['lastName']>;
+  email: FormControl<IPlayer['email']>;
   phoneNumber: FormControl<IPlayer['phoneNumber']>;
   age: FormControl<IPlayer['age']>;
   avatar: FormControl<IPlayer['avatar']>;
   avatarContentType: FormControl<IPlayer['avatarContentType']>;
-  user: FormControl<IPlayer['user']>;
   level: FormControl<IPlayer['level']>;
-  categories: FormControl<IPlayer['categories']>;
   teams: FormControl<IPlayer['teams']>;
 };
 
@@ -47,10 +48,19 @@ export class PlayerFormService {
           validators: [Validators.required],
         },
       ),
+      userName: new FormControl(playerRawValue.userName, {
+        validators: [Validators.required],
+      }),
+      password: new FormControl(playerRawValue.password, {
+        validators: [Validators.required],
+      }),
       firstName: new FormControl(playerRawValue.firstName, {
         validators: [Validators.required],
       }),
       lastName: new FormControl(playerRawValue.lastName, {
+        validators: [Validators.required],
+      }),
+      email: new FormControl(playerRawValue.email, {
         validators: [Validators.required],
       }),
       phoneNumber: new FormControl(playerRawValue.phoneNumber),
@@ -59,9 +69,7 @@ export class PlayerFormService {
       }),
       avatar: new FormControl(playerRawValue.avatar),
       avatarContentType: new FormControl(playerRawValue.avatarContentType),
-      user: new FormControl(playerRawValue.user),
       level: new FormControl(playerRawValue.level),
-      categories: new FormControl(playerRawValue.categories ?? []),
       teams: new FormControl(playerRawValue.teams ?? []),
     });
   }
@@ -83,7 +91,6 @@ export class PlayerFormService {
   private getFormDefaults(): PlayerFormDefaults {
     return {
       id: null,
-      categories: [],
       teams: [],
     };
   }

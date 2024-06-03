@@ -18,10 +18,19 @@ public class PlayerDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private String userName;
+
+    @NotNull
+    private String password;
+
+    @NotNull
     private String firstName;
 
     @NotNull
     private String lastName;
+
+    @NotNull
+    private String email;
 
     private String phoneNumber;
 
@@ -34,11 +43,7 @@ public class PlayerDTO implements Serializable {
 
     private String avatarContentType;
 
-    private UserDTO user;
-
     private LevelDTO level;
-
-    private Set<CategoryDTO> categories = new HashSet<>();
 
     private Set<TeamDTO> teams = new HashSet<>();
 
@@ -48,6 +53,22 @@ public class PlayerDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -64,6 +85,14 @@ public class PlayerDTO implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPhoneNumber() {
@@ -98,28 +127,12 @@ public class PlayerDTO implements Serializable {
         this.avatarContentType = avatarContentType;
     }
 
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
     public LevelDTO getLevel() {
         return level;
     }
 
     public void setLevel(LevelDTO level) {
         this.level = level;
-    }
-
-    public Set<CategoryDTO> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<CategoryDTO> categories) {
-        this.categories = categories;
     }
 
     public Set<TeamDTO> getTeams() {
@@ -156,14 +169,15 @@ public class PlayerDTO implements Serializable {
     public String toString() {
         return "PlayerDTO{" +
             "id=" + getId() +
+            ", userName='" + getUserName() + "'" +
+            ", password='" + getPassword() + "'" +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
+            ", email='" + getEmail() + "'" +
             ", phoneNumber='" + getPhoneNumber() + "'" +
             ", age=" + getAge() +
             ", avatar='" + getAvatar() + "'" +
-            ", user=" + getUser() +
             ", level=" + getLevel() +
-            ", categories=" + getCategories() +
             ", teams=" + getTeams() +
             "}";
     }

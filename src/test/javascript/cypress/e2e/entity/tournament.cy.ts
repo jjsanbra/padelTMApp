@@ -166,17 +166,17 @@ describe('Tournament e2e test', () => {
       cy.get(`[data-cy="description"]`).type('provided pause defender');
       cy.get(`[data-cy="description"]`).should('have.value', 'provided pause defender');
 
-      cy.get(`[data-cy="startDate"]`).type('2024-05-30T08:36');
+      cy.get(`[data-cy="startDate"]`).type('2024-06-02T07:10');
       cy.get(`[data-cy="startDate"]`).blur();
-      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-05-30T08:36');
+      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-06-02T07:10');
 
-      cy.get(`[data-cy="endDate"]`).type('2024-05-30T05:05');
+      cy.get(`[data-cy="endDate"]`).type('2024-06-02T03:39');
       cy.get(`[data-cy="endDate"]`).blur();
-      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-05-30T05:05');
+      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-06-02T03:39');
 
-      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-05-29T17:22');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-06-01T15:56');
       cy.get(`[data-cy="lastInscriptionsDate"]`).blur();
-      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-05-29T17:22');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-06-01T15:56');
 
       cy.get(`[data-cy="maxTeamsAllowed"]`).type('74');
       cy.get(`[data-cy="maxTeamsAllowed"]`).should('have.value', '74');

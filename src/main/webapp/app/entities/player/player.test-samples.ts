@@ -1,34 +1,43 @@
 import { IPlayer, NewPlayer } from './player.model';
 
 export const sampleWithRequiredData: IPlayer = {
-  id: 1851,
-  firstName: 'Octavio',
-  lastName: 'Collazo Lemus',
+  id: 8324,
+  userName: 'throughout so',
+  password: 'boohoo kilt',
+  firstName: 'Lilia',
+  lastName: 'Zelaya Baeza',
+  email: 'MariaSoledad85@yahoo.com',
 };
 
 export const sampleWithPartialData: IPlayer = {
-  id: 10786,
-  firstName: 'Maricarmen',
-  lastName: 'Salgado Chávez',
-  phoneNumber: 'aha',
-  age: 73,
-  avatar: '../fake-data/blob/hipster.png',
-  avatarContentType: 'unknown',
+  id: 5349,
+  userName: 'celebrated oh',
+  password: 'lest gap above',
+  firstName: 'Lucas',
+  lastName: 'Godínez Vela',
+  email: 'Bernardo.AlfaroTejeda48@hotmail.com',
+  age: 61,
 };
 
 export const sampleWithFullData: IPlayer = {
-  id: 8836,
-  firstName: 'Claudia',
-  lastName: 'Herrera Carbajal',
-  phoneNumber: 'root er wonderfully',
-  age: 23,
+  id: 28105,
+  userName: 'ugh ouch furiously',
+  password: 'into',
+  firstName: 'Dolores',
+  lastName: 'Vega Quiñones',
+  email: 'Horacio39@hotmail.com',
+  phoneNumber: 'offensively employ frightfully',
+  age: 62,
   avatar: '../fake-data/blob/hipster.png',
   avatarContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewPlayer = {
-  firstName: 'Ariadna',
-  lastName: 'Robledo Rolón',
+  userName: 'ouch duplicate who',
+  password: 'per quirky starry',
+  firstName: 'Vicente',
+  lastName: 'Ordóñez Merino',
+  email: 'Estela_MascarenasMartinez@hotmail.com',
   id: null,
 };
 

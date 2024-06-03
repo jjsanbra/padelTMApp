@@ -62,23 +62,6 @@
             }
           </select>
         </div>
-
-        <div class="mb-3">
-          <label for="field_players" jhiTranslate="padelTmApp.category.players">Players</label>
-          <select
-            class="form-control"
-            id="field_players"
-            data-cy="players"
-            multiple
-            name="players"
-            formControlName="players"
-            [compareWith]="comparePlayer"
-          >
-            @for (playerOption of playersSharedCollection; track $index) {
-              <option [ngValue]="playerOption">{{ playerOption.firstName }}</option>
-            }
-          </select>
-        </div>
       </div>
 
       <div>

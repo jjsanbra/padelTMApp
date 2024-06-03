@@ -5,6 +5,8 @@ import static com.padeltmapp.app.domain.LocationTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.padeltmapp.app.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class CountryTest {
@@ -28,12 +30,20 @@ class CountryTest {
         Country country = getCountryRandomSampleGenerator();
         Location locationBack = getLocationRandomSampleGenerator();
 
-        country.setLocation(locationBack);
-        assertThat(country.getLocation()).isEqualTo(locationBack);
+        country.addLocation(locationBack);
+        assertThat(country.getLocations()).containsOnly(locationBack);
         assertThat(locationBack.getCountry()).isEqualTo(country);
 
-        country.location(null);
-        assertThat(country.getLocation()).isNull();
+        country.removeLocation(locationBack);
+        assertThat(country.getLocations()).doesNotContain(locationBack);
+        assertThat(locationBack.getCountry()).isNull();
+
+        country.locations(new HashSet<>(Set.of(locationBack)));
+        assertThat(country.getLocations()).containsOnly(locationBack);
+        assertThat(locationBack.getCountry()).isEqualTo(country);
+
+        country.setLocations(new HashSet<>());
+        assertThat(country.getLocations()).doesNotContain(locationBack);
         assertThat(locationBack.getCountry()).isNull();
     }
 }

@@ -18,14 +18,15 @@
         "title": "Player"
       },
       "id": "ID",
+      "userName": "User Name",
+      "password": "Password",
       "firstName": "First Name",
       "lastName": "Last Name",
+      "email": "Email",
       "phoneNumber": "Phone Number",
       "age": "Age",
       "avatar": "Avatar",
-      "user": "User",
       "level": "Level",
-      "categories": "Categories",
       "teams": "Teams"
     }
   }

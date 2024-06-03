@@ -14,14 +14,13 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type CategoryFormGroupInput = ICategory | PartialWithRequiredKeyOf<NewCategory>;
 
-type CategoryFormDefaults = Pick<NewCategory, 'id' | 'tournaments' | 'players'>;
+type CategoryFormDefaults = Pick<NewCategory, 'id' | 'tournaments'>;
 
 type CategoryFormGroupContent = {
   id: FormControl<ICategory['id'] | NewCategory['id']>;
   categoryName: FormControl<ICategory['categoryName']>;
   description: FormControl<ICategory['description']>;
   tournaments: FormControl<ICategory['tournaments']>;
-  players: FormControl<ICategory['players']>;
 };
 
 export type CategoryFormGroup = FormGroup<CategoryFormGroupContent>;
@@ -46,7 +45,6 @@ export class CategoryFormService {
       }),
       description: new FormControl(categoryRawValue.description),
       tournaments: new FormControl(categoryRawValue.tournaments ?? []),
-      players: new FormControl(categoryRawValue.players ?? []),
     });
   }
 
@@ -68,7 +66,6 @@ export class CategoryFormService {
     return {
       id: null,
       tournaments: [],
-      players: [],
     };
   }
 }

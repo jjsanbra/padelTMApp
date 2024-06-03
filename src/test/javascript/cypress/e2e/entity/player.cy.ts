@@ -15,7 +15,13 @@ describe('Player e2e test', () => {
   const playerPageUrlPattern = new RegExp('/player(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const playerSample = { firstName: 'Berta', lastName: 'Concepción Vega' };
+  const playerSample = {
+    userName: 'tear questionably',
+    password: 'trouble lie',
+    firstName: 'Cristina',
+    lastName: 'Puente Moya',
+    email: 'Alfonso.EspinalCarrasquillo98@hotmail.com',
+  };
 
   let player;
 
@@ -160,17 +166,26 @@ describe('Player e2e test', () => {
     });
 
     it('should create an instance of Player', () => {
-      cy.get(`[data-cy="firstName"]`).type('Mario');
-      cy.get(`[data-cy="firstName"]`).should('have.value', 'Mario');
+      cy.get(`[data-cy="userName"]`).type('unlike');
+      cy.get(`[data-cy="userName"]`).should('have.value', 'unlike');
 
-      cy.get(`[data-cy="lastName"]`).type('Carranza Rael');
-      cy.get(`[data-cy="lastName"]`).should('have.value', 'Carranza Rael');
+      cy.get(`[data-cy="password"]`).type('tinted');
+      cy.get(`[data-cy="password"]`).should('have.value', 'tinted');
 
-      cy.get(`[data-cy="phoneNumber"]`).type('pish');
-      cy.get(`[data-cy="phoneNumber"]`).should('have.value', 'pish');
+      cy.get(`[data-cy="firstName"]`).type('Gustavo');
+      cy.get(`[data-cy="firstName"]`).should('have.value', 'Gustavo');
 
-      cy.get(`[data-cy="age"]`).type('49');
-      cy.get(`[data-cy="age"]`).should('have.value', '49');
+      cy.get(`[data-cy="lastName"]`).type('Vargas Segovia');
+      cy.get(`[data-cy="lastName"]`).should('have.value', 'Vargas Segovia');
+
+      cy.get(`[data-cy="email"]`).type('Alicia_ArevaloPerea@hotmail.com');
+      cy.get(`[data-cy="email"]`).should('have.value', 'Alicia_ArevaloPerea@hotmail.com');
+
+      cy.get(`[data-cy="phoneNumber"]`).type('reclaim meh');
+      cy.get(`[data-cy="phoneNumber"]`).should('have.value', 'reclaim meh');
+
+      cy.get(`[data-cy="age"]`).type('12');
+      cy.get(`[data-cy="age"]`).should('have.value', '12');
 
       cy.setFieldImageAsBytesOfEntity('avatar', 'integration-test.png', 'image/png');
 

@@ -35,9 +35,8 @@ public class Location implements Serializable {
     @Column(name = "state_province")
     private String stateProvince;
 
-    @JsonIgnoreProperties(value = { "location" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "locations" }, allowSetters = true)
     private Country country;
 
     @JsonIgnoreProperties(value = { "location", "sponsors", "teams", "categories", "levels" }, allowSetters = true)

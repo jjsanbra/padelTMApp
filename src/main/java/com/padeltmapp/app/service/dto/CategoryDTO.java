@@ -23,8 +23,6 @@ public class CategoryDTO implements Serializable {
 
     private Set<TournamentDTO> tournaments = new HashSet<>();
 
-    private Set<PlayerDTO> players = new HashSet<>();
-
     public Long getId() {
         return id;
     }
@@ -57,14 +55,6 @@ public class CategoryDTO implements Serializable {
         this.tournaments = tournaments;
     }
 
-    public Set<PlayerDTO> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(Set<PlayerDTO> players) {
-        this.players = players;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -94,7 +84,6 @@ public class CategoryDTO implements Serializable {
             ", categoryName='" + getCategoryName() + "'" +
             ", description='" + getDescription() + "'" +
             ", tournaments=" + getTournaments() +
-            ", players=" + getPlayers() +
             "}";
     }
 }

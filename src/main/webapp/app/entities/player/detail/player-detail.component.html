@@ -15,6 +15,14 @@
           <dd>
             <span>{{ player()!.id }}</span>
           </dd>
+          <dt><span jhiTranslate="padelTmApp.player.userName">User Name</span></dt>
+          <dd>
+            <span>{{ player()!.userName }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.password">Password</span></dt>
+          <dd>
+            <span>{{ player()!.password }}</span>
+          </dd>
           <dt><span jhiTranslate="padelTmApp.player.firstName">First Name</span></dt>
           <dd>
             <span>{{ player()!.firstName }}</span>
@@ -22,6 +30,10 @@
           <dt><span jhiTranslate="padelTmApp.player.lastName">Last Name</span></dt>
           <dd>
             <span>{{ player()!.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.player.email">Email</span></dt>
+          <dd>
+            <span>{{ player()!.email }}</span>
           </dd>
           <dt><span jhiTranslate="padelTmApp.player.phoneNumber">Phone Number</span></dt>
           <dd>
@@ -42,25 +54,12 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.player.user">User</span></dt>
-          <dd>
-            <span>{{ player()!.user?.login }}</span>
-          </dd>
           <dt><span jhiTranslate="padelTmApp.player.level">Level</span></dt>
           <dd>
             @if (player()!.level) {
               <div>
                 <a [routerLink]="['/level', player()!.level?.id, 'view']">{{ player()!.level?.levelName }}</a>
               </div>
-            }
-          </dd>
-          <dt><span jhiTranslate="padelTmApp.player.categories">Categories</span></dt>
-          <dd>
-            @for (categories of player()!.categories; track $index; let last = $last) {
-              <span>
-                <a [routerLink]="['/category', categories.id, 'view']">{{ categories?.categoryName }}</a
-                >{{ last ? '' : ', ' }}
-              </span>
             }
           </dd>
           <dt><span jhiTranslate="padelTmApp.player.teams">Teams</span></dt>

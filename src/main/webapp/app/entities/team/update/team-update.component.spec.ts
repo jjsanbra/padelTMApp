@@ -83,10 +83,10 @@ describe('Team Management Update Component', () => {
 
     it('Should call Category query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const category: ICategory = { id: 14415 };
+      const category: ICategory = { id: 14906 };
       team.category = category;
 
-      const categoryCollection: ICategory[] = [{ id: 19363 }];
+      const categoryCollection: ICategory[] = [{ id: 16985 }];
       jest.spyOn(categoryService, 'query').mockReturnValue(of(new HttpResponse({ body: categoryCollection })));
       const additionalCategories = [category];
       const expectedCollection: ICategory[] = [...additionalCategories, ...categoryCollection];
@@ -105,10 +105,10 @@ describe('Team Management Update Component', () => {
 
     it('Should call Player query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const players: IPlayer[] = [{ id: 22370 }];
+      const players: IPlayer[] = [{ id: 5174 }];
       team.players = players;
 
-      const playerCollection: IPlayer[] = [{ id: 17837 }];
+      const playerCollection: IPlayer[] = [{ id: 15780 }];
       jest.spyOn(playerService, 'query').mockReturnValue(of(new HttpResponse({ body: playerCollection })));
       const additionalPlayers = [...players];
       const expectedCollection: IPlayer[] = [...additionalPlayers, ...playerCollection];
@@ -151,9 +151,9 @@ describe('Team Management Update Component', () => {
       const team: ITeam = { id: 456 };
       const level: ILevel = { id: 23123 };
       team.level = level;
-      const category: ICategory = { id: 9874 };
+      const category: ICategory = { id: 12699 };
       team.category = category;
-      const players: IPlayer = { id: 27514 };
+      const players: IPlayer = { id: 4121 };
       team.players = [players];
       const tournaments: ITournament = { id: 7108 };
       team.tournaments = [tournaments];

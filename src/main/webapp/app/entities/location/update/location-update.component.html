@@ -67,7 +67,7 @@
             [compareWith]="compareCountry"
           >
             <option [ngValue]="null"></option>
-            @for (countryOption of countriesCollection; track $index) {
+            @for (countryOption of countriesSharedCollection; track $index) {
               <option [ngValue]="countryOption">{{ countryOption.countryName }}</option>
             }
           </select>
