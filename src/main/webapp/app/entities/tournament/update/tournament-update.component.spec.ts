@@ -15,6 +15,8 @@ import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ILevel } from 'app/entities/level/level.model';
 import { LevelService } from 'app/entities/level/service/level.service';
+import { ICourtType } from 'app/entities/court-type/court-type.model';
+import { CourtTypeService } from 'app/entities/court-type/service/court-type.service';
 import { ITournament } from '../tournament.model';
 import { TournamentService } from '../service/tournament.service';
 import { TournamentFormService } from './tournament-form.service';
@@ -32,6 +34,7 @@ describe('Tournament Management Update Component', () => {
   let teamService: TeamService;
   let categoryService: CategoryService;
   let levelService: LevelService;
+  let courtTypeService: CourtTypeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -58,6 +61,7 @@ describe('Tournament Management Update Component', () => {
     teamService = TestBed.inject(TeamService);
     categoryService = TestBed.inject(CategoryService);
     levelService = TestBed.inject(LevelService);
+    courtTypeService = TestBed.inject(CourtTypeService);
 
     comp = fixture.componentInstance;
   });
@@ -65,10 +69,10 @@ describe('Tournament Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call location query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const location: ILocation = { id: 27470 };
+      const location: ILocation = { id: 2760 };
       tournament.location = location;
 
-      const locationCollection: ILocation[] = [{ id: 13281 }];
+      const locationCollection: ILocation[] = [{ id: 15719 }];
       jest.spyOn(locationService, 'query').mockReturnValue(of(new HttpResponse({ body: locationCollection })));
       const expectedCollection: ILocation[] = [location, ...locationCollection];
       jest.spyOn(locationService, 'addLocationToCollectionIfMissing').mockReturnValue(expectedCollection);
@@ -83,10 +87,10 @@ describe('Tournament Management Update Component', () => {
 
     it('Should call Sponsor query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const sponsors: ISponsor[] = [{ id: 27694 }];
+      const sponsors: ISponsor[] = [{ id: 16264 }];
       tournament.sponsors = sponsors;
 
-      const sponsorCollection: ISponsor[] = [{ id: 15987 }];
+      const sponsorCollection: ISponsor[] = [{ id: 24057 }];
       jest.spyOn(sponsorService, 'query').mockReturnValue(of(new HttpResponse({ body: sponsorCollection })));
       const additionalSponsors = [...sponsors];
       const expectedCollection: ISponsor[] = [...additionalSponsors, ...sponsorCollection];
@@ -105,10 +109,10 @@ describe('Tournament Management Update Component', () => {
 
     it('Should call Team query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const teams: ITeam[] = [{ id: 31380 }];
+      const teams: ITeam[] = [{ id: 4283 }];
       tournament.teams = teams;
 
-      const teamCollection: ITeam[] = [{ id: 26911 }];
+      const teamCollection: ITeam[] = [{ id: 19554 }];
       jest.spyOn(teamService, 'query').mockReturnValue(of(new HttpResponse({ body: teamCollection })));
       const additionalTeams = [...teams];
       const expectedCollection: ITeam[] = [...additionalTeams, ...teamCollection];
@@ -127,10 +131,10 @@ describe('Tournament Management Update Component', () => {
 
     it('Should call Category query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const categories: ICategory[] = [{ id: 31351 }];
+      const categories: ICategory[] = [{ id: 24484 }];
       tournament.categories = categories;
 
-      const categoryCollection: ICategory[] = [{ id: 31950 }];
+      const categoryCollection: ICategory[] = [{ id: 7344 }];
       jest.spyOn(categoryService, 'query').mockReturnValue(of(new HttpResponse({ body: categoryCollection })));
       const additionalCategories = [...categories];
       const expectedCollection: ICategory[] = [...additionalCategories, ...categoryCollection];
@@ -149,10 +153,10 @@ describe('Tournament Management Update Component', () => {
 
     it('Should call Level query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
-      const levels: ILevel[] = [{ id: 6770 }];
+      const levels: ILevel[] = [{ id: 6932 }];
       tournament.levels = levels;
 
-      const levelCollection: ILevel[] = [{ id: 10171 }];
+      const levelCollection: ILevel[] = [{ id: 22339 }];
       jest.spyOn(levelService, 'query').mockReturnValue(of(new HttpResponse({ body: levelCollection })));
       const additionalLevels = [...levels];
       const expectedCollection: ILevel[] = [...additionalLevels, ...levelCollection];
@@ -169,18 +173,42 @@ describe('Tournament Management Update Component', () => {
       expect(comp.levelsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call CourtType query and add missing value', () => {
+      const tournament: ITournament = { id: 456 };
+      const courtTypes: ICourtType[] = [{ id: 7967 }];
+      tournament.courtTypes = courtTypes;
+
+      const courtTypeCollection: ICourtType[] = [{ id: 24174 }];
+      jest.spyOn(courtTypeService, 'query').mockReturnValue(of(new HttpResponse({ body: courtTypeCollection })));
+      const additionalCourtTypes = [...courtTypes];
+      const expectedCollection: ICourtType[] = [...additionalCourtTypes, ...courtTypeCollection];
+      jest.spyOn(courtTypeService, 'addCourtTypeToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ tournament });
+      comp.ngOnInit();
+
+      expect(courtTypeService.query).toHaveBeenCalled();
+      expect(courtTypeService.addCourtTypeToCollectionIfMissing).toHaveBeenCalledWith(
+        courtTypeCollection,
+        ...additionalCourtTypes.map(expect.objectContaining),
+      );
+      expect(comp.courtTypesSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const tournament: ITournament = { id: 456 };
-      const location: ILocation = { id: 21402 };
+      const location: ILocation = { id: 25404 };
       tournament.location = location;
-      const sponsors: ISponsor = { id: 13350 };
+      const sponsors: ISponsor = { id: 9419 };
       tournament.sponsors = [sponsors];
-      const teams: ITeam = { id: 4682 };
+      const teams: ITeam = { id: 28783 };
       tournament.teams = [teams];
-      const categories: ICategory = { id: 25694 };
+      const categories: ICategory = { id: 25568 };
       tournament.categories = [categories];
-      const levels: ILevel = { id: 32353 };
+      const levels: ILevel = { id: 1821 };
       tournament.levels = [levels];
+      const courtTypes: ICourtType = { id: 16059 };
+      tournament.courtTypes = [courtTypes];
 
       activatedRoute.data = of({ tournament });
       comp.ngOnInit();
@@ -190,6 +218,7 @@ describe('Tournament Management Update Component', () => {
       expect(comp.teamsSharedCollection).toContain(teams);
       expect(comp.categoriesSharedCollection).toContain(categories);
       expect(comp.levelsSharedCollection).toContain(levels);
+      expect(comp.courtTypesSharedCollection).toContain(courtTypes);
       expect(comp.tournament).toEqual(tournament);
     });
   });
@@ -310,6 +339,16 @@ describe('Tournament Management Update Component', () => {
         jest.spyOn(levelService, 'compareLevel');
         comp.compareLevel(entity, entity2);
         expect(levelService.compareLevel).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareCourtType', () => {
+      it('Should forward to courtTypeService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(courtTypeService, 'compareCourtType');
+        comp.compareCourtType(entity, entity2);
+        expect(courtTypeService.compareCourtType).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

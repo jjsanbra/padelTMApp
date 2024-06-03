@@ -237,3 +237,13 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
   }
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.text-bg-success,
+.text-bg-danger,
+.text-bg-info,
+.text-bg-primary,
+.text-bg-secondary,
+.text-bg-dark,
+.text-bg-warning {
+  color: #fff !important;
+}

@@ -30,13 +30,13 @@ describe('Team e2e test', () => {
       method: 'POST',
       url: '/api/players',
       body: {
-        userName: 'mysteriously um shield',
-        password: 'meh',
-        firstName: 'Lourdes',
-        lastName: 'Ledesma Villanueva',
-        email: 'JoseMaria.MercadoAvila53@hotmail.com',
-        phoneNumber: 'screw',
-        age: 45,
+        userName: 'lively',
+        password: 'candidacy fiercely our',
+        firstName: 'José Eduardo',
+        lastName: 'Lucero Esparza',
+        email: 'Sara36@gmail.com',
+        phoneNumber: 'familiar despite furiously',
+        age: 44,
         avatar: 'Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci5wbmc=',
         avatarContentType: 'unknown',
       },
@@ -216,8 +216,8 @@ describe('Team e2e test', () => {
     });
 
     it('should create an instance of Team', () => {
-      cy.get(`[data-cy="teamName"]`).type('consequently whoever');
-      cy.get(`[data-cy="teamName"]`).should('have.value', 'consequently whoever');
+      cy.get(`[data-cy="teamName"]`).type('psst');
+      cy.get(`[data-cy="teamName"]`).should('have.value', 'psst');
 
       cy.setFieldImageAsBytesOfEntity('logo', 'integration-test.png', 'image/png');
 

@@ -375,11 +375,11 @@ class TournamentResourceIT {
         partialUpdatedTournament.setId(tournament.getId());
 
         partialUpdatedTournament
+            .tournamentName(UPDATED_TOURNAMENT_NAME)
             .startDate(UPDATED_START_DATE)
             .endDate(UPDATED_END_DATE)
-            .lastInscriptionsDate(UPDATED_LAST_INSCRIPTIONS_DATE)
-            .poster(UPDATED_POSTER)
-            .posterContentType(UPDATED_POSTER_CONTENT_TYPE);
+            .maxTeamsAllowed(UPDATED_MAX_TEAMS_ALLOWED)
+            .prices(UPDATED_PRICES);
 
         restTournamentMockMvc
             .perform(

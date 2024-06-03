@@ -15,7 +15,7 @@ describe('Country e2e test', () => {
   const countryPageUrlPattern = new RegExp('/country(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const countrySample = { countryName: 'bravely consequently' };
+  const countrySample = { countryName: 'fray loudly' };
 
   let country;
 
@@ -157,8 +157,8 @@ describe('Country e2e test', () => {
     });
 
     it('should create an instance of Country', () => {
-      cy.get(`[data-cy="countryName"]`).type('polite unto');
-      cy.get(`[data-cy="countryName"]`).should('have.value', 'polite unto');
+      cy.get(`[data-cy="countryName"]`).type('hmph truly yum');
+      cy.get(`[data-cy="countryName"]`).should('have.value', 'hmph truly yum');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

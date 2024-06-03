@@ -51,6 +51,8 @@ public class TournamentDTO implements Serializable {
 
     private Set<LevelDTO> levels = new HashSet<>();
 
+    private Set<CourtTypeDTO> courtTypes = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -179,6 +181,14 @@ public class TournamentDTO implements Serializable {
         this.levels = levels;
     }
 
+    public Set<CourtTypeDTO> getCourtTypes() {
+        return courtTypes;
+    }
+
+    public void setCourtTypes(Set<CourtTypeDTO> courtTypes) {
+        this.courtTypes = courtTypes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -219,6 +229,7 @@ public class TournamentDTO implements Serializable {
             ", teams=" + getTeams() +
             ", categories=" + getCategories() +
             ", levels=" + getLevels() +
+            ", courtTypes=" + getCourtTypes() +
             "}";
     }
 }

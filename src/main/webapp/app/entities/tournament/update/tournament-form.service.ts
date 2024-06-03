@@ -31,7 +31,7 @@ type NewTournamentFormRawValue = FormValueOf<NewTournament>;
 
 type TournamentFormDefaults = Pick<
   NewTournament,
-  'id' | 'startDate' | 'endDate' | 'lastInscriptionsDate' | 'active' | 'sponsors' | 'teams' | 'categories' | 'levels'
+  'id' | 'startDate' | 'endDate' | 'lastInscriptionsDate' | 'active' | 'sponsors' | 'teams' | 'categories' | 'levels' | 'courtTypes'
 >;
 
 type TournamentFormGroupContent = {
@@ -51,6 +51,7 @@ type TournamentFormGroupContent = {
   teams: FormControl<TournamentFormRawValue['teams']>;
   categories: FormControl<TournamentFormRawValue['categories']>;
   levels: FormControl<TournamentFormRawValue['levels']>;
+  courtTypes: FormControl<TournamentFormRawValue['courtTypes']>;
 };
 
 export type TournamentFormGroup = FormGroup<TournamentFormGroupContent>;
@@ -87,6 +88,7 @@ export class TournamentFormService {
       teams: new FormControl(tournamentRawValue.teams ?? []),
       categories: new FormControl(tournamentRawValue.categories ?? []),
       levels: new FormControl(tournamentRawValue.levels ?? []),
+      courtTypes: new FormControl(tournamentRawValue.courtTypes ?? []),
     });
   }
 
@@ -117,6 +119,7 @@ export class TournamentFormService {
       teams: [],
       categories: [],
       levels: [],
+      courtTypes: [],
     };
   }
 
@@ -143,6 +146,7 @@ export class TournamentFormService {
       teams: tournament.teams ?? [],
       categories: tournament.categories ?? [],
       levels: tournament.levels ?? [],
+      courtTypes: tournament.courtTypes ?? [],
     };
   }
 }

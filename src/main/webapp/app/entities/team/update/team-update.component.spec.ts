@@ -61,10 +61,10 @@ describe('Team Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Level query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const level: ILevel = { id: 30808 };
+      const level: ILevel = { id: 8312 };
       team.level = level;
 
-      const levelCollection: ILevel[] = [{ id: 29573 }];
+      const levelCollection: ILevel[] = [{ id: 316 }];
       jest.spyOn(levelService, 'query').mockReturnValue(of(new HttpResponse({ body: levelCollection })));
       const additionalLevels = [level];
       const expectedCollection: ILevel[] = [...additionalLevels, ...levelCollection];
@@ -83,10 +83,10 @@ describe('Team Management Update Component', () => {
 
     it('Should call Category query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const category: ICategory = { id: 14906 };
+      const category: ICategory = { id: 11114 };
       team.category = category;
 
-      const categoryCollection: ICategory[] = [{ id: 16985 }];
+      const categoryCollection: ICategory[] = [{ id: 20314 }];
       jest.spyOn(categoryService, 'query').mockReturnValue(of(new HttpResponse({ body: categoryCollection })));
       const additionalCategories = [category];
       const expectedCollection: ICategory[] = [...additionalCategories, ...categoryCollection];
@@ -105,10 +105,10 @@ describe('Team Management Update Component', () => {
 
     it('Should call Player query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const players: IPlayer[] = [{ id: 5174 }];
+      const players: IPlayer[] = [{ id: 15094 }];
       team.players = players;
 
-      const playerCollection: IPlayer[] = [{ id: 15780 }];
+      const playerCollection: IPlayer[] = [{ id: 3494 }];
       jest.spyOn(playerService, 'query').mockReturnValue(of(new HttpResponse({ body: playerCollection })));
       const additionalPlayers = [...players];
       const expectedCollection: IPlayer[] = [...additionalPlayers, ...playerCollection];
@@ -127,10 +127,10 @@ describe('Team Management Update Component', () => {
 
     it('Should call Tournament query and add missing value', () => {
       const team: ITeam = { id: 456 };
-      const tournaments: ITournament[] = [{ id: 8938 }];
+      const tournaments: ITournament[] = [{ id: 13900 }];
       team.tournaments = tournaments;
 
-      const tournamentCollection: ITournament[] = [{ id: 7302 }];
+      const tournamentCollection: ITournament[] = [{ id: 13576 }];
       jest.spyOn(tournamentService, 'query').mockReturnValue(of(new HttpResponse({ body: tournamentCollection })));
       const additionalTournaments = [...tournaments];
       const expectedCollection: ITournament[] = [...additionalTournaments, ...tournamentCollection];
@@ -149,13 +149,13 @@ describe('Team Management Update Component', () => {
 
     it('Should update editForm', () => {
       const team: ITeam = { id: 456 };
-      const level: ILevel = { id: 23123 };
+      const level: ILevel = { id: 4229 };
       team.level = level;
-      const category: ICategory = { id: 12699 };
+      const category: ICategory = { id: 14201 };
       team.category = category;
-      const players: IPlayer = { id: 4121 };
+      const players: IPlayer = { id: 28196 };
       team.players = [players];
-      const tournaments: ITournament = { id: 7108 };
+      const tournaments: ITournament = { id: 14376 };
       team.tournaments = [tournaments];
 
       activatedRoute.data = of({ team });

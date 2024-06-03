@@ -1,4 +1,4 @@
-<div>
+<div class="container-fluid">
   <h2 id="page-heading" data-cy="TournamentHeading">
     <span jhiTranslate="padelTmApp.tournament.home.title">Tournaments</span>
 
@@ -31,144 +31,63 @@
   }
 
   @if (tournaments && tournaments.length > 0) {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span jhiTranslate="global.field.id">ID</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
+    <div class="row row-cols-1 row-cols-sm-2 g-4">
+      @for (tournament of tournaments; track trackId) {
+        <div class="col">
+          <div class="card">
+            @if (tournament.poster) {
+              <img
+                class="card-img-top img-fluid"
+                [src]="'data:' + tournament.posterContentType + ';base64,' + tournament.poster"
+                alt="tournament"
+              />
+            }
+            <div class="card-body">
+              <h4 class="card-title position-relative">
+                {{ tournament.tournamentName }}
+                <span *ngIf="tournament.active" class="badge text-bg-success rounded-pill"> Active </span>
+              </h4>
+              <div class="card-text">
+                <p>{{ tournament.description }}</p>
+                <br />
+                <h6>Start Date</h6>
+                <p>{{ tournament.startDate | formatMediumDatetime }}</p>
+                <h6>End Date</h6>
+                <p>{{ tournament.endDate | formatMediumDatetime }}</p>
+                <h6>Limit Registration Date</h6>
+                <p>{{ tournament.lastInscriptionsDate | formatMediumDatetime }}</p>
+                <h6>Max Teams Allowed</h6>
+                <p>{{ tournament.maxTeamsAllowed }}</p>
+                <h6>Prices</h6>
+                <p>{{ tournament.prices }}</p>
+                <h6>Location</h6>
+                <p>{{ tournament.location?.city }}</p>
+                <h6>Court Type</h6>
+                <p>{{ tournament.courtTypes }}</p>
               </div>
-            </th>
-            <th scope="col" jhiSortBy="tournamentName">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.tournamentName">Tournament Name</span>
+              <a [routerLink]="['/tournament', tournament.id, 'view']">More Info</a>
+            </div>
+            <div class="card-footer">
+              <div class="btn-group">
+                <a [routerLink]="['/tournament', tournament.id, 'view']" class="btn btn-outline-info btn-sm" data-cy="entityDetailsButton">
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                </a>
 
-                <fa-icon class="p-1" icon="sort"></fa-icon>
+                <a [routerLink]="['/tournament', tournament.id, 'edit']" class="btn btn-outline-primary btn-sm" data-cy="entityEditButton">
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                </a>
+
+                <button type="submit" (click)="delete(tournament)" class="btn btn-outline-danger btn-sm" data-cy="entityDeleteButton">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                </button>
               </div>
-            </th>
-            <th scope="col" jhiSortBy="description">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.description">Description</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="startDate">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.startDate">Start Date</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="endDate">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.endDate">End Date</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="lastInscriptionsDate">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.lastInscriptionsDate">Last Inscriptions Date</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="maxTeamsAllowed">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.maxTeamsAllowed">Max Teams Allowed</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="prices">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.prices">Prices</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="active">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.active">Active</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="poster">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.poster">Poster</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="location.city">
-              <div class="d-flex">
-                <span jhiTranslate="padelTmApp.tournament.location">Location</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
-          @for (tournament of tournaments; track trackId) {
-            <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/tournament', tournament.id, 'view']">{{ tournament.id }}</a>
-              </td>
-              <td>{{ tournament.tournamentName }}</td>
-              <td>{{ tournament.description }}</td>
-              <td>{{ tournament.startDate | formatMediumDatetime }}</td>
-              <td>{{ tournament.endDate | formatMediumDatetime }}</td>
-              <td>{{ tournament.lastInscriptionsDate | formatMediumDatetime }}</td>
-              <td>{{ tournament.maxTeamsAllowed }}</td>
-              <td>{{ tournament.prices }}</td>
-              <td>{{ tournament.active }}</td>
-              <td>
-                @if (tournament.poster) {
-                  <a (click)="openFile(tournament.poster, tournament.posterContentType)">
-                    <img
-                      [src]="'data:' + tournament.posterContentType + ';base64,' + tournament.poster"
-                      style="max-height: 30px"
-                      alt="tournament"
-                    />
-                  </a>
-                  <span>{{ tournament.posterContentType }}, {{ byteSize(tournament.poster) }}</span>
-                }
-              </td>
-              <td>
-                @if (tournament.location) {
-                  <div>
-                    <a [routerLink]="['/location', tournament.location.id, 'view']">{{ tournament.location.city }}</a>
-                  </div>
-                }
-              </td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <a [routerLink]="['/tournament', tournament.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                    <fa-icon icon="eye"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
-                  </a>
-
-                  <a [routerLink]="['/tournament', tournament.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                    <fa-icon icon="pencil-alt"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
-                  </a>
-
-                  <button type="submit" (click)="delete(tournament)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   }
 </div>

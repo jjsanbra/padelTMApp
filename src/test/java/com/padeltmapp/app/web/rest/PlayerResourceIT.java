@@ -449,7 +449,7 @@ class PlayerResourceIT {
             .userName(UPDATED_USER_NAME)
             .password(UPDATED_PASSWORD)
             .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
+            .email(UPDATED_EMAIL)
             .phoneNumber(UPDATED_PHONE_NUMBER)
             .age(UPDATED_AGE);
 

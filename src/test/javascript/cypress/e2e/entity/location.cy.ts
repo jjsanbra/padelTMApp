@@ -157,17 +157,17 @@ describe('Location e2e test', () => {
     });
 
     it('should create an instance of Location', () => {
-      cy.get(`[data-cy="streetAddress"]`).type('sympathetically');
-      cy.get(`[data-cy="streetAddress"]`).should('have.value', 'sympathetically');
+      cy.get(`[data-cy="streetAddress"]`).type('commandeer');
+      cy.get(`[data-cy="streetAddress"]`).should('have.value', 'commandeer');
 
-      cy.get(`[data-cy="postalCode"]`).type('that asphyxiate however');
-      cy.get(`[data-cy="postalCode"]`).should('have.value', 'that asphyxiate however');
+      cy.get(`[data-cy="postalCode"]`).type('fooey');
+      cy.get(`[data-cy="postalCode"]`).should('have.value', 'fooey');
 
-      cy.get(`[data-cy="city"]`).type('Castellón de la Plana');
-      cy.get(`[data-cy="city"]`).should('have.value', 'Castellón de la Plana');
+      cy.get(`[data-cy="city"]`).type('Granada');
+      cy.get(`[data-cy="city"]`).should('have.value', 'Granada');
 
-      cy.get(`[data-cy="stateProvince"]`).type('royal');
-      cy.get(`[data-cy="stateProvince"]`).should('have.value', 'royal');
+      cy.get(`[data-cy="stateProvince"]`).type('courageously carry');
+      cy.get(`[data-cy="stateProvince"]`).should('have.value', 'courageously carry');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

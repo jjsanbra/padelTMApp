@@ -15,7 +15,7 @@ describe('Sponsor e2e test', () => {
   const sponsorPageUrlPattern = new RegExp('/sponsor(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const sponsorSample = { sponsorName: 'indeed tomorrow' };
+  const sponsorSample = { sponsorName: 'a yum' };
 
   let sponsor;
 
@@ -157,11 +157,11 @@ describe('Sponsor e2e test', () => {
     });
 
     it('should create an instance of Sponsor', () => {
-      cy.get(`[data-cy="sponsorName"]`).type('perfectly while');
-      cy.get(`[data-cy="sponsorName"]`).should('have.value', 'perfectly while');
+      cy.get(`[data-cy="sponsorName"]`).type('intentional devalue those');
+      cy.get(`[data-cy="sponsorName"]`).should('have.value', 'intentional devalue those');
 
-      cy.get(`[data-cy="description"]`).type('scorn inside amidst');
-      cy.get(`[data-cy="description"]`).should('have.value', 'scorn inside amidst');
+      cy.get(`[data-cy="description"]`).type('down');
+      cy.get(`[data-cy="description"]`).should('have.value', 'down');
 
       cy.setFieldImageAsBytesOfEntity('logo', 'integration-test.png', 'image/png');
 

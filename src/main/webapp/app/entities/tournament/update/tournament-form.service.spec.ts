@@ -34,6 +34,7 @@ describe('Tournament Form Service', () => {
             teams: expect.any(Object),
             categories: expect.any(Object),
             levels: expect.any(Object),
+            courtTypes: expect.any(Object),
           }),
         );
       });
@@ -58,6 +59,7 @@ describe('Tournament Form Service', () => {
             teams: expect.any(Object),
             categories: expect.any(Object),
             levels: expect.any(Object),
+            courtTypes: expect.any(Object),
           }),
         );
       });

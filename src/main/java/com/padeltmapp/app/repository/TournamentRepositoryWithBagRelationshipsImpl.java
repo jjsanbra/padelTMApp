@@ -24,7 +24,12 @@ public class TournamentRepositoryWithBagRelationshipsImpl implements TournamentR
 
     @Override
     public Optional<Tournament> fetchBagRelationships(Optional<Tournament> tournament) {
-        return tournament.map(this::fetchSponsors).map(this::fetchTeams).map(this::fetchCategories).map(this::fetchLevels);
+        return tournament
+            .map(this::fetchSponsors)
+            .map(this::fetchTeams)
+            .map(this::fetchCategories)
+            .map(this::fetchLevels)
+            .map(this::fetchCourtTypes);
     }
 
     @Override
@@ -39,6 +44,7 @@ public class TournamentRepositoryWithBagRelationshipsImpl implements TournamentR
             .map(this::fetchTeams)
             .map(this::fetchCategories)
             .map(this::fetchLevels)
+            .map(this::fetchCourtTypes)
             .orElse(Collections.emptyList());
     }
 
@@ -130,6 +136,30 @@ public class TournamentRepositoryWithBagRelationshipsImpl implements TournamentR
         List<Tournament> result = entityManager
             .createQuery(
                 "select tournament from Tournament tournament left join fetch tournament.levels where tournament in :tournaments",
+                Tournament.class
+            )
+            .setParameter(TOURNAMENTS_PARAMETER, tournaments)
+            .getResultList();
+        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
+        return result;
+    }
+
+    Tournament fetchCourtTypes(Tournament result) {
+        return entityManager
+            .createQuery(
+                "select tournament from Tournament tournament left join fetch tournament.courtTypes where tournament.id = :id",
+                Tournament.class
+            )
+            .setParameter(ID_PARAMETER, result.getId())
+            .getSingleResult();
+    }
+
+    List<Tournament> fetchCourtTypes(List<Tournament> tournaments) {
+        HashMap<Object, Integer> order = new HashMap<>();
+        IntStream.range(0, tournaments.size()).forEach(index -> order.put(tournaments.get(index).getId(), index));
+        List<Tournament> result = entityManager
+            .createQuery(
+                "select tournament from Tournament tournament left join fetch tournament.courtTypes where tournament in :tournaments",
                 Tournament.class
             )
             .setParameter(TOURNAMENTS_PARAMETER, tournaments)

@@ -1,43 +1,46 @@
 import { IPlayer, NewPlayer } from './player.model';
 
 export const sampleWithRequiredData: IPlayer = {
-  id: 8324,
-  userName: 'throughout so',
-  password: 'boohoo kilt',
-  firstName: 'Lilia',
-  lastName: 'Zelaya Baeza',
-  email: 'MariaSoledad85@yahoo.com',
+  id: 26941,
+  userName: 'intone um',
+  password: 'across what',
+  firstName: 'David',
+  lastName: 'Galván Valdivia',
+  email: 'Ignacio42@yahoo.com',
 };
 
 export const sampleWithPartialData: IPlayer = {
-  id: 5349,
-  userName: 'celebrated oh',
-  password: 'lest gap above',
-  firstName: 'Lucas',
-  lastName: 'Godínez Vela',
-  email: 'Bernardo.AlfaroTejeda48@hotmail.com',
-  age: 61,
+  id: 412,
+  userName: 'panic gadzooks vivaciously',
+  password: 'president dial near',
+  firstName: 'Agustín',
+  lastName: 'Sánchez Almonte',
+  email: 'Eduardo_CerdaDelapaz@yahoo.com',
+  phoneNumber: 'founder uh-huh',
+  age: 69,
+  avatar: '../fake-data/blob/hipster.png',
+  avatarContentType: 'unknown',
 };
 
 export const sampleWithFullData: IPlayer = {
-  id: 28105,
-  userName: 'ugh ouch furiously',
-  password: 'into',
-  firstName: 'Dolores',
-  lastName: 'Vega Quiñones',
-  email: 'Horacio39@hotmail.com',
-  phoneNumber: 'offensively employ frightfully',
+  id: 19888,
+  userName: 'blah',
+  password: 'likewise inside quarrelsomely',
+  firstName: 'Gregorio',
+  lastName: 'Espinoza Valle',
+  email: 'Rosalia_AliceaHenriquez@hotmail.com',
+  phoneNumber: 'boo rehearse hometown',
   age: 62,
   avatar: '../fake-data/blob/hipster.png',
   avatarContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewPlayer = {
-  userName: 'ouch duplicate who',
-  password: 'per quirky starry',
-  firstName: 'Vicente',
-  lastName: 'Ordóñez Merino',
-  email: 'Estela_MascarenasMartinez@hotmail.com',
+  userName: 'sore',
+  password: 'feline once',
+  firstName: 'Amalia',
+  lastName: 'Canales Solís',
+  email: 'Gonzalo.RivasVerdugo32@gmail.com',
   id: null,
 };
 

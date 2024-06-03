@@ -160,29 +160,29 @@ describe('Tournament e2e test', () => {
     });
 
     it('should create an instance of Tournament', () => {
-      cy.get(`[data-cy="tournamentName"]`).type('moist which underneath');
-      cy.get(`[data-cy="tournamentName"]`).should('have.value', 'moist which underneath');
+      cy.get(`[data-cy="tournamentName"]`).type('pish phooey');
+      cy.get(`[data-cy="tournamentName"]`).should('have.value', 'pish phooey');
 
-      cy.get(`[data-cy="description"]`).type('provided pause defender');
-      cy.get(`[data-cy="description"]`).should('have.value', 'provided pause defender');
+      cy.get(`[data-cy="description"]`).type('in yet holder');
+      cy.get(`[data-cy="description"]`).should('have.value', 'in yet holder');
 
-      cy.get(`[data-cy="startDate"]`).type('2024-06-02T07:10');
+      cy.get(`[data-cy="startDate"]`).type('2024-06-02T21:46');
       cy.get(`[data-cy="startDate"]`).blur();
-      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-06-02T07:10');
+      cy.get(`[data-cy="startDate"]`).should('have.value', '2024-06-02T21:46');
 
-      cy.get(`[data-cy="endDate"]`).type('2024-06-02T03:39');
+      cy.get(`[data-cy="endDate"]`).type('2024-06-03T08:10');
       cy.get(`[data-cy="endDate"]`).blur();
-      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-06-02T03:39');
+      cy.get(`[data-cy="endDate"]`).should('have.value', '2024-06-03T08:10');
 
-      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-06-01T15:56');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).type('2024-06-03T07:03');
       cy.get(`[data-cy="lastInscriptionsDate"]`).blur();
-      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-06-01T15:56');
+      cy.get(`[data-cy="lastInscriptionsDate"]`).should('have.value', '2024-06-03T07:03');
 
-      cy.get(`[data-cy="maxTeamsAllowed"]`).type('74');
-      cy.get(`[data-cy="maxTeamsAllowed"]`).should('have.value', '74');
+      cy.get(`[data-cy="maxTeamsAllowed"]`).type('94');
+      cy.get(`[data-cy="maxTeamsAllowed"]`).should('have.value', '94');
 
-      cy.get(`[data-cy="prices"]`).type('instead properly');
-      cy.get(`[data-cy="prices"]`).should('have.value', 'instead properly');
+      cy.get(`[data-cy="prices"]`).type('greedy mid');
+      cy.get(`[data-cy="prices"]`).should('have.value', 'greedy mid');
 
       cy.get(`[data-cy="active"]`).should('not.be.checked');
       cy.get(`[data-cy="active"]`).click();

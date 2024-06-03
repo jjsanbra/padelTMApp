@@ -49,10 +49,10 @@ describe('Level Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Tournament query and add missing value', () => {
       const level: ILevel = { id: 456 };
-      const tournaments: ITournament[] = [{ id: 27751 }];
+      const tournaments: ITournament[] = [{ id: 12984 }];
       level.tournaments = tournaments;
 
-      const tournamentCollection: ITournament[] = [{ id: 24300 }];
+      const tournamentCollection: ITournament[] = [{ id: 7778 }];
       jest.spyOn(tournamentService, 'query').mockReturnValue(of(new HttpResponse({ body: tournamentCollection })));
       const additionalTournaments = [...tournaments];
       const expectedCollection: ITournament[] = [...additionalTournaments, ...tournamentCollection];
@@ -71,7 +71,7 @@ describe('Level Management Update Component', () => {
 
     it('Should update editForm', () => {
       const level: ILevel = { id: 456 };
-      const tournaments: ITournament = { id: 10177 };
+      const tournaments: ITournament = { id: 17245 };
       level.tournaments = [tournaments];
 
       activatedRoute.data = of({ level });

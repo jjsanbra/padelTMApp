@@ -1,22 +1,22 @@
 import { ICountry, NewCountry } from './country.model';
 
 export const sampleWithRequiredData: ICountry = {
-  id: 24441,
-  countryName: 'unfinished',
+  id: 21823,
+  countryName: 'summer embitter',
 };
 
 export const sampleWithPartialData: ICountry = {
-  id: 2798,
-  countryName: 'rake in',
+  id: 15238,
+  countryName: 'yet furthermore',
 };
 
 export const sampleWithFullData: ICountry = {
-  id: 18562,
-  countryName: 'but burro lest',
+  id: 9596,
+  countryName: 'demur pushy',
 };
 
 export const sampleWithNewData: NewCountry = {
-  countryName: 'conditioner',
+  countryName: 'eek',
   id: null,
 };
 

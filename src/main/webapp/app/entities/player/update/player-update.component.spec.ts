@@ -53,10 +53,10 @@ describe('Player Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Level query and add missing value', () => {
       const player: IPlayer = { id: 456 };
-      const level: ILevel = { id: 21078 };
+      const level: ILevel = { id: 22314 };
       player.level = level;
 
-      const levelCollection: ILevel[] = [{ id: 32473 }];
+      const levelCollection: ILevel[] = [{ id: 6442 }];
       jest.spyOn(levelService, 'query').mockReturnValue(of(new HttpResponse({ body: levelCollection })));
       const additionalLevels = [level];
       const expectedCollection: ILevel[] = [...additionalLevels, ...levelCollection];
@@ -75,10 +75,10 @@ describe('Player Management Update Component', () => {
 
     it('Should call Team query and add missing value', () => {
       const player: IPlayer = { id: 456 };
-      const teams: ITeam[] = [{ id: 4869 }];
+      const teams: ITeam[] = [{ id: 17296 }];
       player.teams = teams;
 
-      const teamCollection: ITeam[] = [{ id: 3583 }];
+      const teamCollection: ITeam[] = [{ id: 13648 }];
       jest.spyOn(teamService, 'query').mockReturnValue(of(new HttpResponse({ body: teamCollection })));
       const additionalTeams = [...teams];
       const expectedCollection: ITeam[] = [...additionalTeams, ...teamCollection];
@@ -97,9 +97,9 @@ describe('Player Management Update Component', () => {
 
     it('Should update editForm', () => {
       const player: IPlayer = { id: 456 };
-      const level: ILevel = { id: 28899 };
+      const level: ILevel = { id: 11035 };
       player.level = level;
-      const teams: ITeam = { id: 21146 };
+      const teams: ITeam = { id: 14125 };
       player.teams = [teams];
 
       activatedRoute.data = of({ player });

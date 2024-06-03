@@ -3,27 +3,26 @@ import dayjs from 'dayjs/esm';
 import { ITournament, NewTournament } from './tournament.model';
 
 export const sampleWithRequiredData: ITournament = {
-  id: 30880,
+  id: 3512,
 };
 
 export const sampleWithPartialData: ITournament = {
-  id: 11026,
-  description: 'ingredient',
-  endDate: dayjs('2024-06-01T21:15'),
-  lastInscriptionsDate: dayjs('2024-06-02T06:45'),
-  maxTeamsAllowed: 44,
-  active: false,
+  id: 10616,
+  description: 'safely',
+  startDate: dayjs('2024-06-02T19:08'),
+  poster: '../fake-data/blob/hipster.png',
+  posterContentType: 'unknown',
 };
 
 export const sampleWithFullData: ITournament = {
-  id: 18070,
-  tournamentName: 'prophet',
-  description: 'deliberately beautifully ha',
-  startDate: dayjs('2024-06-01T23:42'),
-  endDate: dayjs('2024-06-01T21:30'),
-  lastInscriptionsDate: dayjs('2024-06-01T18:15'),
-  maxTeamsAllowed: 25,
-  prices: 'cripple whoa',
+  id: 3353,
+  tournamentName: 'roller baggy ugh',
+  description: 'nix venison amongst',
+  startDate: dayjs('2024-06-02T17:36'),
+  endDate: dayjs('2024-06-03T07:34'),
+  lastInscriptionsDate: dayjs('2024-06-02T20:01'),
+  maxTeamsAllowed: 73,
+  prices: 'buckwheat',
   active: false,
   poster: '../fake-data/blob/hipster.png',
   posterContentType: 'unknown',

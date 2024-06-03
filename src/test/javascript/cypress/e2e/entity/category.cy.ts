@@ -15,7 +15,7 @@ describe('Category e2e test', () => {
   const categoryPageUrlPattern = new RegExp('/category(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const categorySample = { categoryName: 'aha jaggedly recorder' };
+  const categorySample = { categoryName: 'once' };
 
   let category;
 
@@ -157,11 +157,11 @@ describe('Category e2e test', () => {
     });
 
     it('should create an instance of Category', () => {
-      cy.get(`[data-cy="categoryName"]`).type('buggy');
-      cy.get(`[data-cy="categoryName"]`).should('have.value', 'buggy');
+      cy.get(`[data-cy="categoryName"]`).type('along');
+      cy.get(`[data-cy="categoryName"]`).should('have.value', 'along');
 
-      cy.get(`[data-cy="description"]`).type('towards round brr');
-      cy.get(`[data-cy="description"]`).should('have.value', 'towards round brr');
+      cy.get(`[data-cy="description"]`).type('invade whereas misname');
+      cy.get(`[data-cy="description"]`).should('have.value', 'invade whereas misname');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

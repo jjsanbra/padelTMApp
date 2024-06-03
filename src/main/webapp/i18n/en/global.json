@@ -16,7 +16,8 @@
         "country": "Country",
         "category": "Category",
         "level": "Level",
-        "sponsor": "Sponsor"
+        "sponsor": "Sponsor",
+        "courtType": "Court Type"
       },
       "account": {
         "main": "Account",

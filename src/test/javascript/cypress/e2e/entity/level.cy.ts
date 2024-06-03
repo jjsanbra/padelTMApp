@@ -15,7 +15,7 @@ describe('Level e2e test', () => {
   const levelPageUrlPattern = new RegExp('/level(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const levelSample = { levelName: 'following mundane past' };
+  const levelSample = { levelName: 'hence' };
 
   let level;
 
@@ -157,11 +157,11 @@ describe('Level e2e test', () => {
     });
 
     it('should create an instance of Level', () => {
-      cy.get(`[data-cy="levelName"]`).type('modulo');
-      cy.get(`[data-cy="levelName"]`).should('have.value', 'modulo');
+      cy.get(`[data-cy="levelName"]`).type('yawningly');
+      cy.get(`[data-cy="levelName"]`).should('have.value', 'yawningly');
 
-      cy.get(`[data-cy="description"]`).type('international fulfillment');
-      cy.get(`[data-cy="description"]`).should('have.value', 'international fulfillment');
+      cy.get(`[data-cy="description"]`).type('assurance ring');
+      cy.get(`[data-cy="description"]`).should('have.value', 'assurance ring');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

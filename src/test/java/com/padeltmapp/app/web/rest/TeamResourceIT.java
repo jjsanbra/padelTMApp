@@ -320,7 +320,7 @@ class TeamResourceIT {
         Team partialUpdatedTeam = new Team();
         partialUpdatedTeam.setId(team.getId());
 
-        partialUpdatedTeam.teamName(UPDATED_TEAM_NAME);
+        partialUpdatedTeam.logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE);
 
         restTeamMockMvc
             .perform(

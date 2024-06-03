@@ -4,6 +4,7 @@ import { ISponsor } from 'app/entities/sponsor/sponsor.model';
 import { ITeam } from 'app/entities/team/team.model';
 import { ICategory } from 'app/entities/category/category.model';
 import { ILevel } from 'app/entities/level/level.model';
+import { ICourtType } from 'app/entities/court-type/court-type.model';
 
 export interface ITournament {
   id: number;
@@ -22,6 +23,7 @@ export interface ITournament {
   teams?: Pick<ITeam, 'id' | 'teamName'>[] | null;
   categories?: Pick<ICategory, 'id' | 'categoryName'>[] | null;
   levels?: Pick<ILevel, 'id' | 'levelName'>[] | null;
+  courtTypes?: Pick<ICourtType, 'id' | 'courtTypeName'>[] | null;
 }
 
 export type NewTournament = Omit<ITournament, 'id'> & { id: null };

@@ -49,10 +49,10 @@ describe('Category Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Tournament query and add missing value', () => {
       const category: ICategory = { id: 456 };
-      const tournaments: ITournament[] = [{ id: 3214 }];
+      const tournaments: ITournament[] = [{ id: 18964 }];
       category.tournaments = tournaments;
 
-      const tournamentCollection: ITournament[] = [{ id: 19555 }];
+      const tournamentCollection: ITournament[] = [{ id: 21606 }];
       jest.spyOn(tournamentService, 'query').mockReturnValue(of(new HttpResponse({ body: tournamentCollection })));
       const additionalTournaments = [...tournaments];
       const expectedCollection: ITournament[] = [...additionalTournaments, ...tournamentCollection];
@@ -71,7 +71,7 @@ describe('Category Management Update Component', () => {
 
     it('Should update editForm', () => {
       const category: ICategory = { id: 456 };
-      const tournaments: ITournament = { id: 26998 };
+      const tournaments: ITournament = { id: 497 };
       category.tournaments = [tournaments];
 
       activatedRoute.data = of({ category });

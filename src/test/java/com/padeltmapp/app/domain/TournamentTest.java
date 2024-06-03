@@ -1,6 +1,7 @@
 package com.padeltmapp.app.domain;
 
 import static com.padeltmapp.app.domain.CategoryTestSamples.*;
+import static com.padeltmapp.app.domain.CourtTypeTestSamples.*;
 import static com.padeltmapp.app.domain.LevelTestSamples.*;
 import static com.padeltmapp.app.domain.LocationTestSamples.*;
 import static com.padeltmapp.app.domain.SponsorTestSamples.*;
@@ -111,5 +112,23 @@ class TournamentTest {
 
         tournament.setLevels(new HashSet<>());
         assertThat(tournament.getLevels()).doesNotContain(levelBack);
+    }
+
+    @Test
+    void courtTypesTest() throws Exception {
+        Tournament tournament = getTournamentRandomSampleGenerator();
+        CourtType courtTypeBack = getCourtTypeRandomSampleGenerator();
+
+        tournament.addCourtTypes(courtTypeBack);
+        assertThat(tournament.getCourtTypes()).containsOnly(courtTypeBack);
+
+        tournament.removeCourtTypes(courtTypeBack);
+        assertThat(tournament.getCourtTypes()).doesNotContain(courtTypeBack);
+
+        tournament.courtTypes(new HashSet<>(Set.of(courtTypeBack)));
+        assertThat(tournament.getCourtTypes()).containsOnly(courtTypeBack);
+
+        tournament.setCourtTypes(new HashSet<>());
+        assertThat(tournament.getCourtTypes()).doesNotContain(courtTypeBack);
     }
 }

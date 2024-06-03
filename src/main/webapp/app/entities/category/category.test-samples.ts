@@ -1,23 +1,24 @@
 import { ICategory, NewCategory } from './category.model';
 
 export const sampleWithRequiredData: ICategory = {
-  id: 14415,
-  categoryName: 'fondly quick',
+  id: 20592,
+  categoryName: 'human woot',
 };
 
 export const sampleWithPartialData: ICategory = {
-  id: 13991,
-  categoryName: 'until aha',
+  id: 12884,
+  categoryName: 'consequently for',
+  description: 'as',
 };
 
 export const sampleWithFullData: ICategory = {
-  id: 5515,
-  categoryName: 'value infect',
-  description: 'yippee roughly',
+  id: 31421,
+  categoryName: 'gadzooks',
+  description: 'jettison',
 };
 
 export const sampleWithNewData: NewCategory = {
-  categoryName: 'farm pressurization',
+  categoryName: 'levy jailhouse amid',
   id: null,
 };
 

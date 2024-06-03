@@ -49,10 +49,10 @@ describe('Location Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Country query and add missing value', () => {
       const location: ILocation = { id: 456 };
-      const country: ICountry = { id: 31730 };
+      const country: ICountry = { id: 16381 };
       location.country = country;
 
-      const countryCollection: ICountry[] = [{ id: 32577 }];
+      const countryCollection: ICountry[] = [{ id: 31147 }];
       jest.spyOn(countryService, 'query').mockReturnValue(of(new HttpResponse({ body: countryCollection })));
       const additionalCountries = [country];
       const expectedCollection: ICountry[] = [...additionalCountries, ...countryCollection];
@@ -71,7 +71,7 @@ describe('Location Management Update Component', () => {
 
     it('Should update editForm', () => {
       const location: ILocation = { id: 456 };
-      const country: ICountry = { id: 15836 };
+      const country: ICountry = { id: 22707 };
       location.country = country;
 
       activatedRoute.data = of({ location });

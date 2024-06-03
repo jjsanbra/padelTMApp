@@ -105,6 +105,16 @@ public class Tournament implements Serializable {
     @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
     private Set<Level> levels = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "rel_tournament__court_types",
+        joinColumns = @JoinColumn(name = "tournament_id"),
+        inverseJoinColumns = @JoinColumn(name = "court_types_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
+    private Set<CourtType> courtTypes = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -352,6 +362,29 @@ public class Tournament implements Serializable {
 
     public Tournament removeLevels(Level level) {
         this.levels.remove(level);
+        return this;
+    }
+
+    public Set<CourtType> getCourtTypes() {
+        return this.courtTypes;
+    }
+
+    public void setCourtTypes(Set<CourtType> courtTypes) {
+        this.courtTypes = courtTypes;
+    }
+
+    public Tournament courtTypes(Set<CourtType> courtTypes) {
+        this.setCourtTypes(courtTypes);
+        return this;
+    }
+
+    public Tournament addCourtTypes(CourtType courtType) {
+        this.courtTypes.add(courtType);
+        return this;
+    }
+
+    public Tournament removeCourtTypes(CourtType courtType) {
+        this.courtTypes.remove(courtType);
         return this;
     }
 

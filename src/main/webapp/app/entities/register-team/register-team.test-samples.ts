@@ -1,22 +1,22 @@
 import { IRegisterTeam, NewRegisterTeam } from './register-team.model';
 
 export const sampleWithRequiredData: IRegisterTeam = {
-  id: 30102,
-  teamName: 'trailer juvenile off',
+  id: 14019,
+  teamName: 'versus hinder even',
 };
 
 export const sampleWithPartialData: IRegisterTeam = {
-  id: 11423,
-  teamName: 'under fairly drat',
+  id: 20096,
+  teamName: 'grandiose smash lest',
 };
 
 export const sampleWithFullData: IRegisterTeam = {
-  id: 26882,
-  teamName: 'dawdle oof',
+  id: 2809,
+  teamName: 'zowie excavate',
 };
 
 export const sampleWithNewData: NewRegisterTeam = {
-  teamName: 'spotted furthermore that',
+  teamName: 'major',
   id: null,
 };
 

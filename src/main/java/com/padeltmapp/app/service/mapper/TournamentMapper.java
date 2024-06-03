@@ -1,12 +1,14 @@
 package com.padeltmapp.app.service.mapper;
 
 import com.padeltmapp.app.domain.Category;
+import com.padeltmapp.app.domain.CourtType;
 import com.padeltmapp.app.domain.Level;
 import com.padeltmapp.app.domain.Location;
 import com.padeltmapp.app.domain.Sponsor;
 import com.padeltmapp.app.domain.Team;
 import com.padeltmapp.app.domain.Tournament;
 import com.padeltmapp.app.service.dto.CategoryDTO;
+import com.padeltmapp.app.service.dto.CourtTypeDTO;
 import com.padeltmapp.app.service.dto.LevelDTO;
 import com.padeltmapp.app.service.dto.LocationDTO;
 import com.padeltmapp.app.service.dto.SponsorDTO;
@@ -26,12 +28,14 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
     @Mapping(target = "teams", source = "teams", qualifiedByName = "teamTeamNameSet")
     @Mapping(target = "categories", source = "categories", qualifiedByName = "categoryCategoryNameSet")
     @Mapping(target = "levels", source = "levels", qualifiedByName = "levelLevelNameSet")
+    @Mapping(target = "courtTypes", source = "courtTypes", qualifiedByName = "courtTypeCourtTypeNameSet")
     TournamentDTO toDto(Tournament s);
 
     @Mapping(target = "removeSponsors", ignore = true)
     @Mapping(target = "removeTeams", ignore = true)
     @Mapping(target = "removeCategories", ignore = true)
     @Mapping(target = "removeLevels", ignore = true)
+    @Mapping(target = "removeCourtTypes", ignore = true)
     Tournament toEntity(TournamentDTO tournamentDTO);
 
     @Named("locationCity")
@@ -82,5 +86,16 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
     @Named("levelLevelNameSet")
     default Set<LevelDTO> toDtoLevelLevelNameSet(Set<Level> level) {
         return level.stream().map(this::toDtoLevelLevelName).collect(Collectors.toSet());
+    }
+
+    @Named("courtTypeCourtTypeName")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "courtTypeName", source = "courtTypeName")
+    CourtTypeDTO toDtoCourtTypeCourtTypeName(CourtType courtType);
+
+    @Named("courtTypeCourtTypeNameSet")
+    default Set<CourtTypeDTO> toDtoCourtTypeCourtTypeNameSet(Set<CourtType> courtType) {
+        return courtType.stream().map(this::toDtoCourtTypeCourtTypeName).collect(Collectors.toSet());
     }
 }

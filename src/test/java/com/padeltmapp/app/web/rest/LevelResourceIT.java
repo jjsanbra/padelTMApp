@@ -283,7 +283,7 @@ class LevelResourceIT {
         Level partialUpdatedLevel = new Level();
         partialUpdatedLevel.setId(level.getId());
 
-        partialUpdatedLevel.description(UPDATED_DESCRIPTION);
+        partialUpdatedLevel.levelName(UPDATED_LEVEL_NAME).description(UPDATED_DESCRIPTION);
 
         restLevelMockMvc
             .perform(

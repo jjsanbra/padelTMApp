@@ -39,7 +39,7 @@ public class Location implements Serializable {
     @JsonIgnoreProperties(value = { "locations" }, allowSetters = true)
     private Country country;
 
-    @JsonIgnoreProperties(value = { "location", "sponsors", "teams", "categories", "levels" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "location", "sponsors", "teams", "categories", "levels", "courtTypes" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "location")
     private Tournament tournament;
 

@@ -20,6 +20,8 @@ import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ILevel } from 'app/entities/level/level.model';
 import { LevelService } from 'app/entities/level/service/level.service';
+import { ICourtType } from 'app/entities/court-type/court-type.model';
+import { CourtTypeService } from 'app/entities/court-type/service/court-type.service';
 import { TournamentService } from '../service/tournament.service';
 import { ITournament } from '../tournament.model';
 import { TournamentFormService, TournamentFormGroup } from './tournament-form.service';
@@ -39,6 +41,7 @@ export class TournamentUpdateComponent implements OnInit {
   teamsSharedCollection: ITeam[] = [];
   categoriesSharedCollection: ICategory[] = [];
   levelsSharedCollection: ILevel[] = [];
+  courtTypesSharedCollection: ICourtType[] = [];
 
   protected dataUtils = inject(DataUtils);
   protected eventManager = inject(EventManager);
@@ -49,6 +52,7 @@ export class TournamentUpdateComponent implements OnInit {
   protected teamService = inject(TeamService);
   protected categoryService = inject(CategoryService);
   protected levelService = inject(LevelService);
+  protected courtTypeService = inject(CourtTypeService);
   protected elementRef = inject(ElementRef);
   protected activatedRoute = inject(ActivatedRoute);
 
@@ -64,6 +68,8 @@ export class TournamentUpdateComponent implements OnInit {
   compareCategory = (o1: ICategory | null, o2: ICategory | null): boolean => this.categoryService.compareCategory(o1, o2);
 
   compareLevel = (o1: ILevel | null, o2: ILevel | null): boolean => this.levelService.compareLevel(o1, o2);
+
+  compareCourtType = (o1: ICourtType | null, o2: ICourtType | null): boolean => this.courtTypeService.compareCourtType(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ tournament }) => {
@@ -158,6 +164,10 @@ export class TournamentUpdateComponent implements OnInit {
       this.levelsSharedCollection,
       ...(tournament.levels ?? []),
     );
+    this.courtTypesSharedCollection = this.courtTypeService.addCourtTypeToCollectionIfMissing<ICourtType>(
+      this.courtTypesSharedCollection,
+      ...(tournament.courtTypes ?? []),
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -202,5 +212,15 @@ export class TournamentUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<ILevel[]>) => res.body ?? []))
       .pipe(map((levels: ILevel[]) => this.levelService.addLevelToCollectionIfMissing<ILevel>(levels, ...(this.tournament?.levels ?? []))))
       .subscribe((levels: ILevel[]) => (this.levelsSharedCollection = levels));
+
+    this.courtTypeService
+      .query()
+      .pipe(map((res: HttpResponse<ICourtType[]>) => res.body ?? []))
+      .pipe(
+        map((courtTypes: ICourtType[]) =>
+          this.courtTypeService.addCourtTypeToCollectionIfMissing<ICourtType>(courtTypes, ...(this.tournament?.courtTypes ?? [])),
+        ),
+      )
+      .subscribe((courtTypes: ICourtType[]) => (this.courtTypesSharedCollection = courtTypes));
   }
 }

@@ -51,6 +51,11 @@ const routes: Routes = [
     data: { pageTitle: 'padelTmApp.sponsor.home.title' },
     loadChildren: () => import('./sponsor/sponsor.routes'),
   },
+  {
+    path: 'court-type',
+    data: { pageTitle: 'padelTmApp.courtType.home.title' },
+    loadChildren: () => import('./court-type/court-type.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

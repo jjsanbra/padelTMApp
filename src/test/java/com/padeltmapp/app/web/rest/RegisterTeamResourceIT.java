@@ -282,6 +282,8 @@ class RegisterTeamResourceIT {
         RegisterTeam partialUpdatedRegisterTeam = new RegisterTeam();
         partialUpdatedRegisterTeam.setId(registerTeam.getId());
 
+        partialUpdatedRegisterTeam.teamName(UPDATED_TEAM_NAME);
+
         restRegisterTeamMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedRegisterTeam.getId())

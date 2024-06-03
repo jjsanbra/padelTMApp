@@ -76,6 +76,14 @@ entity Level {
 }
 
 /**
+ * The Court Type entity.
+ */
+entity CourtType {
+	courtTypeName String required
+    description String
+}
+
+/**
  * The Sponsor entity.
  */
 entity Sponsor {
@@ -117,6 +125,8 @@ relationship ManyToMany {
     Tournament{Categories(categoryName)} to Category{tournaments(tournamentName)}
     /* Multiple tournament can have multiple levels */
     Tournament{Levels(levelName)} to Level{tournaments(tournamentName)}
+    /* Multiple tournament can have multiple court types */
+    Tournament{CourtTypes(courtTypeName)} to CourtType{tournaments(tournamentName)}
     /* Multiple teams can have up to 2 players, and they are required (handled in business logic, not here) */
     Team{Players(firstName) required} to Player{teams(teamName)}
 }

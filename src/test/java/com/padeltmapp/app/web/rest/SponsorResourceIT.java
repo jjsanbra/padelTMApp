@@ -305,7 +305,7 @@ class SponsorResourceIT {
         Sponsor partialUpdatedSponsor = new Sponsor();
         partialUpdatedSponsor.setId(sponsor.getId());
 
-        partialUpdatedSponsor.description(UPDATED_DESCRIPTION).logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE);
+        partialUpdatedSponsor.sponsorName(UPDATED_SPONSOR_NAME).logo(UPDATED_LOGO).logoContentType(UPDATED_LOGO_CONTENT_TYPE);
 
         restSponsorMockMvc
             .perform(
