@@ -1,0 +1,28 @@
+{
+  "annotations": {
+    "changelogDate": "20240603141905"
+  },
+  "applications": "*",
+  "documentation": "The Country entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "countryName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Country",
+  "relationships": [
+    {
+      "otherEntityField": "city",
+      "otherEntityName": "location",
+      "otherEntityRelationshipName": "country",
+      "relationshipName": "location",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

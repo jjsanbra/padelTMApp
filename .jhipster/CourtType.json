@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "changelogDate": "20240603142629"
+  },
+  "applications": "*",
+  "documentation": "The Court Type entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "courtTypeName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "name": "CourtType",
+  "relationships": [
+    {
+      "otherEntityField": "tournamentName",
+      "otherEntityName": "tournament",
+      "otherEntityRelationshipName": "courtTypes",
+      "relationshipName": "tournaments",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,26 @@
+{
+  "padelTmApp": {
+    "courtType": {
+      "home": {
+        "title": "Court Types",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Court Type",
+        "createOrEditLabel": "Crear o editar Court Type",
+        "notFound": "Ningún Court Types encontrado"
+      },
+      "created": "Un nuevo Court Type ha sido creado con el identificador {{ param }}",
+      "updated": "Un Court Type ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Court Type ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Court Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Court Type"
+      },
+      "id": "ID",
+      "courtTypeName": "Court Type Name",
+      "description": "Description",
+      "tournaments": "Tournaments"
+    }
+  }
+}

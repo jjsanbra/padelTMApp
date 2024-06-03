@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (courtType()) {
+      <div>
+        <h2 data-cy="courtTypeDetailsHeading"><span jhiTranslate="padelTmApp.courtType.detail.title">Court Type</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ courtType()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.courtType.courtTypeName">Court Type Name</span></dt>
+          <dd>
+            <span>{{ courtType()!.courtTypeName }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.courtType.description">Description</span></dt>
+          <dd>
+            <span>{{ courtType()!.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.courtType.tournaments">Tournaments</span></dt>
+          <dd>
+            @for (tournaments of courtType()!.tournaments; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/tournament', tournaments.id, 'view']">{{ tournaments?.tournamentName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/court-type', courtType()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

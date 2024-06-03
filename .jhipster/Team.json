@@ -1,0 +1,56 @@
+{
+  "annotations": {
+    "changelogDate": "20240603141902"
+  },
+  "applications": "*",
+  "documentation": "The Team entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "teamName",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "logo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "name": "Team",
+  "relationships": [
+    {
+      "otherEntityField": "levelName",
+      "otherEntityName": "level",
+      "relationshipName": "level",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "categoryName",
+      "otherEntityName": "category",
+      "relationshipName": "category",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "firstName",
+      "otherEntityName": "player",
+      "otherEntityRelationshipName": "teams",
+      "relationshipName": "players",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "tournamentName",
+      "otherEntityName": "tournament",
+      "otherEntityRelationshipName": "teams",
+      "relationshipName": "tournaments",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

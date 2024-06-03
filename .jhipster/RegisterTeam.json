@@ -1,0 +1,19 @@
+{
+  "annotations": {
+    "changelogDate": "20240603141903"
+  },
+  "applications": "*",
+  "documentation": "The Team Registration entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "teamName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "RegisterTeam",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

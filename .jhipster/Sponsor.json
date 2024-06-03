@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20240603141908"
+  },
+  "applications": "*",
+  "documentation": "The Sponsor entity.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "sponsorName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "logo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "name": "Sponsor",
+  "relationships": [
+    {
+      "otherEntityField": "tournamentName",
+      "otherEntityName": "tournament",
+      "otherEntityRelationshipName": "sponsors",
+      "relationshipName": "tournaments",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
