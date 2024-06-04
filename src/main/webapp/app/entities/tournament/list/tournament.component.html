@@ -63,23 +63,43 @@
                 <h6>Location</h6>
                 <p>{{ tournament.location?.city }}</p>
                 <h6>Court Type</h6>
-                <p>{{ tournament.courtTypes }}</p>
+                @for (courtType of tournament.courtTypes; track trackId) {
+                  <p>{{ courtType?.courtTypeName }}</p>
+                }
+                <h6>Categories</h6>
+                @for (categories of tournament.categories; track trackId) {
+                  <ul>
+                    <li>{{ categories?.categoryName }}</li>
+                  </ul>
+                }
+                <h6>Levels</h6>
+                @for (level of tournament.levels; track trackId) {
+                  <ul>
+                    <li>{{ level?.levelName }}</li>
+                  </ul>
+                }
+                <h6>Sponsors</h6>
+                @for (sponsor of tournament.sponsors; track trackId) {
+                  <ul>
+                    <li>{{ sponsor?.sponsorName }}</li>
+                  </ul>
+                }
               </div>
               <a [routerLink]="['/tournament', tournament.id, 'view']">More Info</a>
             </div>
             <div class="card-footer">
               <div class="btn-group">
-                <a [routerLink]="['/tournament', tournament.id, 'view']" class="btn btn-outline-info btn-sm" data-cy="entityDetailsButton">
+                <a [routerLink]="['/tournament', tournament.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                   <fa-icon icon="eye"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
                 </a>
 
-                <a [routerLink]="['/tournament', tournament.id, 'edit']" class="btn btn-outline-primary btn-sm" data-cy="entityEditButton">
+                <a [routerLink]="['/tournament', tournament.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                   <fa-icon icon="pencil-alt"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
                 </a>
 
-                <button type="submit" (click)="delete(tournament)" class="btn btn-outline-danger btn-sm" data-cy="entityDeleteButton">
+                <button type="submit" (click)="delete(tournament)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                   <fa-icon icon="times"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
                 </button>
