@@ -3,6 +3,8 @@ package com.padeltmapp.app.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -35,13 +37,14 @@ public class Location implements Serializable {
     @Column(name = "state_province")
     private String stateProvince;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "sponsors", "teams", "categories", "levels", "courtTypes", "location" }, allowSetters = true)
+    private Set<Tournament> tournaments = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "locations" }, allowSetters = true)
     private Country country;
-
-    @JsonIgnoreProperties(value = { "location", "sponsors", "teams", "categories", "levels", "courtTypes" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "location")
-    private Tournament tournament;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -110,6 +113,37 @@ public class Location implements Serializable {
         this.stateProvince = stateProvince;
     }
 
+    public Set<Tournament> getTournaments() {
+        return this.tournaments;
+    }
+
+    public void setTournaments(Set<Tournament> tournaments) {
+        if (this.tournaments != null) {
+            this.tournaments.forEach(i -> i.setLocation(null));
+        }
+        if (tournaments != null) {
+            tournaments.forEach(i -> i.setLocation(this));
+        }
+        this.tournaments = tournaments;
+    }
+
+    public Location tournaments(Set<Tournament> tournaments) {
+        this.setTournaments(tournaments);
+        return this;
+    }
+
+    public Location addTournaments(Tournament tournament) {
+        this.tournaments.add(tournament);
+        tournament.setLocation(this);
+        return this;
+    }
+
+    public Location removeTournaments(Tournament tournament) {
+        this.tournaments.remove(tournament);
+        tournament.setLocation(null);
+        return this;
+    }
+
     public Country getCountry() {
         return this.country;
     }
@@ -120,25 +154,6 @@ public class Location implements Serializable {
 
     public Location country(Country country) {
         this.setCountry(country);
-        return this;
-    }
-
-    public Tournament getTournament() {
-        return this.tournament;
-    }
-
-    public void setTournament(Tournament tournament) {
-        if (this.tournament != null) {
-            this.tournament.setLocation(null);
-        }
-        if (tournament != null) {
-            tournament.setLocation(this);
-        }
-        this.tournament = tournament;
-    }
-
-    public Location tournament(Tournament tournament) {
-        this.setTournament(tournament);
         return this;
     }
 

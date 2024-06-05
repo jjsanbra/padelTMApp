@@ -23,12 +23,12 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament> {
-    @Mapping(target = "location", source = "location", qualifiedByName = "locationCity")
     @Mapping(target = "sponsors", source = "sponsors", qualifiedByName = "sponsorSponsorNameSet")
     @Mapping(target = "teams", source = "teams", qualifiedByName = "teamTeamNameSet")
     @Mapping(target = "categories", source = "categories", qualifiedByName = "categoryCategoryNameSet")
     @Mapping(target = "levels", source = "levels", qualifiedByName = "levelLevelNameSet")
     @Mapping(target = "courtTypes", source = "courtTypes", qualifiedByName = "courtTypeCourtTypeNameSet")
+    @Mapping(target = "location", source = "location", qualifiedByName = "locationCity")
     TournamentDTO toDto(Tournament s);
 
     @Mapping(target = "removeSponsors", ignore = true)
@@ -37,12 +37,6 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
     @Mapping(target = "removeLevels", ignore = true)
     @Mapping(target = "removeCourtTypes", ignore = true)
     Tournament toEntity(TournamentDTO tournamentDTO);
-
-    @Named("locationCity")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "city", source = "city")
-    LocationDTO toDtoLocationCity(Location location);
 
     @Named("sponsorSponsorName")
     @BeanMapping(ignoreByDefault = true)
@@ -98,4 +92,10 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
     default Set<CourtTypeDTO> toDtoCourtTypeCourtTypeNameSet(Set<CourtType> courtType) {
         return courtType.stream().map(this::toDtoCourtTypeCourtTypeName).collect(Collectors.toSet());
     }
+
+    @Named("locationCity")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "city", source = "city")
+    LocationDTO toDtoLocationCity(Location location);
 }

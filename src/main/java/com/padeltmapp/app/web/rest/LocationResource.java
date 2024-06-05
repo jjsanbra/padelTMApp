@@ -132,18 +132,10 @@ public class LocationResource {
      * {@code GET  /locations} : get all the locations.
      *
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of locations in body.
      */
     @GetMapping("")
-    public List<LocationDTO> getAllLocations(
-        @RequestParam(name = "filter", required = false) String filter,
-        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
-    ) {
-        if ("tournament-is-null".equals(filter)) {
-            log.debug("REST request to get all Locations where tournament is null");
-            return locationService.findAllWhereTournamentIsNull();
-        }
+    public List<LocationDTO> getAllLocations(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Locations");
         return locationService.findAll();
     }

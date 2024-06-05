@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -98,19 +97,6 @@ public class LocationService {
      */
     public Page<LocationDTO> findAllWithEagerRelationships(Pageable pageable) {
         return locationRepository.findAllWithEagerRelationships(pageable).map(locationMapper::toDto);
-    }
-
-    /**
-     *  Get all the locations where Tournament is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<LocationDTO> findAllWhereTournamentIsNull() {
-        log.debug("Request to get all locations where Tournament is null");
-        return StreamSupport.stream(locationRepository.findAll().spliterator(), false)
-            .filter(location -> location.getTournament() == null)
-            .map(locationMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

@@ -31,78 +31,93 @@
   }
 
   @if (tournaments && tournaments.length > 0) {
-    <div class="row row-cols-1 row-cols-sm-2 g-4">
+    <div class="row">
       @for (tournament of tournaments; track trackId) {
         <div class="col">
           <div class="card">
-            @if (tournament.poster) {
-              <img
-                class="card-img-top img-fluid"
-                [src]="'data:' + tournament.posterContentType + ';base64,' + tournament.poster"
-                alt="tournament"
-              />
-            }
-            <div class="card-body">
-              <h4 class="card-title position-relative">
-                {{ tournament.tournamentName }}
-                <span *ngIf="tournament.active" class="badge text-bg-success rounded-pill"> Active </span>
-              </h4>
-              <div class="card-text">
-                <p>{{ tournament.description }}</p>
-                <br />
-                <h6>Start Date</h6>
-                <p>{{ tournament.startDate | formatMediumDatetime }}</p>
-                <h6>End Date</h6>
-                <p>{{ tournament.endDate | formatMediumDatetime }}</p>
-                <h6>Limit Registration Date</h6>
-                <p>{{ tournament.lastInscriptionsDate | formatMediumDatetime }}</p>
-                <h6>Max Teams Allowed</h6>
-                <p>{{ tournament.maxTeamsAllowed }}</p>
-                <h6>Prices</h6>
-                <p>{{ tournament.prices }}</p>
-                <h6>Location</h6>
-                <p>{{ tournament.location?.city }}</p>
-                <h6>Court Type</h6>
-                @for (courtType of tournament.courtTypes; track trackId) {
-                  <p>{{ courtType?.courtTypeName }}</p>
-                }
-                <h6>Categories</h6>
-                @for (categories of tournament.categories; track trackId) {
-                  <ul>
-                    <li>{{ categories?.categoryName }}</li>
-                  </ul>
-                }
-                <h6>Levels</h6>
-                @for (level of tournament.levels; track trackId) {
-                  <ul>
-                    <li>{{ level?.levelName }}</li>
-                  </ul>
-                }
-                <h6>Sponsors</h6>
-                @for (sponsor of tournament.sponsors; track trackId) {
-                  <ul>
-                    <li>{{ sponsor?.sponsorName }}</li>
-                  </ul>
+            <div class="row g-0">
+              <div class="col-md-3">
+                @if (tournament.poster) {
+                  <img class="img-fluid" [src]="'data:' + tournament.posterContentType + ';base64,' + tournament.poster" alt="tournament" />
                 }
               </div>
-              <a [routerLink]="['/tournament', tournament.id, 'view']">More Info</a>
-            </div>
-            <div class="card-footer">
-              <div class="btn-group">
-                <a [routerLink]="['/tournament', tournament.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                  <fa-icon icon="eye"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
-                </a>
+              <div class="col-md-9">
+                <div class="card-body">
+                  <h4 class="card-title position-relative">
+                    {{ tournament.tournamentName }}
+                    <span *ngIf="tournament.active" class="badge text-bg-success rounded-pill"> Active </span>
+                  </h4>
+                  <div class="card-text">
+                    <p>{{ tournament.description }}</p>
+                    <br />
+                    <div class="row">
+                      <div class="col-4">
+                        <h6>Start Date</h6>
+                        <p>{{ tournament.startDate | formatMediumDatetime }}</p>
+                      </div>
+                      <div class="col-4">
+                        <h6>End Date</h6>
+                        <p>{{ tournament.endDate | formatMediumDatetime }}</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-4">
+                        <h6>Location</h6>
+                        <p>{{ tournament.location?.city }}</p>
+                      </div>
+                      <div class="col-4">
+                        <h6>Court Type</h6>
+                        @for (courtType of tournament.courtTypes; track trackId) {
+                          <p>{{ courtType?.courtTypeName }}</p>
+                        }
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col 4">
+                        <h6>Categories</h6>
+                        @for (categories of tournament.categories; track trackId) {
+                          <ul>
+                            <li>{{ categories?.categoryName }}</li>
+                          </ul>
+                        }
+                      </div>
+                      <div class="col-4">
+                        <h6>Levels</h6>
+                        @for (level of tournament.levels; track trackId) {
+                          <ul>
+                            <li>{{ level?.levelName }}</li>
+                          </ul>
+                        }
+                      </div>
+                    </div>
+                    <div class="row">
+                      <h6>Sponsors</h6>
+                      @for (sponsor of tournament.sponsors; track trackId) {
+                        <ul>
+                          <li>{{ sponsor?.sponsorName }}</li>
+                        </ul>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="btn-group">
+                    <a [routerLink]="['/tournament', tournament.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                      <fa-icon icon="eye"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                    </a>
 
-                <a [routerLink]="['/tournament', tournament.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                  <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
-                </a>
+                    <a [routerLink]="['/tournament', tournament.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                      <fa-icon icon="pencil-alt"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                    </a>
 
-                <button type="submit" (click)="delete(tournament)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                  <fa-icon icon="times"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
-                </button>
+                    <button type="submit" (click)="delete(tournament)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                      <fa-icon icon="times"></fa-icon>
+                      <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

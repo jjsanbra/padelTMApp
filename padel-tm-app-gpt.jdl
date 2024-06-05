@@ -101,9 +101,9 @@ enum Language {
 
 /** RELATIONSHIPS */
 
-relationship OneToOne {
+relationship OneToMany {
 	/* Tournament */
-    Tournament{location(city)} to Location{tournament}
+    Location{tournaments(tournamentName)} to Tournament{location(city)}
 }
 
 relationship ManyToOne {

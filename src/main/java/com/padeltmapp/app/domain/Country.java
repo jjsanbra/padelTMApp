@@ -32,7 +32,7 @@ public class Country implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "country", "tournament" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tournaments", "country" }, allowSetters = true)
     private Set<Location> locations = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

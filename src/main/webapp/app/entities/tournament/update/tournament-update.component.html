@@ -176,23 +176,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_location" jhiTranslate="padelTmApp.tournament.location">Location</label>
-          <select
-            class="form-control"
-            id="field_location"
-            data-cy="location"
-            name="location"
-            formControlName="location"
-            [compareWith]="compareLocation"
-          >
-            <option [ngValue]="null"></option>
-            @for (locationOption of locationsCollection; track $index) {
-              <option [ngValue]="locationOption">{{ locationOption.city }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label for="field_sponsors" jhiTranslate="padelTmApp.tournament.sponsors">Sponsors</label>
           <select
             class="form-control"
@@ -273,6 +256,23 @@
           >
             @for (courtTypeOption of courtTypesSharedCollection; track $index) {
               <option [ngValue]="courtTypeOption">{{ courtTypeOption.courtTypeName }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_location" jhiTranslate="padelTmApp.tournament.location">Location</label>
+          <select
+            class="form-control"
+            id="field_location"
+            data-cy="location"
+            name="location"
+            formControlName="location"
+            [compareWith]="compareLocation"
+          >
+            <option [ngValue]="null"></option>
+            @for (locationOption of locationsSharedCollection; track $index) {
+              <option [ngValue]="locationOption">{{ locationOption.city }}</option>
             }
           </select>
         </div>

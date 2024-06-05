@@ -6,6 +6,8 @@ import static com.padeltmapp.app.domain.TournamentTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.padeltmapp.app.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class LocationTest {
@@ -25,6 +27,28 @@ class LocationTest {
     }
 
     @Test
+    void tournamentsTest() throws Exception {
+        Location location = getLocationRandomSampleGenerator();
+        Tournament tournamentBack = getTournamentRandomSampleGenerator();
+
+        location.addTournaments(tournamentBack);
+        assertThat(location.getTournaments()).containsOnly(tournamentBack);
+        assertThat(tournamentBack.getLocation()).isEqualTo(location);
+
+        location.removeTournaments(tournamentBack);
+        assertThat(location.getTournaments()).doesNotContain(tournamentBack);
+        assertThat(tournamentBack.getLocation()).isNull();
+
+        location.tournaments(new HashSet<>(Set.of(tournamentBack)));
+        assertThat(location.getTournaments()).containsOnly(tournamentBack);
+        assertThat(tournamentBack.getLocation()).isEqualTo(location);
+
+        location.setTournaments(new HashSet<>());
+        assertThat(location.getTournaments()).doesNotContain(tournamentBack);
+        assertThat(tournamentBack.getLocation()).isNull();
+    }
+
+    @Test
     void countryTest() throws Exception {
         Location location = getLocationRandomSampleGenerator();
         Country countryBack = getCountryRandomSampleGenerator();
@@ -34,19 +58,5 @@ class LocationTest {
 
         location.country(null);
         assertThat(location.getCountry()).isNull();
-    }
-
-    @Test
-    void tournamentTest() throws Exception {
-        Location location = getLocationRandomSampleGenerator();
-        Tournament tournamentBack = getTournamentRandomSampleGenerator();
-
-        location.setTournament(tournamentBack);
-        assertThat(location.getTournament()).isEqualTo(tournamentBack);
-        assertThat(tournamentBack.getLocation()).isEqualTo(location);
-
-        location.tournament(null);
-        assertThat(location.getTournament()).isNull();
-        assertThat(tournamentBack.getLocation()).isNull();
     }
 }

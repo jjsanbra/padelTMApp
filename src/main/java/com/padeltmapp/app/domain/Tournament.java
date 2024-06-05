@@ -60,11 +60,6 @@ public class Tournament implements Serializable {
     @Column(name = "poster_content_type")
     private String posterContentType;
 
-    @JsonIgnoreProperties(value = { "country", "tournament" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private Location location;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "rel_tournament__sponsors",
@@ -114,6 +109,10 @@ public class Tournament implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tournaments" }, allowSetters = true)
     private Set<CourtType> courtTypes = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "tournaments", "country" }, allowSetters = true)
+    private Location location;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -260,19 +259,6 @@ public class Tournament implements Serializable {
         this.posterContentType = posterContentType;
     }
 
-    public Location getLocation() {
-        return this.location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Tournament location(Location location) {
-        this.setLocation(location);
-        return this;
-    }
-
     public Set<Sponsor> getSponsors() {
         return this.sponsors;
     }
@@ -385,6 +371,19 @@ public class Tournament implements Serializable {
 
     public Tournament removeCourtTypes(CourtType courtType) {
         this.courtTypes.remove(courtType);
+        return this;
+    }
+
+    public Location getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Tournament location(Location location) {
+        this.setLocation(location);
         return this;
     }
 

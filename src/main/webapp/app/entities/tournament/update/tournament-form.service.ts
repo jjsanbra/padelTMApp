@@ -46,12 +46,12 @@ type TournamentFormGroupContent = {
   active: FormControl<TournamentFormRawValue['active']>;
   poster: FormControl<TournamentFormRawValue['poster']>;
   posterContentType: FormControl<TournamentFormRawValue['posterContentType']>;
-  location: FormControl<TournamentFormRawValue['location']>;
   sponsors: FormControl<TournamentFormRawValue['sponsors']>;
   teams: FormControl<TournamentFormRawValue['teams']>;
   categories: FormControl<TournamentFormRawValue['categories']>;
   levels: FormControl<TournamentFormRawValue['levels']>;
   courtTypes: FormControl<TournamentFormRawValue['courtTypes']>;
+  location: FormControl<TournamentFormRawValue['location']>;
 };
 
 export type TournamentFormGroup = FormGroup<TournamentFormGroupContent>;
@@ -83,12 +83,12 @@ export class TournamentFormService {
       active: new FormControl(tournamentRawValue.active),
       poster: new FormControl(tournamentRawValue.poster),
       posterContentType: new FormControl(tournamentRawValue.posterContentType),
-      location: new FormControl(tournamentRawValue.location),
       sponsors: new FormControl(tournamentRawValue.sponsors ?? []),
       teams: new FormControl(tournamentRawValue.teams ?? []),
       categories: new FormControl(tournamentRawValue.categories ?? []),
       levels: new FormControl(tournamentRawValue.levels ?? []),
       courtTypes: new FormControl(tournamentRawValue.courtTypes ?? []),
+      location: new FormControl(tournamentRawValue.location),
     });
   }
 

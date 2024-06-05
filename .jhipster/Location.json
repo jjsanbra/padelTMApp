@@ -26,19 +26,20 @@
   "name": "Location",
   "relationships": [
     {
+      "otherEntityField": "tournamentName",
+      "otherEntityName": "tournament",
+      "otherEntityRelationshipName": "location",
+      "relationshipName": "tournaments",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "countryName",
       "otherEntityName": "country",
       "otherEntityRelationshipName": "location",
       "relationshipName": "country",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "tournament",
-      "otherEntityRelationshipName": "location",
-      "relationshipName": "tournament",
-      "relationshipSide": "right",
-      "relationshipType": "one-to-one"
     }
   ],
   "searchEngine": "no",

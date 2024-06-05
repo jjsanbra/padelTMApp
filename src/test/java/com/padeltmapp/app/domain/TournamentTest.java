@@ -31,18 +31,6 @@ class TournamentTest {
     }
 
     @Test
-    void locationTest() throws Exception {
-        Tournament tournament = getTournamentRandomSampleGenerator();
-        Location locationBack = getLocationRandomSampleGenerator();
-
-        tournament.setLocation(locationBack);
-        assertThat(tournament.getLocation()).isEqualTo(locationBack);
-
-        tournament.location(null);
-        assertThat(tournament.getLocation()).isNull();
-    }
-
-    @Test
     void sponsorsTest() throws Exception {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Sponsor sponsorBack = getSponsorRandomSampleGenerator();
@@ -130,5 +118,17 @@ class TournamentTest {
 
         tournament.setCourtTypes(new HashSet<>());
         assertThat(tournament.getCourtTypes()).doesNotContain(courtTypeBack);
+    }
+
+    @Test
+    void locationTest() throws Exception {
+        Tournament tournament = getTournamentRandomSampleGenerator();
+        Location locationBack = getLocationRandomSampleGenerator();
+
+        tournament.setLocation(locationBack);
+        assertThat(tournament.getLocation()).isEqualTo(locationBack);
+
+        tournament.location(null);
+        assertThat(tournament.getLocation()).isNull();
     }
 }

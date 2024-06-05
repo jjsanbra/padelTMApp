@@ -51,14 +51,6 @@
   "pagination": "infinite-scroll",
   "relationships": [
     {
-      "otherEntityField": "city",
-      "otherEntityName": "location",
-      "otherEntityRelationshipName": "tournament",
-      "relationshipName": "location",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityField": "sponsorName",
       "otherEntityName": "sponsor",
       "otherEntityRelationshipName": "tournaments",
@@ -97,6 +89,14 @@
       "relationshipName": "courtTypes",
       "relationshipSide": "left",
       "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "city",
+      "otherEntityName": "location",
+      "otherEntityRelationshipName": "tournaments",
+      "relationshipName": "location",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

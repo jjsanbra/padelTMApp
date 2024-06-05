@@ -29,12 +29,12 @@ describe('Tournament Form Service', () => {
             prices: expect.any(Object),
             active: expect.any(Object),
             poster: expect.any(Object),
-            location: expect.any(Object),
             sponsors: expect.any(Object),
             teams: expect.any(Object),
             categories: expect.any(Object),
             levels: expect.any(Object),
             courtTypes: expect.any(Object),
+            location: expect.any(Object),
           }),
         );
       });
@@ -54,12 +54,12 @@ describe('Tournament Form Service', () => {
             prices: expect.any(Object),
             active: expect.any(Object),
             poster: expect.any(Object),
-            location: expect.any(Object),
             sponsors: expect.any(Object),
             teams: expect.any(Object),
             categories: expect.any(Object),
             levels: expect.any(Object),
             courtTypes: expect.any(Object),
+            location: expect.any(Object),
           }),
         );
       });

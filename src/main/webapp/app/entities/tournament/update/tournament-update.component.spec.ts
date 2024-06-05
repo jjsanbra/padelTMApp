@@ -5,8 +5,6 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
-import { ILocation } from 'app/entities/location/location.model';
-import { LocationService } from 'app/entities/location/service/location.service';
 import { ISponsor } from 'app/entities/sponsor/sponsor.model';
 import { SponsorService } from 'app/entities/sponsor/service/sponsor.service';
 import { ITeam } from 'app/entities/team/team.model';
@@ -17,6 +15,8 @@ import { ILevel } from 'app/entities/level/level.model';
 import { LevelService } from 'app/entities/level/service/level.service';
 import { ICourtType } from 'app/entities/court-type/court-type.model';
 import { CourtTypeService } from 'app/entities/court-type/service/court-type.service';
+import { ILocation } from 'app/entities/location/location.model';
+import { LocationService } from 'app/entities/location/service/location.service';
 import { ITournament } from '../tournament.model';
 import { TournamentService } from '../service/tournament.service';
 import { TournamentFormService } from './tournament-form.service';
@@ -29,12 +29,12 @@ describe('Tournament Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let tournamentFormService: TournamentFormService;
   let tournamentService: TournamentService;
-  let locationService: LocationService;
   let sponsorService: SponsorService;
   let teamService: TeamService;
   let categoryService: CategoryService;
   let levelService: LevelService;
   let courtTypeService: CourtTypeService;
+  let locationService: LocationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,35 +56,17 @@ describe('Tournament Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     tournamentFormService = TestBed.inject(TournamentFormService);
     tournamentService = TestBed.inject(TournamentService);
-    locationService = TestBed.inject(LocationService);
     sponsorService = TestBed.inject(SponsorService);
     teamService = TestBed.inject(TeamService);
     categoryService = TestBed.inject(CategoryService);
     levelService = TestBed.inject(LevelService);
     courtTypeService = TestBed.inject(CourtTypeService);
+    locationService = TestBed.inject(LocationService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call location query and add missing value', () => {
-      const tournament: ITournament = { id: 456 };
-      const location: ILocation = { id: 2760 };
-      tournament.location = location;
-
-      const locationCollection: ILocation[] = [{ id: 15719 }];
-      jest.spyOn(locationService, 'query').mockReturnValue(of(new HttpResponse({ body: locationCollection })));
-      const expectedCollection: ILocation[] = [location, ...locationCollection];
-      jest.spyOn(locationService, 'addLocationToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ tournament });
-      comp.ngOnInit();
-
-      expect(locationService.query).toHaveBeenCalled();
-      expect(locationService.addLocationToCollectionIfMissing).toHaveBeenCalledWith(locationCollection, location);
-      expect(comp.locationsCollection).toEqual(expectedCollection);
-    });
-
     it('Should call Sponsor query and add missing value', () => {
       const tournament: ITournament = { id: 456 };
       const sponsors: ISponsor[] = [{ id: 16264 }];
@@ -195,10 +177,30 @@ describe('Tournament Management Update Component', () => {
       expect(comp.courtTypesSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Location query and add missing value', () => {
+      const tournament: ITournament = { id: 456 };
+      const location: ILocation = { id: 2760 };
+      tournament.location = location;
+
+      const locationCollection: ILocation[] = [{ id: 15719 }];
+      jest.spyOn(locationService, 'query').mockReturnValue(of(new HttpResponse({ body: locationCollection })));
+      const additionalLocations = [location];
+      const expectedCollection: ILocation[] = [...additionalLocations, ...locationCollection];
+      jest.spyOn(locationService, 'addLocationToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ tournament });
+      comp.ngOnInit();
+
+      expect(locationService.query).toHaveBeenCalled();
+      expect(locationService.addLocationToCollectionIfMissing).toHaveBeenCalledWith(
+        locationCollection,
+        ...additionalLocations.map(expect.objectContaining),
+      );
+      expect(comp.locationsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const tournament: ITournament = { id: 456 };
-      const location: ILocation = { id: 25404 };
-      tournament.location = location;
       const sponsors: ISponsor = { id: 9419 };
       tournament.sponsors = [sponsors];
       const teams: ITeam = { id: 28783 };
@@ -209,16 +211,18 @@ describe('Tournament Management Update Component', () => {
       tournament.levels = [levels];
       const courtTypes: ICourtType = { id: 16059 };
       tournament.courtTypes = [courtTypes];
+      const location: ILocation = { id: 25404 };
+      tournament.location = location;
 
       activatedRoute.data = of({ tournament });
       comp.ngOnInit();
 
-      expect(comp.locationsCollection).toContain(location);
       expect(comp.sponsorsSharedCollection).toContain(sponsors);
       expect(comp.teamsSharedCollection).toContain(teams);
       expect(comp.categoriesSharedCollection).toContain(categories);
       expect(comp.levelsSharedCollection).toContain(levels);
       expect(comp.courtTypesSharedCollection).toContain(courtTypes);
+      expect(comp.locationsSharedCollection).toContain(location);
       expect(comp.tournament).toEqual(tournament);
     });
   });
@@ -292,16 +296,6 @@ describe('Tournament Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareLocation', () => {
-      it('Should forward to locationService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(locationService, 'compareLocation');
-        comp.compareLocation(entity, entity2);
-        expect(locationService.compareLocation).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
     describe('compareSponsor', () => {
       it('Should forward to sponsorService', () => {
         const entity = { id: 123 };
@@ -349,6 +343,16 @@ describe('Tournament Management Update Component', () => {
         jest.spyOn(courtTypeService, 'compareCourtType');
         comp.compareCourtType(entity, entity2);
         expect(courtTypeService.compareCourtType).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareLocation', () => {
+      it('Should forward to locationService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(locationService, 'compareLocation');
+        comp.compareLocation(entity, entity2);
+        expect(locationService.compareLocation).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

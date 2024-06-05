@@ -27,12 +27,12 @@
       "prices": "Prices",
       "active": "Active",
       "poster": "Poster",
-      "location": "Location",
       "sponsors": "Sponsors",
       "teams": "Teams",
       "categories": "Categories",
       "levels": "Levels",
-      "courtTypes": "Court Types"
+      "courtTypes": "Court Types",
+      "location": "Location"
     }
   }
 }

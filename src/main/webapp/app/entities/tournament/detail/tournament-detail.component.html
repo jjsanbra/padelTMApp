@@ -1,124 +1,130 @@
 <div class="d-flex justify-content-center">
-  <div class="row">
-    <div class="col-4">
-      <dd>
-        @if (tournament()!.poster) {
-          <div>
-            <a (click)="openFile(tournament()!.poster ?? '', tournament()!.posterContentType)">
-              <img
-                [src]="'data:' + tournament()!.posterContentType + ';base64,' + tournament()!.poster"
-                class="img-fluid"
-                alt="tournament"
-              />
-            </a>
-          </div>
-        }
-      </dd>
-    </div>
-    <div class="col-8">
-      @if (tournament()) {
-        <div>
-          <h3 data-cy="tournamentDetailsHeading"><span jhiTranslate="padelTmApp.tournament.detail.title">Tournament</span></h3>
-          <h1>{{ tournament()!.tournamentName }}</h1>
-          <hr />
+  <div class="col-8">
+    @if (tournament()) {
+      <div>
+        <h2 data-cy="tournamentDetailsHeading"><span jhiTranslate="padelTmApp.tournament.detail.title">Tournament</span></h2>
 
-          <jhi-alert-error></jhi-alert-error>
+        <hr />
 
-          <jhi-alert></jhi-alert>
+        <jhi-alert-error></jhi-alert-error>
 
-          <dl class="row-md jh-entity-details">
-            <dt><span jhiTranslate="padelTmApp.tournament.description">Description</span></dt>
-            <dd>
-              <span>{{ tournament()!.description }}</span>
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.startDate">Start Date</span></dt>
-            <dd>
-              <span>{{ tournament()!.startDate | formatMediumDatetime }}</span>
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.endDate">End Date</span></dt>
-            <dd>
-              <span>{{ tournament()!.endDate | formatMediumDatetime }}</span>
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.lastInscriptionsDate">Last Inscriptions Date</span></dt>
-            <dd>
-              <span>{{ tournament()!.lastInscriptionsDate | formatMediumDatetime }}</span>
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.maxTeamsAllowed">Max Teams Allowed</span></dt>
-            <dd>
-              <span>{{ tournament()!.maxTeamsAllowed }}</span>
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.prices">Prices</span></dt>
-            <dd>
-              <span>{{ tournament()!.prices }}</span>
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.active">Active</span></dt>
-            <dd>
-              <span>{{ tournament()!.active }}</span>
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.location">Location</span></dt>
-            <dd>
-              @if (tournament()!.location) {
-                <div>
-                  <a [routerLink]="['/location', tournament()!.location?.id, 'view']">{{ tournament()!.location?.city }}</a>
-                </div>
-              }
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.sponsors">Sponsors</span></dt>
-            <dd>
-              @for (sponsors of tournament()!.sponsors; track $index; let last = $last) {
-                <span>
-                  <a [routerLink]="['/sponsor', sponsors.id, 'view']">{{ sponsors?.sponsorName }}</a
-                  >{{ last ? '' : ', ' }}
-                </span>
-              }
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.teams">Teams</span></dt>
-            <dd>
-              @for (teams of tournament()!.teams; track $index; let last = $last) {
-                <span>
-                  <a [routerLink]="['/team', teams.id, 'view']">{{ teams?.teamName }}</a
-                  >{{ last ? '' : ', ' }}
-                </span>
-              }
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.categories">Categories</span></dt>
-            <dd>
-              @for (categories of tournament()!.categories; track $index; let last = $last) {
-                <span>
-                  <a [routerLink]="['/category', categories.id, 'view']">{{ categories?.categoryName }}</a
-                  >{{ last ? '' : ', ' }}
-                </span>
-              }
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.levels">Levels</span></dt>
-            <dd>
-              @for (levels of tournament()!.levels; track $index; let last = $last) {
-                <span>
-                  <a [routerLink]="['/level', levels.id, 'view']">{{ levels?.levelName }}</a
-                  >{{ last ? '' : ', ' }}
-                </span>
-              }
-            </dd>
-            <dt><span jhiTranslate="padelTmApp.tournament.courtTypes">Court Types</span></dt>
-            <dd>
-              @for (courtTypes of tournament()!.courtTypes; track $index; let last = $last) {
-                <span>
-                  <a [routerLink]="['/court-type', courtTypes.id, 'view']">{{ courtTypes?.courtTypeName }}</a
-                  >{{ last ? '' : ', ' }}
-                </span>
-              }
-            </dd>
-          </dl>
+        <jhi-alert></jhi-alert>
 
-          <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
-          </button>
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ tournament()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.tournamentName">Tournament Name</span></dt>
+          <dd>
+            <span>{{ tournament()!.tournamentName }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.description">Description</span></dt>
+          <dd>
+            <span>{{ tournament()!.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.startDate">Start Date</span></dt>
+          <dd>
+            <span>{{ tournament()!.startDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.endDate">End Date</span></dt>
+          <dd>
+            <span>{{ tournament()!.endDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.lastInscriptionsDate">Last Inscriptions Date</span></dt>
+          <dd>
+            <span>{{ tournament()!.lastInscriptionsDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.maxTeamsAllowed">Max Teams Allowed</span></dt>
+          <dd>
+            <span>{{ tournament()!.maxTeamsAllowed }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.prices">Prices</span></dt>
+          <dd>
+            <span>{{ tournament()!.prices }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.active">Active</span></dt>
+          <dd>
+            <span>{{ tournament()!.active }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.poster">Poster</span></dt>
+          <dd>
+            @if (tournament()!.poster) {
+              <div>
+                <a (click)="openFile(tournament()!.poster ?? '', tournament()!.posterContentType)">
+                  <img
+                    [src]="'data:' + tournament()!.posterContentType + ';base64,' + tournament()!.poster"
+                    style="max-width: 100%"
+                    alt="tournament"
+                  />
+                </a>
+                {{ tournament()!.posterContentType }}, {{ byteSize(tournament()!.poster ?? '') }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.sponsors">Sponsors</span></dt>
+          <dd>
+            @for (sponsors of tournament()!.sponsors; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/sponsor', sponsors.id, 'view']">{{ sponsors?.sponsorName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.teams">Teams</span></dt>
+          <dd>
+            @for (teams of tournament()!.teams; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/team', teams.id, 'view']">{{ teams?.teamName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.categories">Categories</span></dt>
+          <dd>
+            @for (categories of tournament()!.categories; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/category', categories.id, 'view']">{{ categories?.categoryName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.levels">Levels</span></dt>
+          <dd>
+            @for (levels of tournament()!.levels; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/level', levels.id, 'view']">{{ levels?.levelName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.courtTypes">Court Types</span></dt>
+          <dd>
+            @for (courtTypes of tournament()!.courtTypes; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/court-type', courtTypes.id, 'view']">{{ courtTypes?.courtTypeName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.tournament.location">Location</span></dt>
+          <dd>
+            @if (tournament()!.location) {
+              <div>
+                <a [routerLink]="['/location', tournament()!.location?.id, 'view']">{{ tournament()!.location?.city }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
 
-          <button type="button" [routerLink]="['/tournament', tournament()!.id, 'edit']" class="btn btn-primary">
-            <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
-          </button>
-        </div>
-      }
-    </div>
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/tournament', tournament()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
   </div>
 </div>

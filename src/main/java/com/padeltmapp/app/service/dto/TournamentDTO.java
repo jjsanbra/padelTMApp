@@ -41,8 +41,6 @@ public class TournamentDTO implements Serializable {
 
     private String posterContentType;
 
-    private LocationDTO location;
-
     private Set<SponsorDTO> sponsors = new HashSet<>();
 
     private Set<TeamDTO> teams = new HashSet<>();
@@ -52,6 +50,8 @@ public class TournamentDTO implements Serializable {
     private Set<LevelDTO> levels = new HashSet<>();
 
     private Set<CourtTypeDTO> courtTypes = new HashSet<>();
+
+    private LocationDTO location;
 
     public Long getId() {
         return id;
@@ -141,14 +141,6 @@ public class TournamentDTO implements Serializable {
         this.posterContentType = posterContentType;
     }
 
-    public LocationDTO getLocation() {
-        return location;
-    }
-
-    public void setLocation(LocationDTO location) {
-        this.location = location;
-    }
-
     public Set<SponsorDTO> getSponsors() {
         return sponsors;
     }
@@ -189,6 +181,14 @@ public class TournamentDTO implements Serializable {
         this.courtTypes = courtTypes;
     }
 
+    public LocationDTO getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationDTO location) {
+        this.location = location;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -224,12 +224,12 @@ public class TournamentDTO implements Serializable {
             ", prices='" + getPrices() + "'" +
             ", active='" + getActive() + "'" +
             ", poster='" + getPoster() + "'" +
-            ", location=" + getLocation() +
             ", sponsors=" + getSponsors() +
             ", teams=" + getTeams() +
             ", categories=" + getCategories() +
             ", levels=" + getLevels() +
             ", courtTypes=" + getCourtTypes() +
+            ", location=" + getLocation() +
             "}";
     }
 }
