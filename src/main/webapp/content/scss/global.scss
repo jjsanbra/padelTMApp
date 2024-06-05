@@ -16,8 +16,11 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Quicksand', sans-serif;
   font-weight: 600;
+}
+
+.brand-font {
+  font-family: 'Poppins', sans-serif;
 }
 
 /* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
@@ -251,6 +254,11 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
 .text-bg-secondary,
 .text-bg-dark,
 .text-bg-warning,
-.btn {
+.btn-success,
+.btn-danger,
+.btn-info,
+.btn-secondary,
+.btn-dark,
+.btn-warning {
   color: #fff !important;
 }
