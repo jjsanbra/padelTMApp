@@ -2,22 +2,24 @@
   <h2 id="page-heading" data-cy="TournamentHeading">
     <span jhiTranslate="padelTmApp.tournament.home.title">Tournaments</span>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="padelTmApp.tournament.home.refreshListLabel">Refrescar lista</span>
-      </button>
+    @if (account() !== null) {
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+          <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+          <span jhiTranslate="padelTmApp.tournament.home.refreshListLabel">Refrescar lista</span>
+        </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-tournament"
-        [routerLink]="['/tournament/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="padelTmApp.tournament.home.createLabel">Crear nuevo Tournament</span>
-      </button>
-    </div>
+        <button
+          id="jh-create-entity"
+          data-cy="entityCreateButton"
+          class="btn btn-primary jh-create-entity create-tournament"
+          [routerLink]="['/tournament/new']"
+        >
+          <fa-icon icon="plus"></fa-icon>
+          <span jhiTranslate="padelTmApp.tournament.home.createLabel">Crear nuevo Tournament</span>
+        </button>
+      </div>
+    }
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
