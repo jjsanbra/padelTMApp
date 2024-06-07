@@ -1,4 +1,4 @@
-<nav data-cy="navbar" class="navbar navbar-expand-md">
+<nav data-cy="navbar" class="navbar fixed-top bg-body-tertiary navbar-expand-md">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
@@ -345,7 +345,7 @@
           <li class="nav-item pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link" (click)="login()" id="account-menu" data-cy="accountMenu">
               <span>
-                <fa-icon icon="users"></fa-icon>
+                <fa-icon icon="user"></fa-icon>
               </span>
             </a>
           </li>
