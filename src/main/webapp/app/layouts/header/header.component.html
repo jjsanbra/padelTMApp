@@ -1,0 +1,140 @@
+<nav data-cy="navbar" class="navbar sticky-top bg-body-tertiary navbar-expand-md">
+  <div class="container-fluid">
+    <a class="navbar-brand logo" routerLink="/" (click)="collapseHeader()">
+      <span class="logo-img"></span>
+      <span class="navbar-title brand-font" jhiTranslate="global.title">Padel TM App</span>
+      <span class="navbar-version">{{ version }}</span>
+    </a>
+    <a
+      class="navbar-toggler d-lg-none"
+      href="javascript:void(0);"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleHeader()"
+    >
+      <fa-icon icon="bars"></fa-icon>
+    </a>
+    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isHeaderCollapsed()">
+      <ul class="navbar-nav ms-auto">
+        @if (account() !== null) {
+          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" routerLink="/" (click)="collapseHeader()">
+              <span>
+                <fa-icon icon="home"></fa-icon>
+              </span>
+            </a>
+          </li>
+        }
+        <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+        @if (languages && languages.length > 1) {
+          <li ngbDropdown class="nav-item dropdown pointer" display="dynamic">
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+              <span>
+                <fa-icon icon="earth-americas"></fa-icon>
+              </span>
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+              @for (language of languages; track $index) {
+                <li>
+                  <a
+                    class="dropdown-item"
+                    [jhiActiveMenu]="language"
+                    href="javascript:void(0);"
+                    (click)="changeLanguage(language); collapseHeader()"
+                    >{{ language | findLanguageFromKey }}</a
+                  >
+                </li>
+              }
+            </ul>
+          </li>
+        }
+        @if (account() !== null) {
+          <li
+            ngbDropdown
+            class="nav-item dropdown pointer"
+            display="dynamic"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
+              @if (!account()?.imageUrl) {
+                <span>
+                  <fa-icon icon="circle-user"></fa-icon>
+                  <!-- <span jhiTranslate="global.menu.account.main">Cuenta</span> -->
+                </span>
+              } @else {
+                <span>
+                  <img [src]="account()!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
+                </span>
+              }
+            </a>
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+              @if (account() !== null) {
+                <li>
+                  <a
+                    class="dropdown-item"
+                    routerLink="/account/settings"
+                    routerLinkActive="active"
+                    (click)="collapseHeader()"
+                    data-cy="settings"
+                  >
+                    <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+                    <span jhiTranslate="global.menu.account.settings">Ajustes</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    routerLink="/account/password"
+                    routerLinkActive="active"
+                    (click)="collapseHeader()"
+                    data-cy="passwordItem"
+                  >
+                    <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
+                    <span jhiTranslate="global.menu.account.password">Contraseña</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+                    <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+                    <span jhiTranslate="global.menu.account.logout">Cerrar la sesión</span>
+                  </a>
+                </li>
+              } @else {
+                <li>
+                  <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+                    <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+                    <span jhiTranslate="global.menu.account.login">Iniciar sesión</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    routerLink="/account/register"
+                    routerLinkActive="active"
+                    (click)="collapseHeader()"
+                    data-cy="register"
+                  >
+                    <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+                    <span jhiTranslate="global.menu.account.register">Crear una cuenta</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </li>
+        } @else {
+          <li class="nav-item pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link" (click)="login()" id="account-menu" data-cy="accountMenu">
+              <span>
+                <fa-icon icon="circle-user"></fa-icon>
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
