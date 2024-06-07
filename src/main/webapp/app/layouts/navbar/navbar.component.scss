@@ -4,33 +4,3 @@
 /* ==========================================================================
 Navbar
 ========================================================================== */
-
-.navbar-version {
-  font-size: 0.65em;
-  color: $navbar-dark-color;
-}
-
-.profile-image {
-  height: 1.75em;
-  width: 1.75em;
-}
-
-.navbar {
-  padding: 0.2rem 1rem;
-
-  a.nav-link {
-    font-weight: 400;
-  }
-}
-
-/* ==========================================================================
-Logo styles
-========================================================================== */
-.logo-img {
-  height: 45px;
-  width: 45px;
-  display: inline-block;
-  vertical-align: middle;
-  background: url('/content/images/PadelTMApp_logo.svg') no-repeat center center;
-  background-size: contain;
-}

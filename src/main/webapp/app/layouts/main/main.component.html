@@ -1,14 +1,16 @@
 <jhi-header></jhi-header>
 
-<div class="row">
-  @if (account() !== null) {
-    <div class="col-3">
-      <router-outlet name="navbar"></router-outlet>
-    </div>
-  }
+<div class="container-fluid">
+  <div class="row">
+    @if (account() !== null) {
+      <div class="col-sm-12 col-md-3">
+        <router-outlet name="navbar"></router-outlet>
+      </div>
+    }
 
-  <div class="col-9" [ngClass]="{ 'col-9': account() !== null }">
-    <router-outlet></router-outlet>
+    <div class="col-sm-12 col-md-9" [ngClass]="{ 'col-md-9': account() !== null }">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
 
