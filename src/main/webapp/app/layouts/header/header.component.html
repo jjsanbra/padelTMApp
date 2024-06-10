@@ -1,33 +1,12 @@
-<nav data-cy="navbar" class="navbar sticky-top bg-body-tertiary navbar-expand-md">
+<nav data-cy="navbar" class="navbar sticky-top bg-body-tertiary navbar-expand-sm">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseHeader()">
       <span class="logo-img"></span>
       <span class="navbar-title brand-font" jhiTranslate="global.title">Padel TM App</span>
       <span class="navbar-version">{{ version }}</span>
     </a>
-    <a
-      class="navbar-toggler d-lg-none"
-      href="javascript:void(0);"
-      data-toggle="collapse"
-      data-target="#navbarResponsive"
-      aria-controls="navbarResponsive"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-      (click)="toggleHeader()"
-    >
-      <fa-icon icon="bars"></fa-icon>
-    </a>
-    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isHeaderCollapsed()">
+    <div class="navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ms-auto">
-        @if (account() !== null) {
-          <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link" routerLink="/" (click)="collapseHeader()">
-              <span>
-                <fa-icon icon="home"></fa-icon>
-              </span>
-            </a>
-          </li>
-        }
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         @if (languages && languages.length > 1) {
           <li ngbDropdown class="nav-item dropdown pointer" display="dynamic">
