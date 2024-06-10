@@ -2,17 +2,18 @@
   <nav class="bg-light sidebar" aria-labelledby="Navigation Menu">
     <div class="navbar navbar-expand-sm navbar-light bg-light d-md-block">
       <a class="navbar-brand" href="#">Menu</a>
-      <button
-        class="navbar-toggler"
-        type="button"
+      <a
+        class="navbar-toggler d-md-none"
+        href="javascript:void(0);"
         data-toggle="collapse"
         data-target="#navbarNav"
         aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        (click)="toggleNavbar()"
       >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <fa-icon icon="bars"></fa-icon>
+      </a>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav flex-column">
           <li class="nav-item">
