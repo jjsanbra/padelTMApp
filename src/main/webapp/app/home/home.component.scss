@@ -1,31 +1,23 @@
 /* ==========================================================================
 Main page styles
 ========================================================================== */
-
-.hipster {
-  display: inline-block;
-  width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
-  background-size: contain;
-}
-
 //Main section
 .video-container {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  top: -5rem;
 }
 .video-container iframe {
-  margin-top: 0px;
+  margin-top: 0;
   max-width: initial;
   transition-property: opacity;
   transition-duration: 1000ms;
   pointer-events: none;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   transform: scale(1.2);

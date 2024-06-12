@@ -7,7 +7,7 @@ Header
 
 .navbar-version {
   font-size: 0.65em;
-  color: $navbar-dark-color;
+  color: $navbar-light-color;
 }
 
 .profile-image {
@@ -16,19 +16,21 @@ Header
 }
 
 .navbar {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
+}
 
-  a.nav-link {
-    font-weight: 400;
-  }
+.container-fluid {
+  background-color: rgba(255, 255, 255, 0.8);
+  height: 4rem;
+  border-radius: 2.2rem;
 }
 
 /* ==========================================================================
 Logo styles
 ========================================================================== */
 .logo-img {
-  height: 45px;
-  width: 45px;
+  height: 2.5rem;
+  width: 2.5rem;
   display: inline-block;
   vertical-align: middle;
   background: url('/content/images/PadelTMApp_logo.svg') no-repeat center center;

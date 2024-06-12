@@ -1,6 +1,6 @@
 @if (account() !== null) {
   <nav data-cy="navbar" class="bg-light sidebar" aria-labelledby="Navigation Menu">
-    <div class="navbar navbar-expand-md navbar-light bg-light d-md-block">
+    <div class="navbar navbar-expand-md navbar-light d-md-block">
       <a
         class="navbar-toggler d-md-none"
         href="javascript:void(0);"
@@ -14,224 +14,193 @@
         <fa-icon icon="bars"></fa-icon>
       </a>
       <div class="collapse navbar-collapse" id="navbarNav" [ngbCollapse]="isNavbarCollapsed()">
-        <ul class="navbar-nav flex-column">
-          <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-          @if (account() !== null) {
-            <li
-              ngbDropdown
-              class="nav-item dropdown pointer"
-              display="dynamic"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
-                <span>
-                  <fa-icon icon="th-list"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.main">Entidades</span>
-                </span>
-              </a>
-              <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/tournament"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.tournament">Tournament</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/player"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.player">Player</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/team"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.team">Team</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/register-team"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.registerTeam">Register Team</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/location"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.location">Location</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/country"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.country">Country</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/category"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.category">Category</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/level"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.level">Level</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/sponsor"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.sponsor">Sponsor</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item"
-                    routerLink="/court-type"
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    (click)="collapseNavbar()"
-                  >
-                    <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.courtType">Court Type</span>
-                  </a>
-                </li>
-                <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-              </ul>
-            </li>
-          }
-          <li
-            *jhiHasAnyAuthority="'ROLE_ADMIN'"
-            ngbDropdown
-            class="nav-item dropdown pointer"
-            display="dynamic"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
-              <span>
-                <fa-icon icon="users-cog"></fa-icon>
-                <span jhiTranslate="global.menu.admin.main">Administración</span>
-              </span>
-            </a>
-            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/authority"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.entities.adminAuthority">Authority</span>
-                </a>
-              </li>
-              <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-              <li>
-                <a class="dropdown-item" routerLink="/admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
-                  <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.admin.userManagement">Gestión de usuarios</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
-                  <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.admin.metrics">Métricas</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/admin/health" routerLinkActive="active" (click)="collapseNavbar()">
-                  <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.admin.health">Salud</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
-                  <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.admin.configuration">Configuración</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
-                  <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
-                  <span jhiTranslate="global.menu.admin.logs">Logs</span>
-                </a>
-              </li>
-              @if (openAPIEnabled) {
-                <li>
-                  <a class="dropdown-item" routerLink="/admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                    <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.admin.apidocs">API</span>
-                  </a>
-                </li>
-              }
-              @if (!inProduction) {
-                <li>
-                  <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">
-                    <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
-                    <span jhiTranslate="global.menu.admin.database">Base de datos</span>
-                  </a>
-                </li>
-              }
-            </ul>
-          </li>
-        </ul>
+        <div ngbAccordion>
+          <div ngbAccordionItem [collapsed]="false">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>
+                <span><b>Entidades</b></span>
+              </button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <ul aria-labelledby="entity-menu">
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/tournament"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="sitemap" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.tournament">Tournament</span>
+                      </a>
+                    </li>
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/player"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="person-walking" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.player">Players</span>
+                      </a>
+                    </li>
+                    <li routerLinkActive="active" routerLink="/team" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="user-group" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.team">Team</span>
+                      </a>
+                    </li>
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/register-team"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="table-list" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.registerTeam">Register Team</span>
+                      </a>
+                    </li>
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/location"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="map-location-dot" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.location">Location</span>
+                      </a>
+                    </li>
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/country"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="passport" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.country">Country</span>
+                      </a>
+                    </li>
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/category"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="list" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.category">Category</span>
+                      </a>
+                    </li>
+                    <li routerLinkActive="active" routerLink="/level" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="signal" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.level">Level</span>
+                      </a>
+                    </li>
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/sponsor"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="handshake-angle" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.sponsor">Sponsor</span>
+                      </a>
+                    </li>
+                    <li
+                      routerLinkActive="active"
+                      routerLink="/court-type"
+                      routerLinkActive="active"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                    >
+                      <a>
+                        <fa-icon icon="cube" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.courtType">Court Type</span>
+                      </a>
+                    </li>
+                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                  </ul>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <div ngbAccordionItem [collapsed]="true" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>
+                <span><b>Administración</b></span>
+              </button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <ul aria-labelledby="admin-menu">
+                    <li routerLink="/authority" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.adminAuthority">Authority</span>
+                      </a>
+                    </li>
+                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                    <li routerLink="/admin/user-management" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.userManagement">Gestión de usuarios</span>
+                      </a>
+                    </li>
+                    <li routerLink="/admin/metrics" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.metrics">Métricas</span>
+                      </a>
+                    </li>
+                    <li routerLink="/admin/health" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.health">Salud</span>
+                      </a>
+                    </li>
+                    <li routerLink="/admin/configuration" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.configuration">Configuración</span>
+                      </a>
+                    </li>
+                    <li routerLink="/admin/logs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                      <a>
+                        <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.logs">Logs</span>
+                      </a>
+                    </li>
+                    @if (openAPIEnabled) {
+                      <li routerLink="/admin/docs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <a>
+                          <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
+                          <span jhiTranslate="global.menu.admin.apidocs">API</span>
+                        </a>
+                      </li>
+                    }
+                    @if (!inProduction) {
+                      <li>
+                        <a href="./h2-console/" target="_tab">
+                          <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
+                          <span jhiTranslate="global.menu.admin.database">Base de datos</span>
+                        </a>
+                      </li>
+                    }
+                  </ul>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>

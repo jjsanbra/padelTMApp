@@ -1,4 +1,4 @@
-<nav data-cy="navbar" class="navbar sticky-top bg-body-tertiary navbar-expand-sm">
+<nav data-cy="navbar" class="navbar navbar-expand-sm" [ngClass]="{ 'sticky-top': account() === null }">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseHeader()">
       <span class="logo-img"></span>
