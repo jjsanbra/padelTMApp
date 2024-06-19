@@ -55,10 +55,10 @@ public class Team implements Serializable {
     @JsonIgnoreProperties(value = { "level", "teams" }, allowSetters = true)
     private Set<Player> players = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teams")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "sponsors", "teams", "categories", "levels", "courtTypes", "location" }, allowSetters = true)
-    private Set<Tournament> tournaments = new HashSet<>();
+    @JsonIgnoreProperties(value = { "team", "tournaments" }, allowSetters = true)
+    private Set<RegisterTeam> registerTeams = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -163,34 +163,34 @@ public class Team implements Serializable {
         return this;
     }
 
-    public Set<Tournament> getTournaments() {
-        return this.tournaments;
+    public Set<RegisterTeam> getRegisterTeams() {
+        return this.registerTeams;
     }
 
-    public void setTournaments(Set<Tournament> tournaments) {
-        if (this.tournaments != null) {
-            this.tournaments.forEach(i -> i.removeTeams(this));
+    public void setRegisterTeams(Set<RegisterTeam> registerTeams) {
+        if (this.registerTeams != null) {
+            this.registerTeams.forEach(i -> i.setTeam(null));
         }
-        if (tournaments != null) {
-            tournaments.forEach(i -> i.addTeams(this));
+        if (registerTeams != null) {
+            registerTeams.forEach(i -> i.setTeam(this));
         }
-        this.tournaments = tournaments;
+        this.registerTeams = registerTeams;
     }
 
-    public Team tournaments(Set<Tournament> tournaments) {
-        this.setTournaments(tournaments);
+    public Team registerTeams(Set<RegisterTeam> registerTeams) {
+        this.setRegisterTeams(registerTeams);
         return this;
     }
 
-    public Team addTournaments(Tournament tournament) {
-        this.tournaments.add(tournament);
-        tournament.getTeams().add(this);
+    public Team addRegisterTeam(RegisterTeam registerTeam) {
+        this.registerTeams.add(registerTeam);
+        registerTeam.setTeam(this);
         return this;
     }
 
-    public Team removeTournaments(Tournament tournament) {
-        this.tournaments.remove(tournament);
-        tournament.getTeams().remove(this);
+    public Team removeRegisterTeam(RegisterTeam registerTeam) {
+        this.registerTeams.remove(registerTeam);
+        registerTeam.setTeam(null);
         return this;
     }
 

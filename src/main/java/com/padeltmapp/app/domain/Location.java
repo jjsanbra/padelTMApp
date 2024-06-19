@@ -39,7 +39,7 @@ public class Location implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "sponsors", "teams", "categories", "levels", "courtTypes", "location" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "sponsors", "categories", "levels", "courtTypes", "location", "registerTeams" }, allowSetters = true)
     private Set<Tournament> tournaments = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -42,10 +42,22 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="teamName">
+            <th scope="col" jhiSortBy="registerDate">
               <div class="d-flex">
-                <span jhiTranslate="padelTmApp.registerTeam.teamName">Team Name</span>
+                <span jhiTranslate="padelTmApp.registerTeam.registerDate">Register Date</span>
 
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="team.teamName">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.registerTeam.team">Team</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="tournaments.tournamentName">
+              <div class="d-flex">
+                <span jhiTranslate="padelTmApp.registerTeam.tournaments">Tournaments</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -58,7 +70,24 @@
               <td>
                 <a [routerLink]="['/register-team', registerTeam.id, 'view']">{{ registerTeam.id }}</a>
               </td>
-              <td>{{ registerTeam.teamName }}</td>
+              <td>{{ registerTeam.registerDate | formatMediumDatetime }}</td>
+              <td>
+                @if (registerTeam.team) {
+                  <div>
+                    <a [routerLink]="['/team', registerTeam.team.id, 'view']">{{ registerTeam.team.teamName }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @for (tournaments of registerTeam.tournaments; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/tournament', tournaments.id, 'view']">{{
+                      tournaments.tournamentName
+                    }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/register-team', registerTeam.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

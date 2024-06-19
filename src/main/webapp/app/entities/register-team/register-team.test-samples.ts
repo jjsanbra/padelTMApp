@@ -1,22 +1,24 @@
+import dayjs from 'dayjs/esm';
+
 import { IRegisterTeam, NewRegisterTeam } from './register-team.model';
 
 export const sampleWithRequiredData: IRegisterTeam = {
-  id: 14019,
-  teamName: 'versus hinder even',
+  id: 13529,
+  registerDate: dayjs('2024-06-02T22:00'),
 };
 
 export const sampleWithPartialData: IRegisterTeam = {
-  id: 20096,
-  teamName: 'grandiose smash lest',
+  id: 1459,
+  registerDate: dayjs('2024-06-03T09:37'),
 };
 
 export const sampleWithFullData: IRegisterTeam = {
-  id: 2809,
-  teamName: 'zowie excavate',
+  id: 18809,
+  registerDate: dayjs('2024-06-02T15:51'),
 };
 
 export const sampleWithNewData: NewRegisterTeam = {
-  teamName: 'major',
+  registerDate: dayjs('2024-06-03T03:16'),
   id: null,
 };
 

@@ -16,6 +16,7 @@ import com.padeltmapp.app.service.mapper.LevelMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,8 @@ class LevelResourceIT {
 
     private Level level;
 
+    private Level insertedLevel;
+
     /**
      * Create an entity for this test.
      *
@@ -89,6 +92,14 @@ class LevelResourceIT {
         level = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedLevel != null) {
+            levelRepository.delete(insertedLevel);
+            insertedLevel = null;
+        }
+    }
+
     @Test
     @Transactional
     void createLevel() throws Exception {
@@ -109,6 +120,8 @@ class LevelResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedLevel = levelMapper.toEntity(returnedLevelDTO);
         assertLevelUpdatableFieldsEquals(returnedLevel, getPersistedLevel(returnedLevel));
+
+        insertedLevel = returnedLevel;
     }
 
     @Test
@@ -150,7 +163,7 @@ class LevelResourceIT {
     @Transactional
     void getAllLevels() throws Exception {
         // Initialize the database
-        levelRepository.saveAndFlush(level);
+        insertedLevel = levelRepository.saveAndFlush(level);
 
         // Get all the levelList
         restLevelMockMvc
@@ -166,7 +179,7 @@ class LevelResourceIT {
     @Transactional
     void getLevel() throws Exception {
         // Initialize the database
-        levelRepository.saveAndFlush(level);
+        insertedLevel = levelRepository.saveAndFlush(level);
 
         // Get the level
         restLevelMockMvc
@@ -189,7 +202,7 @@ class LevelResourceIT {
     @Transactional
     void putExistingLevel() throws Exception {
         // Initialize the database
-        levelRepository.saveAndFlush(level);
+        insertedLevel = levelRepository.saveAndFlush(level);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -275,7 +288,7 @@ class LevelResourceIT {
     @Transactional
     void partialUpdateLevelWithPatch() throws Exception {
         // Initialize the database
-        levelRepository.saveAndFlush(level);
+        insertedLevel = levelRepository.saveAndFlush(level);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -303,7 +316,7 @@ class LevelResourceIT {
     @Transactional
     void fullUpdateLevelWithPatch() throws Exception {
         // Initialize the database
-        levelRepository.saveAndFlush(level);
+        insertedLevel = levelRepository.saveAndFlush(level);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -393,7 +406,7 @@ class LevelResourceIT {
     @Transactional
     void deleteLevel() throws Exception {
         // Initialize the database
-        levelRepository.saveAndFlush(level);
+        insertedLevel = levelRepository.saveAndFlush(level);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

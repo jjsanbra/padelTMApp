@@ -31,7 +31,7 @@ type NewTournamentFormRawValue = FormValueOf<NewTournament>;
 
 type TournamentFormDefaults = Pick<
   NewTournament,
-  'id' | 'startDate' | 'endDate' | 'lastInscriptionsDate' | 'active' | 'sponsors' | 'teams' | 'categories' | 'levels' | 'courtTypes'
+  'id' | 'startDate' | 'endDate' | 'lastInscriptionsDate' | 'active' | 'sponsors' | 'categories' | 'levels' | 'courtTypes' | 'registerTeams'
 >;
 
 type TournamentFormGroupContent = {
@@ -47,11 +47,11 @@ type TournamentFormGroupContent = {
   poster: FormControl<TournamentFormRawValue['poster']>;
   posterContentType: FormControl<TournamentFormRawValue['posterContentType']>;
   sponsors: FormControl<TournamentFormRawValue['sponsors']>;
-  teams: FormControl<TournamentFormRawValue['teams']>;
   categories: FormControl<TournamentFormRawValue['categories']>;
   levels: FormControl<TournamentFormRawValue['levels']>;
   courtTypes: FormControl<TournamentFormRawValue['courtTypes']>;
   location: FormControl<TournamentFormRawValue['location']>;
+  registerTeams: FormControl<TournamentFormRawValue['registerTeams']>;
 };
 
 export type TournamentFormGroup = FormGroup<TournamentFormGroupContent>;
@@ -84,11 +84,11 @@ export class TournamentFormService {
       poster: new FormControl(tournamentRawValue.poster),
       posterContentType: new FormControl(tournamentRawValue.posterContentType),
       sponsors: new FormControl(tournamentRawValue.sponsors ?? []),
-      teams: new FormControl(tournamentRawValue.teams ?? []),
       categories: new FormControl(tournamentRawValue.categories ?? []),
       levels: new FormControl(tournamentRawValue.levels ?? []),
       courtTypes: new FormControl(tournamentRawValue.courtTypes ?? []),
       location: new FormControl(tournamentRawValue.location),
+      registerTeams: new FormControl(tournamentRawValue.registerTeams ?? []),
     });
   }
 
@@ -116,10 +116,10 @@ export class TournamentFormService {
       lastInscriptionsDate: currentTime,
       active: false,
       sponsors: [],
-      teams: [],
       categories: [],
       levels: [],
       courtTypes: [],
+      registerTeams: [],
     };
   }
 
@@ -143,10 +143,10 @@ export class TournamentFormService {
       endDate: tournament.endDate ? tournament.endDate.format(DATE_TIME_FORMAT) : undefined,
       lastInscriptionsDate: tournament.lastInscriptionsDate ? tournament.lastInscriptionsDate.format(DATE_TIME_FORMAT) : undefined,
       sponsors: tournament.sponsors ?? [],
-      teams: tournament.teams ?? [],
       categories: tournament.categories ?? [],
       levels: tournament.levels ?? [],
       courtTypes: tournament.courtTypes ?? [],
+      registerTeams: tournament.registerTeams ?? [],
     };
   }
 }

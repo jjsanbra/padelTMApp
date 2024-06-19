@@ -72,16 +72,6 @@ public class Tournament implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_tournament__teams",
-        joinColumns = @JoinColumn(name = "tournament_id"),
-        inverseJoinColumns = @JoinColumn(name = "teams_id")
-    )
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "level", "category", "players", "tournaments" }, allowSetters = true)
-    private Set<Team> teams = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
         name = "rel_tournament__categories",
         joinColumns = @JoinColumn(name = "tournament_id"),
         inverseJoinColumns = @JoinColumn(name = "categories_id")
@@ -113,6 +103,11 @@ public class Tournament implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "tournaments", "country" }, allowSetters = true)
     private Location location;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tournaments")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "team", "tournaments" }, allowSetters = true)
+    private Set<RegisterTeam> registerTeams = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -282,29 +277,6 @@ public class Tournament implements Serializable {
         return this;
     }
 
-    public Set<Team> getTeams() {
-        return this.teams;
-    }
-
-    public void setTeams(Set<Team> teams) {
-        this.teams = teams;
-    }
-
-    public Tournament teams(Set<Team> teams) {
-        this.setTeams(teams);
-        return this;
-    }
-
-    public Tournament addTeams(Team team) {
-        this.teams.add(team);
-        return this;
-    }
-
-    public Tournament removeTeams(Team team) {
-        this.teams.remove(team);
-        return this;
-    }
-
     public Set<Category> getCategories() {
         return this.categories;
     }
@@ -384,6 +356,37 @@ public class Tournament implements Serializable {
 
     public Tournament location(Location location) {
         this.setLocation(location);
+        return this;
+    }
+
+    public Set<RegisterTeam> getRegisterTeams() {
+        return this.registerTeams;
+    }
+
+    public void setRegisterTeams(Set<RegisterTeam> registerTeams) {
+        if (this.registerTeams != null) {
+            this.registerTeams.forEach(i -> i.removeTournaments(this));
+        }
+        if (registerTeams != null) {
+            registerTeams.forEach(i -> i.addTournaments(this));
+        }
+        this.registerTeams = registerTeams;
+    }
+
+    public Tournament registerTeams(Set<RegisterTeam> registerTeams) {
+        this.setRegisterTeams(registerTeams);
+        return this;
+    }
+
+    public Tournament addRegisterTeam(RegisterTeam registerTeam) {
+        this.registerTeams.add(registerTeam);
+        registerTeam.getTournaments().add(this);
+        return this;
+    }
+
+    public Tournament removeRegisterTeam(RegisterTeam registerTeam) {
+        this.registerTeams.remove(registerTeam);
+        registerTeam.getTournaments().remove(this);
         return this;
     }
 

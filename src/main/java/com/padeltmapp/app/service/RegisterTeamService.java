@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,6 +91,15 @@ public class RegisterTeamService {
     }
 
     /**
+     * Get all the registerTeams with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<RegisterTeamDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return registerTeamRepository.findAllWithEagerRelationships(pageable).map(registerTeamMapper::toDto);
+    }
+
+    /**
      * Get one registerTeam by id.
      *
      * @param id the id of the entity.
@@ -97,7 +108,7 @@ public class RegisterTeamService {
     @Transactional(readOnly = true)
     public Optional<RegisterTeamDTO> findOne(Long id) {
         log.debug("Request to get RegisterTeam : {}", id);
-        return registerTeamRepository.findById(id).map(registerTeamMapper::toDto);
+        return registerTeamRepository.findOneWithEagerRelationships(id).map(registerTeamMapper::toDto);
     }
 
     /**

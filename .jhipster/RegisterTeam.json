@@ -7,13 +7,31 @@
   "dto": "mapstruct",
   "fields": [
     {
-      "fieldName": "teamName",
-      "fieldType": "String",
+      "fieldName": "registerDate",
+      "fieldType": "Instant",
       "fieldValidateRules": ["required"]
     }
   ],
   "name": "RegisterTeam",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "teamName",
+      "otherEntityName": "team",
+      "otherEntityRelationshipName": "registerTeam",
+      "relationshipName": "team",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "tournamentName",
+      "otherEntityName": "tournament",
+      "relationshipName": "tournaments",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many",
+      "relationshipValidateRules": "required"
+    }
+  ],
   "searchEngine": "no",
   "service": "serviceClass"
 }

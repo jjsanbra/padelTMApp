@@ -47,7 +47,7 @@ public class RegisterTeamAsserts {
     public static void assertRegisterTeamUpdatableFieldsEquals(RegisterTeam expected, RegisterTeam actual) {
         assertThat(expected)
             .as("Verify RegisterTeam relevant properties")
-            .satisfies(e -> assertThat(e.getTeamName()).as("check teamName").isEqualTo(actual.getTeamName()));
+            .satisfies(e -> assertThat(e.getRegisterDate()).as("check registerDate").isEqualTo(actual.getRegisterDate()));
     }
 
     /**
@@ -56,5 +56,10 @@ public class RegisterTeamAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertRegisterTeamUpdatableRelationshipsEquals(RegisterTeam expected, RegisterTeam actual) {}
+    public static void assertRegisterTeamUpdatableRelationshipsEquals(RegisterTeam expected, RegisterTeam actual) {
+        assertThat(expected)
+            .as("Verify RegisterTeam relationships")
+            .satisfies(e -> assertThat(e.getTeam()).as("check team").isEqualTo(actual.getTeam()))
+            .satisfies(e -> assertThat(e.getTournaments()).as("check tournaments").isEqualTo(actual.getTournaments()));
+    }
 }

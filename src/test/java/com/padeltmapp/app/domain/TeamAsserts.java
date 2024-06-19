@@ -63,7 +63,6 @@ public class TeamAsserts {
             .as("Verify Team relationships")
             .satisfies(e -> assertThat(e.getLevel()).as("check level").isEqualTo(actual.getLevel()))
             .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
-            .satisfies(e -> assertThat(e.getPlayers()).as("check players").isEqualTo(actual.getPlayers()))
-            .satisfies(e -> assertThat(e.getTournaments()).as("check tournaments").isEqualTo(actual.getTournaments()));
+            .satisfies(e -> assertThat(e.getPlayers()).as("check players").isEqualTo(actual.getPlayers()));
     }
 }

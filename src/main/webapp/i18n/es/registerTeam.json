@@ -18,7 +18,9 @@
         "title": "Register Team"
       },
       "id": "ID",
-      "teamName": "Team Name"
+      "registerDate": "Register Date",
+      "team": "Team",
+      "tournaments": "Tournaments"
     }
   }
 }

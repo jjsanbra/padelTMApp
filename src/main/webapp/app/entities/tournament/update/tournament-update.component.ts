@@ -12,8 +12,6 @@ import { EventManager, EventWithContent } from 'app/core/util/event-manager.serv
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { ISponsor } from 'app/entities/sponsor/sponsor.model';
 import { SponsorService } from 'app/entities/sponsor/service/sponsor.service';
-import { ITeam } from 'app/entities/team/team.model';
-import { TeamService } from 'app/entities/team/service/team.service';
 import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ILevel } from 'app/entities/level/level.model';
@@ -22,6 +20,8 @@ import { ICourtType } from 'app/entities/court-type/court-type.model';
 import { CourtTypeService } from 'app/entities/court-type/service/court-type.service';
 import { ILocation } from 'app/entities/location/location.model';
 import { LocationService } from 'app/entities/location/service/location.service';
+import { IRegisterTeam } from 'app/entities/register-team/register-team.model';
+import { RegisterTeamService } from 'app/entities/register-team/service/register-team.service';
 import { TournamentService } from '../service/tournament.service';
 import { ITournament } from '../tournament.model';
 import { TournamentFormService, TournamentFormGroup } from './tournament-form.service';
@@ -37,22 +37,22 @@ export class TournamentUpdateComponent implements OnInit {
   tournament: ITournament | null = null;
 
   sponsorsSharedCollection: ISponsor[] = [];
-  teamsSharedCollection: ITeam[] = [];
   categoriesSharedCollection: ICategory[] = [];
   levelsSharedCollection: ILevel[] = [];
   courtTypesSharedCollection: ICourtType[] = [];
   locationsSharedCollection: ILocation[] = [];
+  registerTeamsSharedCollection: IRegisterTeam[] = [];
 
   protected dataUtils = inject(DataUtils);
   protected eventManager = inject(EventManager);
   protected tournamentService = inject(TournamentService);
   protected tournamentFormService = inject(TournamentFormService);
   protected sponsorService = inject(SponsorService);
-  protected teamService = inject(TeamService);
   protected categoryService = inject(CategoryService);
   protected levelService = inject(LevelService);
   protected courtTypeService = inject(CourtTypeService);
   protected locationService = inject(LocationService);
+  protected registerTeamService = inject(RegisterTeamService);
   protected elementRef = inject(ElementRef);
   protected activatedRoute = inject(ActivatedRoute);
 
@@ -61,8 +61,6 @@ export class TournamentUpdateComponent implements OnInit {
 
   compareSponsor = (o1: ISponsor | null, o2: ISponsor | null): boolean => this.sponsorService.compareSponsor(o1, o2);
 
-  compareTeam = (o1: ITeam | null, o2: ITeam | null): boolean => this.teamService.compareTeam(o1, o2);
-
   compareCategory = (o1: ICategory | null, o2: ICategory | null): boolean => this.categoryService.compareCategory(o1, o2);
 
   compareLevel = (o1: ILevel | null, o2: ILevel | null): boolean => this.levelService.compareLevel(o1, o2);
@@ -70,6 +68,9 @@ export class TournamentUpdateComponent implements OnInit {
   compareCourtType = (o1: ICourtType | null, o2: ICourtType | null): boolean => this.courtTypeService.compareCourtType(o1, o2);
 
   compareLocation = (o1: ILocation | null, o2: ILocation | null): boolean => this.locationService.compareLocation(o1, o2);
+
+  compareRegisterTeam = (o1: IRegisterTeam | null, o2: IRegisterTeam | null): boolean =>
+    this.registerTeamService.compareRegisterTeam(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ tournament }) => {
@@ -148,10 +149,6 @@ export class TournamentUpdateComponent implements OnInit {
       this.sponsorsSharedCollection,
       ...(tournament.sponsors ?? []),
     );
-    this.teamsSharedCollection = this.teamService.addTeamToCollectionIfMissing<ITeam>(
-      this.teamsSharedCollection,
-      ...(tournament.teams ?? []),
-    );
     this.categoriesSharedCollection = this.categoryService.addCategoryToCollectionIfMissing<ICategory>(
       this.categoriesSharedCollection,
       ...(tournament.categories ?? []),
@@ -168,6 +165,10 @@ export class TournamentUpdateComponent implements OnInit {
       this.locationsSharedCollection,
       tournament.location,
     );
+    this.registerTeamsSharedCollection = this.registerTeamService.addRegisterTeamToCollectionIfMissing<IRegisterTeam>(
+      this.registerTeamsSharedCollection,
+      ...(tournament.registerTeams ?? []),
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -180,12 +181,6 @@ export class TournamentUpdateComponent implements OnInit {
         ),
       )
       .subscribe((sponsors: ISponsor[]) => (this.sponsorsSharedCollection = sponsors));
-
-    this.teamService
-      .query()
-      .pipe(map((res: HttpResponse<ITeam[]>) => res.body ?? []))
-      .pipe(map((teams: ITeam[]) => this.teamService.addTeamToCollectionIfMissing<ITeam>(teams, ...(this.tournament?.teams ?? []))))
-      .subscribe((teams: ITeam[]) => (this.teamsSharedCollection = teams));
 
     this.categoryService
       .query()
@@ -222,5 +217,18 @@ export class TournamentUpdateComponent implements OnInit {
         ),
       )
       .subscribe((locations: ILocation[]) => (this.locationsSharedCollection = locations));
+
+    this.registerTeamService
+      .query()
+      .pipe(map((res: HttpResponse<IRegisterTeam[]>) => res.body ?? []))
+      .pipe(
+        map((registerTeams: IRegisterTeam[]) =>
+          this.registerTeamService.addRegisterTeamToCollectionIfMissing<IRegisterTeam>(
+            registerTeams,
+            ...(this.tournament?.registerTeams ?? []),
+          ),
+        ),
+      )
+      .subscribe((registerTeams: IRegisterTeam[]) => (this.registerTeamsSharedCollection = registerTeams));
   }
 }

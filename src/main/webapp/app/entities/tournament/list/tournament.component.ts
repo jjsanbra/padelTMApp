@@ -17,7 +17,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TournamentDeleteDialogComponent } from '../delete/tournament-delete-dialog.component';
 import { EntityArrayResponseType, TournamentService } from '../service/tournament.service';
 import { ITournament } from '../tournament.model';
-import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   standalone: true,
@@ -39,7 +38,6 @@ export class TournamentComponent implements OnInit {
   subscription: Subscription | null = null;
   tournaments?: ITournament[];
   isLoading = false;
-  account = inject(AccountService).trackCurrentAccount();
 
   sortState = sortStateSignal({});
 

@@ -30,11 +30,11 @@ describe('Tournament Form Service', () => {
             active: expect.any(Object),
             poster: expect.any(Object),
             sponsors: expect.any(Object),
-            teams: expect.any(Object),
             categories: expect.any(Object),
             levels: expect.any(Object),
             courtTypes: expect.any(Object),
             location: expect.any(Object),
+            registerTeams: expect.any(Object),
           }),
         );
       });
@@ -55,11 +55,11 @@ describe('Tournament Form Service', () => {
             active: expect.any(Object),
             poster: expect.any(Object),
             sponsors: expect.any(Object),
-            teams: expect.any(Object),
             categories: expect.any(Object),
             levels: expect.any(Object),
             courtTypes: expect.any(Object),
             location: expect.any(Object),
+            registerTeams: expect.any(Object),
           }),
         );
       });

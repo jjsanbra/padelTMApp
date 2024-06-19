@@ -26,7 +26,7 @@ class CourtTypeTest {
     }
 
     @Test
-    void tournamentsTest() throws Exception {
+    void tournamentsTest() {
         CourtType courtType = getCourtTypeRandomSampleGenerator();
         Tournament tournamentBack = getTournamentRandomSampleGenerator();
 

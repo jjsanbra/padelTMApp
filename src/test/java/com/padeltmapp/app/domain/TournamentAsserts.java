@@ -71,10 +71,10 @@ public class TournamentAsserts {
         assertThat(expected)
             .as("Verify Tournament relationships")
             .satisfies(e -> assertThat(e.getSponsors()).as("check sponsors").isEqualTo(actual.getSponsors()))
-            .satisfies(e -> assertThat(e.getTeams()).as("check teams").isEqualTo(actual.getTeams()))
             .satisfies(e -> assertThat(e.getCategories()).as("check categories").isEqualTo(actual.getCategories()))
             .satisfies(e -> assertThat(e.getLevels()).as("check levels").isEqualTo(actual.getLevels()))
             .satisfies(e -> assertThat(e.getCourtTypes()).as("check courtTypes").isEqualTo(actual.getCourtTypes()))
-            .satisfies(e -> assertThat(e.getLocation()).as("check location").isEqualTo(actual.getLocation()));
+            .satisfies(e -> assertThat(e.getLocation()).as("check location").isEqualTo(actual.getLocation()))
+            .satisfies(e -> assertThat(e.getRegisterTeams()).as("check registerTeams").isEqualTo(actual.getRegisterTeams()));
     }
 }

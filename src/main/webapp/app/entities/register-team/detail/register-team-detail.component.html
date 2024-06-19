@@ -15,9 +15,26 @@
           <dd>
             <span>{{ registerTeam()!.id }}</span>
           </dd>
-          <dt><span jhiTranslate="padelTmApp.registerTeam.teamName">Team Name</span></dt>
+          <dt><span jhiTranslate="padelTmApp.registerTeam.registerDate">Register Date</span></dt>
           <dd>
-            <span>{{ registerTeam()!.teamName }}</span>
+            <span>{{ registerTeam()!.registerDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.registerTeam.team">Team</span></dt>
+          <dd>
+            @if (registerTeam()!.team) {
+              <div>
+                <a [routerLink]="['/team', registerTeam()!.team?.id, 'view']">{{ registerTeam()!.team?.teamName }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="padelTmApp.registerTeam.tournaments">Tournaments</span></dt>
+          <dd>
+            @for (tournaments of registerTeam()!.tournaments; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/tournament', tournaments.id, 'view']">{{ tournaments?.tournamentName }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
           </dd>
         </dl>
 

@@ -3,7 +3,10 @@ package com.padeltmapp.app.service.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.padeltmapp.app.domain.RegisterTeam} entity.
@@ -15,7 +18,13 @@ public class RegisterTeamDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String teamName;
+    private Instant registerDate;
+
+    @NotNull
+    private TeamDTO team;
+
+    @NotNull
+    private Set<TournamentDTO> tournaments = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -25,12 +34,28 @@ public class RegisterTeamDTO implements Serializable {
         this.id = id;
     }
 
-    public String getTeamName() {
-        return teamName;
+    public Instant getRegisterDate() {
+        return registerDate;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setRegisterDate(Instant registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public TeamDTO getTeam() {
+        return team;
+    }
+
+    public void setTeam(TeamDTO team) {
+        this.team = team;
+    }
+
+    public Set<TournamentDTO> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(Set<TournamentDTO> tournaments) {
+        this.tournaments = tournaments;
     }
 
     @Override
@@ -59,7 +84,9 @@ public class RegisterTeamDTO implements Serializable {
     public String toString() {
         return "RegisterTeamDTO{" +
             "id=" + getId() +
-            ", teamName='" + getTeamName() + "'" +
+            ", registerDate='" + getRegisterDate() + "'" +
+            ", team=" + getTeam() +
+            ", tournaments=" + getTournaments() +
             "}";
     }
 }

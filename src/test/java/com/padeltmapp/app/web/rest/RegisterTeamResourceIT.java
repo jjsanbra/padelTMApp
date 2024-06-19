@@ -4,22 +4,35 @@ import static com.padeltmapp.app.domain.RegisterTeamAsserts.*;
 import static com.padeltmapp.app.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.padeltmapp.app.IntegrationTest;
 import com.padeltmapp.app.domain.RegisterTeam;
+import com.padeltmapp.app.domain.Team;
+import com.padeltmapp.app.domain.Tournament;
 import com.padeltmapp.app.repository.RegisterTeamRepository;
+import com.padeltmapp.app.service.RegisterTeamService;
 import com.padeltmapp.app.service.dto.RegisterTeamDTO;
 import com.padeltmapp.app.service.mapper.RegisterTeamMapper;
 import jakarta.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,12 +42,13 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link RegisterTeamResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class RegisterTeamResourceIT {
 
-    private static final String DEFAULT_TEAM_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_TEAM_NAME = "BBBBBBBBBB";
+    private static final Instant DEFAULT_REGISTER_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_REGISTER_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String ENTITY_API_URL = "/api/register-teams";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -48,8 +62,14 @@ class RegisterTeamResourceIT {
     @Autowired
     private RegisterTeamRepository registerTeamRepository;
 
+    @Mock
+    private RegisterTeamRepository registerTeamRepositoryMock;
+
     @Autowired
     private RegisterTeamMapper registerTeamMapper;
+
+    @Mock
+    private RegisterTeamService registerTeamServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -59,6 +79,8 @@ class RegisterTeamResourceIT {
 
     private RegisterTeam registerTeam;
 
+    private RegisterTeam insertedRegisterTeam;
+
     /**
      * Create an entity for this test.
      *
@@ -66,7 +88,27 @@ class RegisterTeamResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static RegisterTeam createEntity(EntityManager em) {
-        RegisterTeam registerTeam = new RegisterTeam().teamName(DEFAULT_TEAM_NAME);
+        RegisterTeam registerTeam = new RegisterTeam().registerDate(DEFAULT_REGISTER_DATE);
+        // Add required entity
+        Team team;
+        if (TestUtil.findAll(em, Team.class).isEmpty()) {
+            team = TeamResourceIT.createEntity(em);
+            em.persist(team);
+            em.flush();
+        } else {
+            team = TestUtil.findAll(em, Team.class).get(0);
+        }
+        registerTeam.setTeam(team);
+        // Add required entity
+        Tournament tournament;
+        if (TestUtil.findAll(em, Tournament.class).isEmpty()) {
+            tournament = TournamentResourceIT.createEntity(em);
+            em.persist(tournament);
+            em.flush();
+        } else {
+            tournament = TestUtil.findAll(em, Tournament.class).get(0);
+        }
+        registerTeam.getTournaments().add(tournament);
         return registerTeam;
     }
 
@@ -77,13 +119,41 @@ class RegisterTeamResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static RegisterTeam createUpdatedEntity(EntityManager em) {
-        RegisterTeam registerTeam = new RegisterTeam().teamName(UPDATED_TEAM_NAME);
+        RegisterTeam registerTeam = new RegisterTeam().registerDate(UPDATED_REGISTER_DATE);
+        // Add required entity
+        Team team;
+        if (TestUtil.findAll(em, Team.class).isEmpty()) {
+            team = TeamResourceIT.createUpdatedEntity(em);
+            em.persist(team);
+            em.flush();
+        } else {
+            team = TestUtil.findAll(em, Team.class).get(0);
+        }
+        registerTeam.setTeam(team);
+        // Add required entity
+        Tournament tournament;
+        if (TestUtil.findAll(em, Tournament.class).isEmpty()) {
+            tournament = TournamentResourceIT.createUpdatedEntity(em);
+            em.persist(tournament);
+            em.flush();
+        } else {
+            tournament = TestUtil.findAll(em, Tournament.class).get(0);
+        }
+        registerTeam.getTournaments().add(tournament);
         return registerTeam;
     }
 
     @BeforeEach
     public void initTest() {
         registerTeam = createEntity(em);
+    }
+
+    @AfterEach
+    public void cleanup() {
+        if (insertedRegisterTeam != null) {
+            registerTeamRepository.delete(insertedRegisterTeam);
+            insertedRegisterTeam = null;
+        }
     }
 
     @Test
@@ -106,6 +176,8 @@ class RegisterTeamResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedRegisterTeam = registerTeamMapper.toEntity(returnedRegisterTeamDTO);
         assertRegisterTeamUpdatableFieldsEquals(returnedRegisterTeam, getPersistedRegisterTeam(returnedRegisterTeam));
+
+        insertedRegisterTeam = returnedRegisterTeam;
     }
 
     @Test
@@ -128,10 +200,10 @@ class RegisterTeamResourceIT {
 
     @Test
     @Transactional
-    void checkTeamNameIsRequired() throws Exception {
+    void checkRegisterDateIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        registerTeam.setTeamName(null);
+        registerTeam.setRegisterDate(null);
 
         // Create the RegisterTeam, which fails.
         RegisterTeamDTO registerTeamDTO = registerTeamMapper.toDto(registerTeam);
@@ -147,7 +219,7 @@ class RegisterTeamResourceIT {
     @Transactional
     void getAllRegisterTeams() throws Exception {
         // Initialize the database
-        registerTeamRepository.saveAndFlush(registerTeam);
+        insertedRegisterTeam = registerTeamRepository.saveAndFlush(registerTeam);
 
         // Get all the registerTeamList
         restRegisterTeamMockMvc
@@ -155,14 +227,31 @@ class RegisterTeamResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(registerTeam.getId().intValue())))
-            .andExpect(jsonPath("$.[*].teamName").value(hasItem(DEFAULT_TEAM_NAME)));
+            .andExpect(jsonPath("$.[*].registerDate").value(hasItem(DEFAULT_REGISTER_DATE.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllRegisterTeamsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(registerTeamServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restRegisterTeamMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(registerTeamServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllRegisterTeamsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(registerTeamServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restRegisterTeamMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(registerTeamRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
     @Transactional
     void getRegisterTeam() throws Exception {
         // Initialize the database
-        registerTeamRepository.saveAndFlush(registerTeam);
+        insertedRegisterTeam = registerTeamRepository.saveAndFlush(registerTeam);
 
         // Get the registerTeam
         restRegisterTeamMockMvc
@@ -170,7 +259,7 @@ class RegisterTeamResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(registerTeam.getId().intValue()))
-            .andExpect(jsonPath("$.teamName").value(DEFAULT_TEAM_NAME));
+            .andExpect(jsonPath("$.registerDate").value(DEFAULT_REGISTER_DATE.toString()));
     }
 
     @Test
@@ -184,7 +273,7 @@ class RegisterTeamResourceIT {
     @Transactional
     void putExistingRegisterTeam() throws Exception {
         // Initialize the database
-        registerTeamRepository.saveAndFlush(registerTeam);
+        insertedRegisterTeam = registerTeamRepository.saveAndFlush(registerTeam);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -192,7 +281,7 @@ class RegisterTeamResourceIT {
         RegisterTeam updatedRegisterTeam = registerTeamRepository.findById(registerTeam.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedRegisterTeam are not directly saved in db
         em.detach(updatedRegisterTeam);
-        updatedRegisterTeam.teamName(UPDATED_TEAM_NAME);
+        updatedRegisterTeam.registerDate(UPDATED_REGISTER_DATE);
         RegisterTeamDTO registerTeamDTO = registerTeamMapper.toDto(updatedRegisterTeam);
 
         restRegisterTeamMockMvc
@@ -274,7 +363,7 @@ class RegisterTeamResourceIT {
     @Transactional
     void partialUpdateRegisterTeamWithPatch() throws Exception {
         // Initialize the database
-        registerTeamRepository.saveAndFlush(registerTeam);
+        insertedRegisterTeam = registerTeamRepository.saveAndFlush(registerTeam);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -282,7 +371,7 @@ class RegisterTeamResourceIT {
         RegisterTeam partialUpdatedRegisterTeam = new RegisterTeam();
         partialUpdatedRegisterTeam.setId(registerTeam.getId());
 
-        partialUpdatedRegisterTeam.teamName(UPDATED_TEAM_NAME);
+        partialUpdatedRegisterTeam.registerDate(UPDATED_REGISTER_DATE);
 
         restRegisterTeamMockMvc
             .perform(
@@ -305,7 +394,7 @@ class RegisterTeamResourceIT {
     @Transactional
     void fullUpdateRegisterTeamWithPatch() throws Exception {
         // Initialize the database
-        registerTeamRepository.saveAndFlush(registerTeam);
+        insertedRegisterTeam = registerTeamRepository.saveAndFlush(registerTeam);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -313,7 +402,7 @@ class RegisterTeamResourceIT {
         RegisterTeam partialUpdatedRegisterTeam = new RegisterTeam();
         partialUpdatedRegisterTeam.setId(registerTeam.getId());
 
-        partialUpdatedRegisterTeam.teamName(UPDATED_TEAM_NAME);
+        partialUpdatedRegisterTeam.registerDate(UPDATED_REGISTER_DATE);
 
         restRegisterTeamMockMvc
             .perform(
@@ -395,7 +484,7 @@ class RegisterTeamResourceIT {
     @Transactional
     void deleteRegisterTeam() throws Exception {
         // Initialize the database
-        registerTeamRepository.saveAndFlush(registerTeam);
+        insertedRegisterTeam = registerTeamRepository.saveAndFlush(registerTeam);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

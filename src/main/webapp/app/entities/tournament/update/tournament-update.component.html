@@ -193,23 +193,6 @@
         </div>
 
         <div class="mb-3">
-          <label for="field_teams" jhiTranslate="padelTmApp.tournament.teams">Teams</label>
-          <select
-            class="form-control"
-            id="field_teams"
-            data-cy="teams"
-            multiple
-            name="teams"
-            formControlName="teams"
-            [compareWith]="compareTeam"
-          >
-            @for (teamOption of teamsSharedCollection; track $index) {
-              <option [ngValue]="teamOption">{{ teamOption.teamName }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label for="field_categories" jhiTranslate="padelTmApp.tournament.categories">Categories</label>
           <select
             class="form-control"
@@ -273,6 +256,23 @@
             <option [ngValue]="null"></option>
             @for (locationOption of locationsSharedCollection; track $index) {
               <option [ngValue]="locationOption">{{ locationOption.city }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_registerTeams" jhiTranslate="padelTmApp.tournament.registerTeam">Register Team</label>
+          <select
+            class="form-control"
+            id="field_registerTeams"
+            data-cy="registerTeam"
+            multiple
+            name="registerTeams"
+            formControlName="registerTeams"
+            [compareWith]="compareRegisterTeam"
+          >
+            @for (registerTeamOption of registerTeamsSharedCollection; track $index) {
+              <option [ngValue]="registerTeamOption">{{ registerTeamOption.id }}</option>
             }
           </select>
         </div>

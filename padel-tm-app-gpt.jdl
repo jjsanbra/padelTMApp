@@ -39,7 +39,7 @@ entity Team {
  * The Team Registration entity.
  */
 entity RegisterTeam {
-    teamName String required
+    registerDate Instant required
 }
 
 /**
@@ -114,13 +114,15 @@ relationship ManyToOne {
 	Location{country(countryName)} to Country{location(city)}
     /* Player */
     // Player{user(login)} to @OnDelete("CASCADE") @Id User with builtInEntity
+    /* RegisterTeam */
+    RegisterTeam{team(teamName) required} to Team{registerTeam}
 }
 
 relationship ManyToMany {
 	/* Multiple tournaments can have multiple sponsors */
     Tournament{Sponsors(sponsorName)} to Sponsor{tournaments(tournamentName)}
     /* Multiple tournaments can have multiple teams, with a limit of x teams (handled in business logic, not here) */
-    Tournament{Teams(teamName)} to Team{tournaments(tournamentName)}
+    // Tournament{Teams(teamName)} to Team{tournaments(tournamentName)}
     /* Multiple tournament can have multiple categories */
     Tournament{Categories(categoryName)} to Category{tournaments(tournamentName)}
     /* Multiple tournament can have multiple levels */
@@ -129,6 +131,8 @@ relationship ManyToMany {
     Tournament{CourtTypes(courtTypeName)} to CourtType{tournaments(tournamentName)}
     /* Multiple teams can have up to 2 players, and they are required (handled in business logic, not here) */
     Team{Players(firstName) required} to Player{teams(teamName)}
+    /* Register */
+    RegisterTeam{tournaments(tournamentName) required} to Tournament
 }
 
 /* Set pagination options */

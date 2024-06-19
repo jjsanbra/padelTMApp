@@ -27,7 +27,7 @@ class PlayerTest {
     }
 
     @Test
-    void levelTest() throws Exception {
+    void levelTest() {
         Player player = getPlayerRandomSampleGenerator();
         Level levelBack = getLevelRandomSampleGenerator();
 
@@ -39,7 +39,7 @@ class PlayerTest {
     }
 
     @Test
-    void teamsTest() throws Exception {
+    void teamsTest() {
         Player player = getPlayerRandomSampleGenerator();
         Team teamBack = getTeamRandomSampleGenerator();
 

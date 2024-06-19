@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -98,6 +99,8 @@ class PlayerResourceIT {
 
     private Player player;
 
+    private Player insertedPlayer;
+
     /**
      * Create an entity for this test.
      *
@@ -143,6 +146,14 @@ class PlayerResourceIT {
         player = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedPlayer != null) {
+            playerRepository.delete(insertedPlayer);
+            insertedPlayer = null;
+        }
+    }
+
     @Test
     @Transactional
     void createPlayer() throws Exception {
@@ -163,6 +174,8 @@ class PlayerResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedPlayer = playerMapper.toEntity(returnedPlayerDTO);
         assertPlayerUpdatableFieldsEquals(returnedPlayer, getPersistedPlayer(returnedPlayer));
+
+        insertedPlayer = returnedPlayer;
     }
 
     @Test
@@ -272,7 +285,7 @@ class PlayerResourceIT {
     @Transactional
     void getAllPlayers() throws Exception {
         // Initialize the database
-        playerRepository.saveAndFlush(player);
+        insertedPlayer = playerRepository.saveAndFlush(player);
 
         // Get all the playerList
         restPlayerMockMvc
@@ -312,7 +325,7 @@ class PlayerResourceIT {
     @Transactional
     void getPlayer() throws Exception {
         // Initialize the database
-        playerRepository.saveAndFlush(player);
+        insertedPlayer = playerRepository.saveAndFlush(player);
 
         // Get the player
         restPlayerMockMvc
@@ -342,7 +355,7 @@ class PlayerResourceIT {
     @Transactional
     void putExistingPlayer() throws Exception {
         // Initialize the database
-        playerRepository.saveAndFlush(player);
+        insertedPlayer = playerRepository.saveAndFlush(player);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -437,7 +450,7 @@ class PlayerResourceIT {
     @Transactional
     void partialUpdatePlayerWithPatch() throws Exception {
         // Initialize the database
-        playerRepository.saveAndFlush(player);
+        insertedPlayer = playerRepository.saveAndFlush(player);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -471,7 +484,7 @@ class PlayerResourceIT {
     @Transactional
     void fullUpdatePlayerWithPatch() throws Exception {
         // Initialize the database
-        playerRepository.saveAndFlush(player);
+        insertedPlayer = playerRepository.saveAndFlush(player);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -570,7 +583,7 @@ class PlayerResourceIT {
     @Transactional
     void deletePlayer() throws Exception {
         // Initialize the database
-        playerRepository.saveAndFlush(player);
+        insertedPlayer = playerRepository.saveAndFlush(player);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

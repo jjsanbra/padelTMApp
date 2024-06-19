@@ -134,10 +134,13 @@ public class RegisterTeamResource {
     /**
      * {@code GET  /register-teams} : get all the registerTeams.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of registerTeams in body.
      */
     @GetMapping("")
-    public List<RegisterTeamDTO> getAllRegisterTeams() {
+    public List<RegisterTeamDTO> getAllRegisterTeams(
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
+    ) {
         log.debug("REST request to get all RegisterTeams");
         return registerTeamService.findAll();
     }

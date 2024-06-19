@@ -16,6 +16,7 @@ import com.padeltmapp.app.service.mapper.CategoryMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,8 @@ class CategoryResourceIT {
 
     private Category category;
 
+    private Category insertedCategory;
+
     /**
      * Create an entity for this test.
      *
@@ -89,6 +92,14 @@ class CategoryResourceIT {
         category = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedCategory != null) {
+            categoryRepository.delete(insertedCategory);
+            insertedCategory = null;
+        }
+    }
+
     @Test
     @Transactional
     void createCategory() throws Exception {
@@ -109,6 +120,8 @@ class CategoryResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedCategory = categoryMapper.toEntity(returnedCategoryDTO);
         assertCategoryUpdatableFieldsEquals(returnedCategory, getPersistedCategory(returnedCategory));
+
+        insertedCategory = returnedCategory;
     }
 
     @Test
@@ -150,7 +163,7 @@ class CategoryResourceIT {
     @Transactional
     void getAllCategories() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        insertedCategory = categoryRepository.saveAndFlush(category);
 
         // Get all the categoryList
         restCategoryMockMvc
@@ -166,7 +179,7 @@ class CategoryResourceIT {
     @Transactional
     void getCategory() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        insertedCategory = categoryRepository.saveAndFlush(category);
 
         // Get the category
         restCategoryMockMvc
@@ -189,7 +202,7 @@ class CategoryResourceIT {
     @Transactional
     void putExistingCategory() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        insertedCategory = categoryRepository.saveAndFlush(category);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -279,7 +292,7 @@ class CategoryResourceIT {
     @Transactional
     void partialUpdateCategoryWithPatch() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        insertedCategory = categoryRepository.saveAndFlush(category);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -307,7 +320,7 @@ class CategoryResourceIT {
     @Transactional
     void fullUpdateCategoryWithPatch() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        insertedCategory = categoryRepository.saveAndFlush(category);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -397,7 +410,7 @@ class CategoryResourceIT {
     @Transactional
     void deleteCategory() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        insertedCategory = categoryRepository.saveAndFlush(category);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

@@ -27,7 +27,7 @@ class LocationTest {
     }
 
     @Test
-    void tournamentsTest() throws Exception {
+    void tournamentsTest() {
         Location location = getLocationRandomSampleGenerator();
         Tournament tournamentBack = getTournamentRandomSampleGenerator();
 
@@ -49,7 +49,7 @@ class LocationTest {
     }
 
     @Test
-    void countryTest() throws Exception {
+    void countryTest() {
         Location location = getLocationRandomSampleGenerator();
         Country countryBack = getCountryRandomSampleGenerator();
 

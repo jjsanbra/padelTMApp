@@ -42,7 +42,7 @@ public class Sponsor implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "sponsors")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "sponsors", "teams", "categories", "levels", "courtTypes", "location" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "sponsors", "categories", "levels", "courtTypes", "location", "registerTeams" }, allowSetters = true)
     private Set<Tournament> tournaments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

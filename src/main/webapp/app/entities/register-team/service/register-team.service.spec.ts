@@ -4,10 +4,11 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { IRegisterTeam } from '../register-team.model';
 import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../register-team.test-samples';
 
-import { RegisterTeamService } from './register-team.service';
+import { RegisterTeamService, RestRegisterTeam } from './register-team.service';
 
-const requireRestSample: IRegisterTeam = {
+const requireRestSample: RestRegisterTeam = {
   ...sampleWithRequiredData,
+  registerDate: sampleWithRequiredData.registerDate?.toJSON(),
 };
 
 describe('RegisterTeam Service', () => {

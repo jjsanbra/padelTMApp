@@ -31,6 +31,7 @@
     <include file="config/liquibase/changelog/20240603141900_added_entity_constraints_Tournament.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240603141901_added_entity_constraints_Player.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240603141902_added_entity_constraints_Team.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240603141903_added_entity_constraints_RegisterTeam.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240603141904_added_entity_constraints_Location.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

@@ -19,6 +19,7 @@ import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -83,6 +84,8 @@ class LocationResourceIT {
 
     private Location location;
 
+    private Location insertedLocation;
+
     /**
      * Create an entity for this test.
      *
@@ -118,6 +121,14 @@ class LocationResourceIT {
         location = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedLocation != null) {
+            locationRepository.delete(insertedLocation);
+            insertedLocation = null;
+        }
+    }
+
     @Test
     @Transactional
     void createLocation() throws Exception {
@@ -138,6 +149,8 @@ class LocationResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedLocation = locationMapper.toEntity(returnedLocationDTO);
         assertLocationUpdatableFieldsEquals(returnedLocation, getPersistedLocation(returnedLocation));
+
+        insertedLocation = returnedLocation;
     }
 
     @Test
@@ -162,7 +175,7 @@ class LocationResourceIT {
     @Transactional
     void getAllLocations() throws Exception {
         // Initialize the database
-        locationRepository.saveAndFlush(location);
+        insertedLocation = locationRepository.saveAndFlush(location);
 
         // Get all the locationList
         restLocationMockMvc
@@ -197,7 +210,7 @@ class LocationResourceIT {
     @Transactional
     void getLocation() throws Exception {
         // Initialize the database
-        locationRepository.saveAndFlush(location);
+        insertedLocation = locationRepository.saveAndFlush(location);
 
         // Get the location
         restLocationMockMvc
@@ -222,7 +235,7 @@ class LocationResourceIT {
     @Transactional
     void putExistingLocation() throws Exception {
         // Initialize the database
-        locationRepository.saveAndFlush(location);
+        insertedLocation = locationRepository.saveAndFlush(location);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -316,7 +329,7 @@ class LocationResourceIT {
     @Transactional
     void partialUpdateLocationWithPatch() throws Exception {
         // Initialize the database
-        locationRepository.saveAndFlush(location);
+        insertedLocation = locationRepository.saveAndFlush(location);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -344,7 +357,7 @@ class LocationResourceIT {
     @Transactional
     void fullUpdateLocationWithPatch() throws Exception {
         // Initialize the database
-        locationRepository.saveAndFlush(location);
+        insertedLocation = locationRepository.saveAndFlush(location);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -438,7 +451,7 @@ class LocationResourceIT {
     @Transactional
     void deleteLocation() throws Exception {
         // Initialize the database
-        locationRepository.saveAndFlush(location);
+        insertedLocation = locationRepository.saveAndFlush(location);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

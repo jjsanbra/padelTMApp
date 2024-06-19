@@ -75,10 +75,10 @@ describe('Player Management Update Component', () => {
 
     it('Should call Team query and add missing value', () => {
       const player: IPlayer = { id: 456 };
-      const teams: ITeam[] = [{ id: 17296 }];
+      const teams: ITeam[] = [{ id: 4283 }];
       player.teams = teams;
 
-      const teamCollection: ITeam[] = [{ id: 13648 }];
+      const teamCollection: ITeam[] = [{ id: 19554 }];
       jest.spyOn(teamService, 'query').mockReturnValue(of(new HttpResponse({ body: teamCollection })));
       const additionalTeams = [...teams];
       const expectedCollection: ITeam[] = [...additionalTeams, ...teamCollection];
@@ -99,7 +99,7 @@ describe('Player Management Update Component', () => {
       const player: IPlayer = { id: 456 };
       const level: ILevel = { id: 11035 };
       player.level = level;
-      const teams: ITeam = { id: 14125 };
+      const teams: ITeam = { id: 28783 };
       player.teams = [teams];
 
       activatedRoute.data = of({ player });

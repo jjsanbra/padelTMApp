@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type TeamFormGroupInput = ITeam | PartialWithRequiredKeyOf<NewTeam>;
 
-type TeamFormDefaults = Pick<NewTeam, 'id' | 'players' | 'tournaments'>;
+type TeamFormDefaults = Pick<NewTeam, 'id' | 'players'>;
 
 type TeamFormGroupContent = {
   id: FormControl<ITeam['id'] | NewTeam['id']>;
@@ -24,7 +24,6 @@ type TeamFormGroupContent = {
   level: FormControl<ITeam['level']>;
   category: FormControl<ITeam['category']>;
   players: FormControl<ITeam['players']>;
-  tournaments: FormControl<ITeam['tournaments']>;
 };
 
 export type TeamFormGroup = FormGroup<TeamFormGroupContent>;
@@ -50,7 +49,6 @@ export class TeamFormService {
       level: new FormControl(teamRawValue.level),
       category: new FormControl(teamRawValue.category),
       players: new FormControl(teamRawValue.players ?? []),
-      tournaments: new FormControl(teamRawValue.tournaments ?? []),
     });
   }
 
@@ -72,7 +70,6 @@ export class TeamFormService {
     return {
       id: null,
       players: [],
-      tournaments: [],
     };
   }
 }

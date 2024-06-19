@@ -25,7 +25,6 @@ describe('Team Form Service', () => {
             level: expect.any(Object),
             category: expect.any(Object),
             players: expect.any(Object),
-            tournaments: expect.any(Object),
           }),
         );
       });
@@ -41,7 +40,6 @@ describe('Team Form Service', () => {
             level: expect.any(Object),
             category: expect.any(Object),
             players: expect.any(Object),
-            tournaments: expect.any(Object),
           }),
         );
       });

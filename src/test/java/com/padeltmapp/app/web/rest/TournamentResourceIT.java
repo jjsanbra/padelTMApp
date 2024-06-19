@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -103,6 +104,8 @@ class TournamentResourceIT {
 
     private Tournament tournament;
 
+    private Tournament insertedTournament;
+
     /**
      * Create an entity for this test.
      *
@@ -150,6 +153,14 @@ class TournamentResourceIT {
         tournament = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedTournament != null) {
+            tournamentRepository.delete(insertedTournament);
+            insertedTournament = null;
+        }
+    }
+
     @Test
     @Transactional
     void createTournament() throws Exception {
@@ -170,6 +181,8 @@ class TournamentResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedTournament = tournamentMapper.toEntity(returnedTournamentDTO);
         assertTournamentUpdatableFieldsEquals(returnedTournament, getPersistedTournament(returnedTournament));
+
+        insertedTournament = returnedTournament;
     }
 
     @Test
@@ -194,7 +207,7 @@ class TournamentResourceIT {
     @Transactional
     void getAllTournaments() throws Exception {
         // Initialize the database
-        tournamentRepository.saveAndFlush(tournament);
+        insertedTournament = tournamentRepository.saveAndFlush(tournament);
 
         // Get all the tournamentList
         restTournamentMockMvc
@@ -235,7 +248,7 @@ class TournamentResourceIT {
     @Transactional
     void getTournament() throws Exception {
         // Initialize the database
-        tournamentRepository.saveAndFlush(tournament);
+        insertedTournament = tournamentRepository.saveAndFlush(tournament);
 
         // Get the tournament
         restTournamentMockMvc
@@ -266,7 +279,7 @@ class TournamentResourceIT {
     @Transactional
     void putExistingTournament() throws Exception {
         // Initialize the database
-        tournamentRepository.saveAndFlush(tournament);
+        insertedTournament = tournamentRepository.saveAndFlush(tournament);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -366,7 +379,7 @@ class TournamentResourceIT {
     @Transactional
     void partialUpdateTournamentWithPatch() throws Exception {
         // Initialize the database
-        tournamentRepository.saveAndFlush(tournament);
+        insertedTournament = tournamentRepository.saveAndFlush(tournament);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -402,7 +415,7 @@ class TournamentResourceIT {
     @Transactional
     void fullUpdateTournamentWithPatch() throws Exception {
         // Initialize the database
-        tournamentRepository.saveAndFlush(tournament);
+        insertedTournament = tournamentRepository.saveAndFlush(tournament);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -502,7 +515,7 @@ class TournamentResourceIT {
     @Transactional
     void deleteTournament() throws Exception {
         // Initialize the database
-        tournamentRepository.saveAndFlush(tournament);
+        insertedTournament = tournamentRepository.saveAndFlush(tournament);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

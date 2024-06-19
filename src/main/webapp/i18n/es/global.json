@@ -8,15 +8,15 @@
       "entities": {
         "main": "Entidades",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "tournament": "Torneos",
-        "player": "Jugadores",
-        "team": "Equipos",
-        "registerTeam": "Registro de equipos",
-        "location": "Ubicaciónes",
-        "country": "Países",
-        "category": "Catgorías",
-        "level": "Niveles",
-        "sponsor": "Sponsors",
+        "tournament": "Tournament",
+        "player": "Player",
+        "team": "Team",
+        "registerTeam": "Register Team",
+        "location": "Location",
+        "country": "Country",
+        "category": "Category",
+        "level": "Level",
+        "sponsor": "Sponsor",
         "courtType": "Court Type"
       },
       "account": {
@@ -30,7 +30,6 @@
       },
       "admin": {
         "main": "Administración",
-        "adminAuthority": "Roles",
         "userManagement": "Gestión de usuarios",
         "tracker": "Registro de usuarios",
         "metrics": "Métricas",

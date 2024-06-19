@@ -28,11 +28,11 @@
       "active": "Active",
       "poster": "Poster",
       "sponsors": "Sponsors",
-      "teams": "Teams",
       "categories": "Categories",
       "levels": "Levels",
       "courtTypes": "Court Types",
-      "location": "Location"
+      "location": "Location",
+      "registerTeam": "Register Team"
     }
   }
 }

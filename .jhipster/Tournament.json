@@ -59,14 +59,6 @@
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityField": "teamName",
-      "otherEntityName": "team",
-      "otherEntityRelationshipName": "tournaments",
-      "relationshipName": "teams",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-many"
-    },
-    {
       "otherEntityField": "categoryName",
       "otherEntityName": "category",
       "otherEntityRelationshipName": "tournaments",

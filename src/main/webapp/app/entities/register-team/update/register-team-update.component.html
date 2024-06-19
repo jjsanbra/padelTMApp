@@ -20,16 +20,75 @@
         }
 
         <div class="mb-3">
-          <label class="form-label" for="field_teamName" jhiTranslate="padelTmApp.registerTeam.teamName">Team Name</label>
-          <input type="text" class="form-control" name="teamName" id="field_teamName" data-cy="teamName" formControlName="teamName" />
-          @if (editForm.get('teamName')!.invalid && (editForm.get('teamName')!.dirty || editForm.get('teamName')!.touched)) {
+          <label class="form-label" for="field_registerDate" jhiTranslate="padelTmApp.registerTeam.registerDate">Register Date</label>
+          <div class="d-flex">
+            <input
+              id="field_registerDate"
+              data-cy="registerDate"
+              type="datetime-local"
+              class="form-control"
+              name="registerDate"
+              formControlName="registerDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (editForm.get('registerDate')!.invalid && (editForm.get('registerDate')!.dirty || editForm.get('registerDate')!.touched)) {
             <div>
-              @if (editForm.get('teamName')?.errors?.required) {
+              @if (editForm.get('registerDate')?.errors?.required) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
               }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('registerDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Este campo debe ser una fecha y hora.</small
+              >
             </div>
           }
         </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_team" jhiTranslate="padelTmApp.registerTeam.team">Team</label>
+          <select class="form-control" id="field_team" data-cy="team" name="team" formControlName="team" [compareWith]="compareTeam">
+            @if (editForm.get(['team'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (teamOption of teamsSharedCollection; track $index) {
+              <option [ngValue]="teamOption">{{ teamOption.teamName }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['team'])!.invalid && (editForm.get(['team'])!.dirty || editForm.get(['team'])!.touched)) {
+          <div>
+            @if (editForm.get(['team'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label for="field_tournaments" jhiTranslate="padelTmApp.registerTeam.tournaments">Tournaments</label>
+          <select
+            class="form-control"
+            id="field_tournaments"
+            data-cy="tournaments"
+            multiple
+            name="tournaments"
+            formControlName="tournaments"
+            [compareWith]="compareTournament"
+          >
+            @for (tournamentOption of tournamentsSharedCollection; track $index) {
+              <option [ngValue]="tournamentOption">{{ tournamentOption.tournamentName }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['tournaments'])!.invalid && (editForm.get(['tournaments'])!.dirty || editForm.get(['tournaments'])!.touched)) {
+          <div>
+            @if (editForm.get(['tournaments'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
       </div>
 
       <div>

@@ -25,20 +25,6 @@
                                  />
 
         <addForeignKeyConstraint baseColumnNames="tournament_id"
-                                 baseTableName="rel_tournament__teams"
-                                 constraintName="fk_rel_tournament__teams__tournament_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="tournament"
-                                 />
-
-        <addForeignKeyConstraint baseColumnNames="teams_id"
-                                 baseTableName="rel_tournament__teams"
-                                 constraintName="fk_rel_tournament__teams__teams_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="team"
-                                 />
-
-        <addForeignKeyConstraint baseColumnNames="tournament_id"
                                  baseTableName="rel_tournament__categories"
                                  constraintName="fk_rel_tournament__categories__tournament_id"
                                  referencedColumnNames="id"

@@ -26,7 +26,7 @@ class LevelTest {
     }
 
     @Test
-    void tournamentsTest() throws Exception {
+    void tournamentsTest() {
         Level level = getLevelRandomSampleGenerator();
         Tournament tournamentBack = getTournamentRandomSampleGenerator();
 

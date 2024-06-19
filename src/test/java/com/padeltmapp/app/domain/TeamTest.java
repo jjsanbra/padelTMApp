@@ -3,8 +3,8 @@ package com.padeltmapp.app.domain;
 import static com.padeltmapp.app.domain.CategoryTestSamples.*;
 import static com.padeltmapp.app.domain.LevelTestSamples.*;
 import static com.padeltmapp.app.domain.PlayerTestSamples.*;
+import static com.padeltmapp.app.domain.RegisterTeamTestSamples.*;
 import static com.padeltmapp.app.domain.TeamTestSamples.*;
-import static com.padeltmapp.app.domain.TournamentTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.padeltmapp.app.web.rest.TestUtil;
@@ -29,7 +29,7 @@ class TeamTest {
     }
 
     @Test
-    void levelTest() throws Exception {
+    void levelTest() {
         Team team = getTeamRandomSampleGenerator();
         Level levelBack = getLevelRandomSampleGenerator();
 
@@ -41,7 +41,7 @@ class TeamTest {
     }
 
     @Test
-    void categoryTest() throws Exception {
+    void categoryTest() {
         Team team = getTeamRandomSampleGenerator();
         Category categoryBack = getCategoryRandomSampleGenerator();
 
@@ -53,7 +53,7 @@ class TeamTest {
     }
 
     @Test
-    void playersTest() throws Exception {
+    void playersTest() {
         Team team = getTeamRandomSampleGenerator();
         Player playerBack = getPlayerRandomSampleGenerator();
 
@@ -71,24 +71,24 @@ class TeamTest {
     }
 
     @Test
-    void tournamentsTest() throws Exception {
+    void registerTeamTest() {
         Team team = getTeamRandomSampleGenerator();
-        Tournament tournamentBack = getTournamentRandomSampleGenerator();
+        RegisterTeam registerTeamBack = getRegisterTeamRandomSampleGenerator();
 
-        team.addTournaments(tournamentBack);
-        assertThat(team.getTournaments()).containsOnly(tournamentBack);
-        assertThat(tournamentBack.getTeams()).containsOnly(team);
+        team.addRegisterTeam(registerTeamBack);
+        assertThat(team.getRegisterTeams()).containsOnly(registerTeamBack);
+        assertThat(registerTeamBack.getTeam()).isEqualTo(team);
 
-        team.removeTournaments(tournamentBack);
-        assertThat(team.getTournaments()).doesNotContain(tournamentBack);
-        assertThat(tournamentBack.getTeams()).doesNotContain(team);
+        team.removeRegisterTeam(registerTeamBack);
+        assertThat(team.getRegisterTeams()).doesNotContain(registerTeamBack);
+        assertThat(registerTeamBack.getTeam()).isNull();
 
-        team.tournaments(new HashSet<>(Set.of(tournamentBack)));
-        assertThat(team.getTournaments()).containsOnly(tournamentBack);
-        assertThat(tournamentBack.getTeams()).containsOnly(team);
+        team.registerTeams(new HashSet<>(Set.of(registerTeamBack)));
+        assertThat(team.getRegisterTeams()).containsOnly(registerTeamBack);
+        assertThat(registerTeamBack.getTeam()).isEqualTo(team);
 
-        team.setTournaments(new HashSet<>());
-        assertThat(team.getTournaments()).doesNotContain(tournamentBack);
-        assertThat(tournamentBack.getTeams()).doesNotContain(team);
+        team.setRegisterTeams(new HashSet<>());
+        assertThat(team.getRegisterTeams()).doesNotContain(registerTeamBack);
+        assertThat(registerTeamBack.getTeam()).isNull();
     }
 }

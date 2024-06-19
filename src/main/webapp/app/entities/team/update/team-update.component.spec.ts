@@ -11,8 +11,6 @@ import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { IPlayer } from 'app/entities/player/player.model';
 import { PlayerService } from 'app/entities/player/service/player.service';
-import { ITournament } from 'app/entities/tournament/tournament.model';
-import { TournamentService } from 'app/entities/tournament/service/tournament.service';
 import { ITeam } from '../team.model';
 import { TeamService } from '../service/team.service';
 import { TeamFormService } from './team-form.service';
@@ -28,7 +26,6 @@ describe('Team Management Update Component', () => {
   let levelService: LevelService;
   let categoryService: CategoryService;
   let playerService: PlayerService;
-  let tournamentService: TournamentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -53,7 +50,6 @@ describe('Team Management Update Component', () => {
     levelService = TestBed.inject(LevelService);
     categoryService = TestBed.inject(CategoryService);
     playerService = TestBed.inject(PlayerService);
-    tournamentService = TestBed.inject(TournamentService);
 
     comp = fixture.componentInstance;
   });
@@ -125,28 +121,6 @@ describe('Team Management Update Component', () => {
       expect(comp.playersSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Tournament query and add missing value', () => {
-      const team: ITeam = { id: 456 };
-      const tournaments: ITournament[] = [{ id: 13900 }];
-      team.tournaments = tournaments;
-
-      const tournamentCollection: ITournament[] = [{ id: 13576 }];
-      jest.spyOn(tournamentService, 'query').mockReturnValue(of(new HttpResponse({ body: tournamentCollection })));
-      const additionalTournaments = [...tournaments];
-      const expectedCollection: ITournament[] = [...additionalTournaments, ...tournamentCollection];
-      jest.spyOn(tournamentService, 'addTournamentToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ team });
-      comp.ngOnInit();
-
-      expect(tournamentService.query).toHaveBeenCalled();
-      expect(tournamentService.addTournamentToCollectionIfMissing).toHaveBeenCalledWith(
-        tournamentCollection,
-        ...additionalTournaments.map(expect.objectContaining),
-      );
-      expect(comp.tournamentsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const team: ITeam = { id: 456 };
       const level: ILevel = { id: 4229 };
@@ -155,8 +129,6 @@ describe('Team Management Update Component', () => {
       team.category = category;
       const players: IPlayer = { id: 28196 };
       team.players = [players];
-      const tournaments: ITournament = { id: 14376 };
-      team.tournaments = [tournaments];
 
       activatedRoute.data = of({ team });
       comp.ngOnInit();
@@ -164,7 +136,6 @@ describe('Team Management Update Component', () => {
       expect(comp.levelsSharedCollection).toContain(level);
       expect(comp.categoriesSharedCollection).toContain(category);
       expect(comp.playersSharedCollection).toContain(players);
-      expect(comp.tournamentsSharedCollection).toContain(tournaments);
       expect(comp.team).toEqual(team);
     });
   });
@@ -265,16 +236,6 @@ describe('Team Management Update Component', () => {
         jest.spyOn(playerService, 'comparePlayer');
         comp.comparePlayer(entity, entity2);
         expect(playerService.comparePlayer).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareTournament', () => {
-      it('Should forward to tournamentService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(tournamentService, 'compareTournament');
-        comp.compareTournament(entity, entity2);
-        expect(tournamentService.compareTournament).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

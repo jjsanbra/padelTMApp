@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,6 +82,8 @@ class TeamResourceIT {
 
     private Team team;
 
+    private Team insertedTeam;
+
     /**
      * Create an entity for this test.
      *
@@ -128,6 +131,14 @@ class TeamResourceIT {
         team = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedTeam != null) {
+            teamRepository.delete(insertedTeam);
+            insertedTeam = null;
+        }
+    }
+
     @Test
     @Transactional
     void createTeam() throws Exception {
@@ -148,6 +159,8 @@ class TeamResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedTeam = teamMapper.toEntity(returnedTeamDTO);
         assertTeamUpdatableFieldsEquals(returnedTeam, getPersistedTeam(returnedTeam));
+
+        insertedTeam = returnedTeam;
     }
 
     @Test
@@ -172,7 +185,7 @@ class TeamResourceIT {
     @Transactional
     void getAllTeams() throws Exception {
         // Initialize the database
-        teamRepository.saveAndFlush(team);
+        insertedTeam = teamRepository.saveAndFlush(team);
 
         // Get all the teamList
         restTeamMockMvc
@@ -206,7 +219,7 @@ class TeamResourceIT {
     @Transactional
     void getTeam() throws Exception {
         // Initialize the database
-        teamRepository.saveAndFlush(team);
+        insertedTeam = teamRepository.saveAndFlush(team);
 
         // Get the team
         restTeamMockMvc
@@ -230,7 +243,7 @@ class TeamResourceIT {
     @Transactional
     void putExistingTeam() throws Exception {
         // Initialize the database
-        teamRepository.saveAndFlush(team);
+        insertedTeam = teamRepository.saveAndFlush(team);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -312,7 +325,7 @@ class TeamResourceIT {
     @Transactional
     void partialUpdateTeamWithPatch() throws Exception {
         // Initialize the database
-        teamRepository.saveAndFlush(team);
+        insertedTeam = teamRepository.saveAndFlush(team);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -340,7 +353,7 @@ class TeamResourceIT {
     @Transactional
     void fullUpdateTeamWithPatch() throws Exception {
         // Initialize the database
-        teamRepository.saveAndFlush(team);
+        insertedTeam = teamRepository.saveAndFlush(team);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -428,7 +441,7 @@ class TeamResourceIT {
     @Transactional
     void deleteTeam() throws Exception {
         // Initialize the database
-        teamRepository.saveAndFlush(team);
+        insertedTeam = teamRepository.saveAndFlush(team);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

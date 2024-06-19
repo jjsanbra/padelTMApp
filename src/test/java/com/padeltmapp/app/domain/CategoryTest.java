@@ -26,7 +26,7 @@ class CategoryTest {
     }
 
     @Test
-    void tournamentsTest() throws Exception {
+    void tournamentsTest() {
         Category category = getCategoryRandomSampleGenerator();
         Tournament tournamentBack = getTournamentRandomSampleGenerator();
 

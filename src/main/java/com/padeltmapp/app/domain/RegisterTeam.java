@@ -1,8 +1,12 @@
 package com.padeltmapp.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,8 +28,24 @@ public class RegisterTeam implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "team_name", nullable = false)
-    private String teamName;
+    @Column(name = "register_date", nullable = false)
+    private Instant registerDate;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "level", "category", "players", "registerTeams" }, allowSetters = true)
+    private Team team;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @NotNull
+    @JoinTable(
+        name = "rel_register_team__tournaments",
+        joinColumns = @JoinColumn(name = "register_team_id"),
+        inverseJoinColumns = @JoinColumn(name = "tournaments_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "sponsors", "categories", "levels", "courtTypes", "location", "registerTeams" }, allowSetters = true)
+    private Set<Tournament> tournaments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -42,17 +62,53 @@ public class RegisterTeam implements Serializable {
         this.id = id;
     }
 
-    public String getTeamName() {
-        return this.teamName;
+    public Instant getRegisterDate() {
+        return this.registerDate;
     }
 
-    public RegisterTeam teamName(String teamName) {
-        this.setTeamName(teamName);
+    public RegisterTeam registerDate(Instant registerDate) {
+        this.setRegisterDate(registerDate);
         return this;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public void setRegisterDate(Instant registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public Team getTeam() {
+        return this.team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public RegisterTeam team(Team team) {
+        this.setTeam(team);
+        return this;
+    }
+
+    public Set<Tournament> getTournaments() {
+        return this.tournaments;
+    }
+
+    public void setTournaments(Set<Tournament> tournaments) {
+        this.tournaments = tournaments;
+    }
+
+    public RegisterTeam tournaments(Set<Tournament> tournaments) {
+        this.setTournaments(tournaments);
+        return this;
+    }
+
+    public RegisterTeam addTournaments(Tournament tournament) {
+        this.tournaments.add(tournament);
+        return this;
+    }
+
+    public RegisterTeam removeTournaments(Tournament tournament) {
+        this.tournaments.remove(tournament);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -79,7 +135,7 @@ public class RegisterTeam implements Serializable {
     public String toString() {
         return "RegisterTeam{" +
             "id=" + getId() +
-            ", teamName='" + getTeamName() + "'" +
+            ", registerDate='" + getRegisterDate() + "'" +
             "}";
     }
 }

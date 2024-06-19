@@ -16,6 +16,7 @@ import com.padeltmapp.app.service.mapper.CourtTypeMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,8 @@ class CourtTypeResourceIT {
 
     private CourtType courtType;
 
+    private CourtType insertedCourtType;
+
     /**
      * Create an entity for this test.
      *
@@ -89,6 +92,14 @@ class CourtTypeResourceIT {
         courtType = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedCourtType != null) {
+            courtTypeRepository.delete(insertedCourtType);
+            insertedCourtType = null;
+        }
+    }
+
     @Test
     @Transactional
     void createCourtType() throws Exception {
@@ -109,6 +120,8 @@ class CourtTypeResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedCourtType = courtTypeMapper.toEntity(returnedCourtTypeDTO);
         assertCourtTypeUpdatableFieldsEquals(returnedCourtType, getPersistedCourtType(returnedCourtType));
+
+        insertedCourtType = returnedCourtType;
     }
 
     @Test
@@ -150,7 +163,7 @@ class CourtTypeResourceIT {
     @Transactional
     void getAllCourtTypes() throws Exception {
         // Initialize the database
-        courtTypeRepository.saveAndFlush(courtType);
+        insertedCourtType = courtTypeRepository.saveAndFlush(courtType);
 
         // Get all the courtTypeList
         restCourtTypeMockMvc
@@ -166,7 +179,7 @@ class CourtTypeResourceIT {
     @Transactional
     void getCourtType() throws Exception {
         // Initialize the database
-        courtTypeRepository.saveAndFlush(courtType);
+        insertedCourtType = courtTypeRepository.saveAndFlush(courtType);
 
         // Get the courtType
         restCourtTypeMockMvc
@@ -189,7 +202,7 @@ class CourtTypeResourceIT {
     @Transactional
     void putExistingCourtType() throws Exception {
         // Initialize the database
-        courtTypeRepository.saveAndFlush(courtType);
+        insertedCourtType = courtTypeRepository.saveAndFlush(courtType);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -279,7 +292,7 @@ class CourtTypeResourceIT {
     @Transactional
     void partialUpdateCourtTypeWithPatch() throws Exception {
         // Initialize the database
-        courtTypeRepository.saveAndFlush(courtType);
+        insertedCourtType = courtTypeRepository.saveAndFlush(courtType);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -310,7 +323,7 @@ class CourtTypeResourceIT {
     @Transactional
     void fullUpdateCourtTypeWithPatch() throws Exception {
         // Initialize the database
-        courtTypeRepository.saveAndFlush(courtType);
+        insertedCourtType = courtTypeRepository.saveAndFlush(courtType);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -400,7 +413,7 @@ class CourtTypeResourceIT {
     @Transactional
     void deleteCourtType() throws Exception {
         // Initialize the database
-        courtTypeRepository.saveAndFlush(courtType);
+        insertedCourtType = courtTypeRepository.saveAndFlush(courtType);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

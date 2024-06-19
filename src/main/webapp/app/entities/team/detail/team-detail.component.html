@@ -55,15 +55,6 @@
               </span>
             }
           </dd>
-          <dt><span jhiTranslate="padelTmApp.team.tournaments">Tournaments</span></dt>
-          <dd>
-            @for (tournaments of team()!.tournaments; track $index; let last = $last) {
-              <span>
-                <a [routerLink]="['/tournament', tournaments.id, 'view']">{{ tournaments?.tournamentName }}</a
-                >{{ last ? '' : ', ' }}
-              </span>
-            }
-          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

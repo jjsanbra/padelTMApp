@@ -4,15 +4,15 @@ import com.padeltmapp.app.domain.Category;
 import com.padeltmapp.app.domain.CourtType;
 import com.padeltmapp.app.domain.Level;
 import com.padeltmapp.app.domain.Location;
+import com.padeltmapp.app.domain.RegisterTeam;
 import com.padeltmapp.app.domain.Sponsor;
-import com.padeltmapp.app.domain.Team;
 import com.padeltmapp.app.domain.Tournament;
 import com.padeltmapp.app.service.dto.CategoryDTO;
 import com.padeltmapp.app.service.dto.CourtTypeDTO;
 import com.padeltmapp.app.service.dto.LevelDTO;
 import com.padeltmapp.app.service.dto.LocationDTO;
+import com.padeltmapp.app.service.dto.RegisterTeamDTO;
 import com.padeltmapp.app.service.dto.SponsorDTO;
-import com.padeltmapp.app.service.dto.TeamDTO;
 import com.padeltmapp.app.service.dto.TournamentDTO;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,18 +24,19 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament> {
     @Mapping(target = "sponsors", source = "sponsors", qualifiedByName = "sponsorSponsorNameSet")
-    @Mapping(target = "teams", source = "teams", qualifiedByName = "teamTeamNameSet")
     @Mapping(target = "categories", source = "categories", qualifiedByName = "categoryCategoryNameSet")
     @Mapping(target = "levels", source = "levels", qualifiedByName = "levelLevelNameSet")
     @Mapping(target = "courtTypes", source = "courtTypes", qualifiedByName = "courtTypeCourtTypeNameSet")
     @Mapping(target = "location", source = "location", qualifiedByName = "locationCity")
+    @Mapping(target = "registerTeams", source = "registerTeams", qualifiedByName = "registerTeamIdSet")
     TournamentDTO toDto(Tournament s);
 
     @Mapping(target = "removeSponsors", ignore = true)
-    @Mapping(target = "removeTeams", ignore = true)
     @Mapping(target = "removeCategories", ignore = true)
     @Mapping(target = "removeLevels", ignore = true)
     @Mapping(target = "removeCourtTypes", ignore = true)
+    @Mapping(target = "registerTeams", ignore = true)
+    @Mapping(target = "removeRegisterTeam", ignore = true)
     Tournament toEntity(TournamentDTO tournamentDTO);
 
     @Named("sponsorSponsorName")
@@ -47,17 +48,6 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
     @Named("sponsorSponsorNameSet")
     default Set<SponsorDTO> toDtoSponsorSponsorNameSet(Set<Sponsor> sponsor) {
         return sponsor.stream().map(this::toDtoSponsorSponsorName).collect(Collectors.toSet());
-    }
-
-    @Named("teamTeamName")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "teamName", source = "teamName")
-    TeamDTO toDtoTeamTeamName(Team team);
-
-    @Named("teamTeamNameSet")
-    default Set<TeamDTO> toDtoTeamTeamNameSet(Set<Team> team) {
-        return team.stream().map(this::toDtoTeamTeamName).collect(Collectors.toSet());
     }
 
     @Named("categoryCategoryName")
@@ -98,4 +88,14 @@ public interface TournamentMapper extends EntityMapper<TournamentDTO, Tournament
     @Mapping(target = "id", source = "id")
     @Mapping(target = "city", source = "city")
     LocationDTO toDtoLocationCity(Location location);
+
+    @Named("registerTeamId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    RegisterTeamDTO toDtoRegisterTeamId(RegisterTeam registerTeam);
+
+    @Named("registerTeamIdSet")
+    default Set<RegisterTeamDTO> toDtoRegisterTeamIdSet(Set<RegisterTeam> registerTeam) {
+        return registerTeam.stream().map(this::toDtoRegisterTeamId).collect(Collectors.toSet());
+    }
 }

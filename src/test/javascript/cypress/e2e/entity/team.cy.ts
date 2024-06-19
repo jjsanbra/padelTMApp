@@ -68,7 +68,7 @@ describe('Team e2e test', () => {
       body: [player],
     });
 
-    cy.intercept('GET', '/api/tournaments', {
+    cy.intercept('GET', '/api/register-teams', {
       statusCode: 200,
       body: [],
     });
@@ -100,7 +100,7 @@ describe('Team e2e test', () => {
     cy.visit('/');
     cy.clickOnEntityMenuItem('team');
     cy.wait('@entitiesRequest').then(({ response }) => {
-      if (response.body.length === 0) {
+      if (response?.body.length === 0) {
         cy.get(entityTableSelector).should('not.exist');
       } else {
         cy.get(entityTableSelector).should('exist');
@@ -124,7 +124,7 @@ describe('Team e2e test', () => {
         cy.get(entityCreateSaveButtonSelector).should('exist');
         cy.get(entityCreateCancelButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', teamPageUrlPattern);
       });
@@ -165,7 +165,7 @@ describe('Team e2e test', () => {
         cy.getEntityDetailsHeading('team');
         cy.get(entityDetailsBackButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', teamPageUrlPattern);
       });
@@ -176,7 +176,7 @@ describe('Team e2e test', () => {
         cy.get(entityCreateSaveButtonSelector).should('exist');
         cy.get(entityCreateCancelButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', teamPageUrlPattern);
       });
@@ -186,7 +186,7 @@ describe('Team e2e test', () => {
         cy.getEntityCreateUpdateHeading('Team');
         cy.get(entityCreateSaveButtonSelector).click();
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', teamPageUrlPattern);
       });
@@ -196,10 +196,10 @@ describe('Team e2e test', () => {
         cy.getEntityDeleteDialogHeading('team').should('exist');
         cy.get(entityConfirmDeleteButtonSelector).click();
         cy.wait('@deleteEntityRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(204);
+          expect(response?.statusCode).to.equal(204);
         });
         cy.wait('@entitiesRequest').then(({ response }) => {
-          expect(response.statusCode).to.equal(200);
+          expect(response?.statusCode).to.equal(200);
         });
         cy.url().should('match', teamPageUrlPattern);
 
@@ -216,8 +216,8 @@ describe('Team e2e test', () => {
     });
 
     it('should create an instance of Team', () => {
-      cy.get(`[data-cy="teamName"]`).type('psst');
-      cy.get(`[data-cy="teamName"]`).should('have.value', 'psst');
+      cy.get(`[data-cy="teamName"]`).type('atop psst that');
+      cy.get(`[data-cy="teamName"]`).should('have.value', 'atop psst that');
 
       cy.setFieldImageAsBytesOfEntity('logo', 'integration-test.png', 'image/png');
 
@@ -228,11 +228,11 @@ describe('Team e2e test', () => {
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {
-        expect(response.statusCode).to.equal(201);
+        expect(response?.statusCode).to.equal(201);
         team = response.body;
       });
       cy.wait('@entitiesRequest').then(({ response }) => {
-        expect(response.statusCode).to.equal(200);
+        expect(response?.statusCode).to.equal(200);
       });
       cy.url().should('match', teamPageUrlPattern);
     });

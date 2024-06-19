@@ -108,23 +108,6 @@
             }
           </div>
         }
-
-        <div class="mb-3">
-          <label for="field_tournaments" jhiTranslate="padelTmApp.team.tournaments">Tournaments</label>
-          <select
-            class="form-control"
-            id="field_tournaments"
-            data-cy="tournaments"
-            multiple
-            name="tournaments"
-            formControlName="tournaments"
-            [compareWith]="compareTournament"
-          >
-            @for (tournamentOption of tournamentsSharedCollection; track $index) {
-              <option [ngValue]="tournamentOption">{{ tournamentOption.tournamentName }}</option>
-            }
-          </select>
-        </div>
       </div>
 
       <div>

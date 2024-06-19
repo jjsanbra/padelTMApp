@@ -43,12 +43,11 @@
       "relationshipValidateRules": "required"
     },
     {
-      "otherEntityField": "tournamentName",
-      "otherEntityName": "tournament",
-      "otherEntityRelationshipName": "teams",
-      "relationshipName": "tournaments",
+      "otherEntityName": "registerTeam",
+      "otherEntityRelationshipName": "team",
+      "relationshipName": "registerTeam",
       "relationshipSide": "right",
-      "relationshipType": "many-to-many"
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no",

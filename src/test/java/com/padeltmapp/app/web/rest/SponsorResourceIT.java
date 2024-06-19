@@ -17,6 +17,7 @@ import jakarta.persistence.EntityManager;
 import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,8 @@ class SponsorResourceIT {
 
     private Sponsor sponsor;
 
+    private Sponsor insertedSponsor;
+
     /**
      * Create an entity for this test.
      *
@@ -103,6 +106,14 @@ class SponsorResourceIT {
         sponsor = createEntity(em);
     }
 
+    @AfterEach
+    public void cleanup() {
+        if (insertedSponsor != null) {
+            sponsorRepository.delete(insertedSponsor);
+            insertedSponsor = null;
+        }
+    }
+
     @Test
     @Transactional
     void createSponsor() throws Exception {
@@ -123,6 +134,8 @@ class SponsorResourceIT {
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         var returnedSponsor = sponsorMapper.toEntity(returnedSponsorDTO);
         assertSponsorUpdatableFieldsEquals(returnedSponsor, getPersistedSponsor(returnedSponsor));
+
+        insertedSponsor = returnedSponsor;
     }
 
     @Test
@@ -164,7 +177,7 @@ class SponsorResourceIT {
     @Transactional
     void getAllSponsors() throws Exception {
         // Initialize the database
-        sponsorRepository.saveAndFlush(sponsor);
+        insertedSponsor = sponsorRepository.saveAndFlush(sponsor);
 
         // Get all the sponsorList
         restSponsorMockMvc
@@ -182,7 +195,7 @@ class SponsorResourceIT {
     @Transactional
     void getSponsor() throws Exception {
         // Initialize the database
-        sponsorRepository.saveAndFlush(sponsor);
+        insertedSponsor = sponsorRepository.saveAndFlush(sponsor);
 
         // Get the sponsor
         restSponsorMockMvc
@@ -207,7 +220,7 @@ class SponsorResourceIT {
     @Transactional
     void putExistingSponsor() throws Exception {
         // Initialize the database
-        sponsorRepository.saveAndFlush(sponsor);
+        insertedSponsor = sponsorRepository.saveAndFlush(sponsor);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -297,7 +310,7 @@ class SponsorResourceIT {
     @Transactional
     void partialUpdateSponsorWithPatch() throws Exception {
         // Initialize the database
-        sponsorRepository.saveAndFlush(sponsor);
+        insertedSponsor = sponsorRepository.saveAndFlush(sponsor);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -325,7 +338,7 @@ class SponsorResourceIT {
     @Transactional
     void fullUpdateSponsorWithPatch() throws Exception {
         // Initialize the database
-        sponsorRepository.saveAndFlush(sponsor);
+        insertedSponsor = sponsorRepository.saveAndFlush(sponsor);
 
         long databaseSizeBeforeUpdate = getRepositoryCount();
 
@@ -419,7 +432,7 @@ class SponsorResourceIT {
     @Transactional
     void deleteSponsor() throws Exception {
         // Initialize the database
-        sponsorRepository.saveAndFlush(sponsor);
+        insertedSponsor = sponsorRepository.saveAndFlush(sponsor);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

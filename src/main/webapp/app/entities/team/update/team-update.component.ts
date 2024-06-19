@@ -16,8 +16,6 @@ import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { IPlayer } from 'app/entities/player/player.model';
 import { PlayerService } from 'app/entities/player/service/player.service';
-import { ITournament } from 'app/entities/tournament/tournament.model';
-import { TournamentService } from 'app/entities/tournament/service/tournament.service';
 import { TeamService } from '../service/team.service';
 import { ITeam } from '../team.model';
 import { TeamFormService, TeamFormGroup } from './team-form.service';
@@ -35,7 +33,6 @@ export class TeamUpdateComponent implements OnInit {
   levelsSharedCollection: ILevel[] = [];
   categoriesSharedCollection: ICategory[] = [];
   playersSharedCollection: IPlayer[] = [];
-  tournamentsSharedCollection: ITournament[] = [];
 
   protected dataUtils = inject(DataUtils);
   protected eventManager = inject(EventManager);
@@ -44,7 +41,6 @@ export class TeamUpdateComponent implements OnInit {
   protected levelService = inject(LevelService);
   protected categoryService = inject(CategoryService);
   protected playerService = inject(PlayerService);
-  protected tournamentService = inject(TournamentService);
   protected elementRef = inject(ElementRef);
   protected activatedRoute = inject(ActivatedRoute);
 
@@ -56,8 +52,6 @@ export class TeamUpdateComponent implements OnInit {
   compareCategory = (o1: ICategory | null, o2: ICategory | null): boolean => this.categoryService.compareCategory(o1, o2);
 
   comparePlayer = (o1: IPlayer | null, o2: IPlayer | null): boolean => this.playerService.comparePlayer(o1, o2);
-
-  compareTournament = (o1: ITournament | null, o2: ITournament | null): boolean => this.tournamentService.compareTournament(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ team }) => {
@@ -141,10 +135,6 @@ export class TeamUpdateComponent implements OnInit {
       this.playersSharedCollection,
       ...(team.players ?? []),
     );
-    this.tournamentsSharedCollection = this.tournamentService.addTournamentToCollectionIfMissing<ITournament>(
-      this.tournamentsSharedCollection,
-      ...(team.tournaments ?? []),
-    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -167,15 +157,5 @@ export class TeamUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IPlayer[]>) => res.body ?? []))
       .pipe(map((players: IPlayer[]) => this.playerService.addPlayerToCollectionIfMissing<IPlayer>(players, ...(this.team?.players ?? []))))
       .subscribe((players: IPlayer[]) => (this.playersSharedCollection = players));
-
-    this.tournamentService
-      .query()
-      .pipe(map((res: HttpResponse<ITournament[]>) => res.body ?? []))
-      .pipe(
-        map((tournaments: ITournament[]) =>
-          this.tournamentService.addTournamentToCollectionIfMissing<ITournament>(tournaments, ...(this.team?.tournaments ?? [])),
-        ),
-      )
-      .subscribe((tournaments: ITournament[]) => (this.tournamentsSharedCollection = tournaments));
   }
 }

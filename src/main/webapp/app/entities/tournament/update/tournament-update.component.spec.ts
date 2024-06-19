@@ -7,8 +7,6 @@ import { of, Subject, from } from 'rxjs';
 
 import { ISponsor } from 'app/entities/sponsor/sponsor.model';
 import { SponsorService } from 'app/entities/sponsor/service/sponsor.service';
-import { ITeam } from 'app/entities/team/team.model';
-import { TeamService } from 'app/entities/team/service/team.service';
 import { ICategory } from 'app/entities/category/category.model';
 import { CategoryService } from 'app/entities/category/service/category.service';
 import { ILevel } from 'app/entities/level/level.model';
@@ -17,6 +15,8 @@ import { ICourtType } from 'app/entities/court-type/court-type.model';
 import { CourtTypeService } from 'app/entities/court-type/service/court-type.service';
 import { ILocation } from 'app/entities/location/location.model';
 import { LocationService } from 'app/entities/location/service/location.service';
+import { IRegisterTeam } from 'app/entities/register-team/register-team.model';
+import { RegisterTeamService } from 'app/entities/register-team/service/register-team.service';
 import { ITournament } from '../tournament.model';
 import { TournamentService } from '../service/tournament.service';
 import { TournamentFormService } from './tournament-form.service';
@@ -30,11 +30,11 @@ describe('Tournament Management Update Component', () => {
   let tournamentFormService: TournamentFormService;
   let tournamentService: TournamentService;
   let sponsorService: SponsorService;
-  let teamService: TeamService;
   let categoryService: CategoryService;
   let levelService: LevelService;
   let courtTypeService: CourtTypeService;
   let locationService: LocationService;
+  let registerTeamService: RegisterTeamService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -57,11 +57,11 @@ describe('Tournament Management Update Component', () => {
     tournamentFormService = TestBed.inject(TournamentFormService);
     tournamentService = TestBed.inject(TournamentService);
     sponsorService = TestBed.inject(SponsorService);
-    teamService = TestBed.inject(TeamService);
     categoryService = TestBed.inject(CategoryService);
     levelService = TestBed.inject(LevelService);
     courtTypeService = TestBed.inject(CourtTypeService);
     locationService = TestBed.inject(LocationService);
+    registerTeamService = TestBed.inject(RegisterTeamService);
 
     comp = fixture.componentInstance;
   });
@@ -87,28 +87,6 @@ describe('Tournament Management Update Component', () => {
         ...additionalSponsors.map(expect.objectContaining),
       );
       expect(comp.sponsorsSharedCollection).toEqual(expectedCollection);
-    });
-
-    it('Should call Team query and add missing value', () => {
-      const tournament: ITournament = { id: 456 };
-      const teams: ITeam[] = [{ id: 4283 }];
-      tournament.teams = teams;
-
-      const teamCollection: ITeam[] = [{ id: 19554 }];
-      jest.spyOn(teamService, 'query').mockReturnValue(of(new HttpResponse({ body: teamCollection })));
-      const additionalTeams = [...teams];
-      const expectedCollection: ITeam[] = [...additionalTeams, ...teamCollection];
-      jest.spyOn(teamService, 'addTeamToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ tournament });
-      comp.ngOnInit();
-
-      expect(teamService.query).toHaveBeenCalled();
-      expect(teamService.addTeamToCollectionIfMissing).toHaveBeenCalledWith(
-        teamCollection,
-        ...additionalTeams.map(expect.objectContaining),
-      );
-      expect(comp.teamsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call Category query and add missing value', () => {
@@ -199,12 +177,32 @@ describe('Tournament Management Update Component', () => {
       expect(comp.locationsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call RegisterTeam query and add missing value', () => {
+      const tournament: ITournament = { id: 456 };
+      const registerTeams: IRegisterTeam[] = [{ id: 14019 }];
+      tournament.registerTeams = registerTeams;
+
+      const registerTeamCollection: IRegisterTeam[] = [{ id: 32332 }];
+      jest.spyOn(registerTeamService, 'query').mockReturnValue(of(new HttpResponse({ body: registerTeamCollection })));
+      const additionalRegisterTeams = [...registerTeams];
+      const expectedCollection: IRegisterTeam[] = [...additionalRegisterTeams, ...registerTeamCollection];
+      jest.spyOn(registerTeamService, 'addRegisterTeamToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ tournament });
+      comp.ngOnInit();
+
+      expect(registerTeamService.query).toHaveBeenCalled();
+      expect(registerTeamService.addRegisterTeamToCollectionIfMissing).toHaveBeenCalledWith(
+        registerTeamCollection,
+        ...additionalRegisterTeams.map(expect.objectContaining),
+      );
+      expect(comp.registerTeamsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const tournament: ITournament = { id: 456 };
       const sponsors: ISponsor = { id: 9419 };
       tournament.sponsors = [sponsors];
-      const teams: ITeam = { id: 28783 };
-      tournament.teams = [teams];
       const categories: ICategory = { id: 25568 };
       tournament.categories = [categories];
       const levels: ILevel = { id: 1821 };
@@ -213,16 +211,18 @@ describe('Tournament Management Update Component', () => {
       tournament.courtTypes = [courtTypes];
       const location: ILocation = { id: 25404 };
       tournament.location = location;
+      const registerTeam: IRegisterTeam = { id: 13640 };
+      tournament.registerTeams = [registerTeam];
 
       activatedRoute.data = of({ tournament });
       comp.ngOnInit();
 
       expect(comp.sponsorsSharedCollection).toContain(sponsors);
-      expect(comp.teamsSharedCollection).toContain(teams);
       expect(comp.categoriesSharedCollection).toContain(categories);
       expect(comp.levelsSharedCollection).toContain(levels);
       expect(comp.courtTypesSharedCollection).toContain(courtTypes);
       expect(comp.locationsSharedCollection).toContain(location);
+      expect(comp.registerTeamsSharedCollection).toContain(registerTeam);
       expect(comp.tournament).toEqual(tournament);
     });
   });
@@ -306,16 +306,6 @@ describe('Tournament Management Update Component', () => {
       });
     });
 
-    describe('compareTeam', () => {
-      it('Should forward to teamService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(teamService, 'compareTeam');
-        comp.compareTeam(entity, entity2);
-        expect(teamService.compareTeam).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
     describe('compareCategory', () => {
       it('Should forward to categoryService', () => {
         const entity = { id: 123 };
@@ -353,6 +343,16 @@ describe('Tournament Management Update Component', () => {
         jest.spyOn(locationService, 'compareLocation');
         comp.compareLocation(entity, entity2);
         expect(locationService.compareLocation).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareRegisterTeam', () => {
+      it('Should forward to registerTeamService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(registerTeamService, 'compareRegisterTeam');
+        comp.compareRegisterTeam(entity, entity2);
+        expect(registerTeamService.compareRegisterTeam).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

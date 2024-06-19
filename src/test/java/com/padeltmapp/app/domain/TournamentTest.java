@@ -4,8 +4,8 @@ import static com.padeltmapp.app.domain.CategoryTestSamples.*;
 import static com.padeltmapp.app.domain.CourtTypeTestSamples.*;
 import static com.padeltmapp.app.domain.LevelTestSamples.*;
 import static com.padeltmapp.app.domain.LocationTestSamples.*;
+import static com.padeltmapp.app.domain.RegisterTeamTestSamples.*;
 import static com.padeltmapp.app.domain.SponsorTestSamples.*;
-import static com.padeltmapp.app.domain.TeamTestSamples.*;
 import static com.padeltmapp.app.domain.TournamentTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +31,7 @@ class TournamentTest {
     }
 
     @Test
-    void sponsorsTest() throws Exception {
+    void sponsorsTest() {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Sponsor sponsorBack = getSponsorRandomSampleGenerator();
 
@@ -49,25 +49,7 @@ class TournamentTest {
     }
 
     @Test
-    void teamsTest() throws Exception {
-        Tournament tournament = getTournamentRandomSampleGenerator();
-        Team teamBack = getTeamRandomSampleGenerator();
-
-        tournament.addTeams(teamBack);
-        assertThat(tournament.getTeams()).containsOnly(teamBack);
-
-        tournament.removeTeams(teamBack);
-        assertThat(tournament.getTeams()).doesNotContain(teamBack);
-
-        tournament.teams(new HashSet<>(Set.of(teamBack)));
-        assertThat(tournament.getTeams()).containsOnly(teamBack);
-
-        tournament.setTeams(new HashSet<>());
-        assertThat(tournament.getTeams()).doesNotContain(teamBack);
-    }
-
-    @Test
-    void categoriesTest() throws Exception {
+    void categoriesTest() {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Category categoryBack = getCategoryRandomSampleGenerator();
 
@@ -85,7 +67,7 @@ class TournamentTest {
     }
 
     @Test
-    void levelsTest() throws Exception {
+    void levelsTest() {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Level levelBack = getLevelRandomSampleGenerator();
 
@@ -103,7 +85,7 @@ class TournamentTest {
     }
 
     @Test
-    void courtTypesTest() throws Exception {
+    void courtTypesTest() {
         Tournament tournament = getTournamentRandomSampleGenerator();
         CourtType courtTypeBack = getCourtTypeRandomSampleGenerator();
 
@@ -121,7 +103,7 @@ class TournamentTest {
     }
 
     @Test
-    void locationTest() throws Exception {
+    void locationTest() {
         Tournament tournament = getTournamentRandomSampleGenerator();
         Location locationBack = getLocationRandomSampleGenerator();
 
@@ -130,5 +112,27 @@ class TournamentTest {
 
         tournament.location(null);
         assertThat(tournament.getLocation()).isNull();
+    }
+
+    @Test
+    void registerTeamTest() {
+        Tournament tournament = getTournamentRandomSampleGenerator();
+        RegisterTeam registerTeamBack = getRegisterTeamRandomSampleGenerator();
+
+        tournament.addRegisterTeam(registerTeamBack);
+        assertThat(tournament.getRegisterTeams()).containsOnly(registerTeamBack);
+        assertThat(registerTeamBack.getTournaments()).containsOnly(tournament);
+
+        tournament.removeRegisterTeam(registerTeamBack);
+        assertThat(tournament.getRegisterTeams()).doesNotContain(registerTeamBack);
+        assertThat(registerTeamBack.getTournaments()).doesNotContain(tournament);
+
+        tournament.registerTeams(new HashSet<>(Set.of(registerTeamBack)));
+        assertThat(tournament.getRegisterTeams()).containsOnly(registerTeamBack);
+        assertThat(registerTeamBack.getTournaments()).containsOnly(tournament);
+
+        tournament.setRegisterTeams(new HashSet<>());
+        assertThat(tournament.getRegisterTeams()).doesNotContain(registerTeamBack);
+        assertThat(registerTeamBack.getTournaments()).doesNotContain(tournament);
     }
 }

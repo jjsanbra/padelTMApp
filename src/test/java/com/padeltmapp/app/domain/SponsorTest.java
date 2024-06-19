@@ -26,7 +26,7 @@ class SponsorTest {
     }
 
     @Test
-    void tournamentsTest() throws Exception {
+    void tournamentsTest() {
         Sponsor sponsor = getSponsorRandomSampleGenerator();
         Tournament tournamentBack = getTournamentRandomSampleGenerator();
 

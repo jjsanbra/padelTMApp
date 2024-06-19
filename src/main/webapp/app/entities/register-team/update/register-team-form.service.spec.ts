@@ -20,7 +20,9 @@ describe('RegisterTeam Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            teamName: expect.any(Object),
+            registerDate: expect.any(Object),
+            team: expect.any(Object),
+            tournaments: expect.any(Object),
           }),
         );
       });
@@ -31,7 +33,9 @@ describe('RegisterTeam Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            teamName: expect.any(Object),
+            registerDate: expect.any(Object),
+            team: expect.any(Object),
+            tournaments: expect.any(Object),
           }),
         );
       });
